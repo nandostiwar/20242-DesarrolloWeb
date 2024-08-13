@@ -1,1 +1,1 @@
-Juan David qUINTERO Pimentel
+Juan David Quintero Pimentel
