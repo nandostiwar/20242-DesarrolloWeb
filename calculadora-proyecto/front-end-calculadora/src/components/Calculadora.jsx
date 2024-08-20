@@ -21,6 +21,25 @@ function Calculadora(){
                 // setResultado(responseData)
                 // console.log(resultado)
             })
+            let ResultadosMatematicos;
+            const num1 = parseFloat(number1);
+            const num2 = parseFloat(number2);
+
+            switch(operacion){
+                case "sumar":
+                    ResultadosMatematicos = num1 + num2;
+                    break;
+                case "restar":
+                    ResultadosMatematicos = num1 - num2;
+                    break;
+                case "dividir":
+                    ResultadosMatematicos = num1 / num2;
+                    break;
+                case "multiplicar":
+                    ResultadosMatematicos = num1 * num2;
+                    break;
+            }
+    setResultado(ResultadosMatematicos);
     }
 
     return (
@@ -31,6 +50,7 @@ function Calculadora(){
                 <input type="text" className="number" onChange={(e)=>{setNumber2(e.target.value)}}/><br />
                 <input type="submit" className="btnEnviar" value="sumar" onClick={handleSubmit}/>
                 <input type="submit" className="btnEnviar" value="restar" onClick={handleSubmit}/>
+                <input type="submit" className="btnEnviar" value="dividir" onClick={handleSubmit}/>
                 <input type="submit" className="btnEnviar" value="multiplicar" onClick={handleSubmit}/>
             </form>
             <Resultado resultado={"El resultado es "+ resultado}/>
