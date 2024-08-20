@@ -10,32 +10,59 @@ function Calculadora(){
     function handleSubmit(e){
         e.preventDefault();
         const operacion = e.target.value;
-        fetch(`http://localhost:3500/v1/calculadora/${operacion}`, {
-            method: 'POST',
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({number1, number2})
-        })
-            .then(res =>res.json())
-            .then(responseData => {
-                setResultado(responseData.resultado)
-                // setResultado(responseData)
-                // console.log(resultado)
-            })
+
+        // Verificamos si los campos están vacíos o si no son números
+        if (number1 === '' || number2 === '' || isNaN(number1) || isNaN(number2)) {
+            setResultado("Error: Ambos campos deben contener números válidos");
+            return;
+        }
+
+        let result;
+
+        // Convertimos los valores a números
+        const num1 = parseFloat(number1);
+        const num2 = parseFloat(number2);
+
+        // Realizamos la operación correspondiente
+        switch(operacion){
+            case 'sumar':
+                result = num1 + num2;
+                break;
+            case 'restar':
+                result = num1 - num2;
+                break;
+            case 'multiplicar':
+                result = num1 * num2;
+                break;
+            case 'division':
+                if(num2 !== 0) {
+                    result = num1 / num2;
+                } else {
+                    result = "Error: División por cero";
+                }
+                break;
+            default:
+                result = "Operación no válida";
+        }
+
+        // Actualizamos el estado con el resultado
+        setResultado(result);
     }
 
     return (
         <div className="container">
             <h1 id="txtCalculadora">CALCULADORA</h1>
             <form>
-                <input type="text" className="number" onChange={(e)=>{setNumber1(e.target.value)}}/><br />
-                <input type="text" className="number" onChange={(e)=>{setNumber2(e.target.value)}}/><br />
+                <input type="text" className="number" onChange={(e)=>{setNumber1(e.target.value)}} value={number1} /><br />
+                <input type="text" className="number" onChange={(e)=>{setNumber2(e.target.value)}} value={number2} /><br />
                 <input type="submit" className="btnEnviar" value="sumar" onClick={handleSubmit}/>
                 <input type="submit" className="btnEnviar" value="restar" onClick={handleSubmit}/>
                 <input type="submit" className="btnEnviar" value="multiplicar" onClick={handleSubmit}/>
+                <input type="submit" className="btnEnviar" value="division" onClick={handleSubmit}/>
             </form>
-            <Resultado resultado={"El resultado es "+ resultado}/>
+            <Resultado resultado={"El resultado es: " + resultado}/>
         </div>
     )
 }
 
-export default Calculadora
+export default Calculadora;
