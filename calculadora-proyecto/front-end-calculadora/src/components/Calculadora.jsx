@@ -10,6 +10,11 @@ function Calculadora(){
     function handleSubmit(e){
         e.preventDefault();
         const operacion = e.target.value;
+
+        if (operacion == "sumar"){setResultado(parseFloat(number1)+parseFloat(number2))}
+        if (operacion == "restar"){setResultado("restar")}
+        if (operacion == "multiplicar"){setResultado("multiplicar")}
+
         fetch(`http://localhost:3500/v1/calculadora/${operacion}`, {
             method: 'POST',
             headers: {"Content-Type": "application/json"},
@@ -33,7 +38,7 @@ function Calculadora(){
                 <input type="submit" className="btnEnviar" value="restar" onClick={handleSubmit}/>
                 <input type="submit" className="btnEnviar" value="multiplicar" onClick={handleSubmit}/>
             </form>
-            <Resultado resultado={"El resultado es "+ resultado}/>
+            <Resultado resultado={"El resultado es " + resultado}/>
         </div>
     )
 }
