@@ -8,19 +8,25 @@ function Calculadora(){
     const [resultado, setResultado] = useState('');
 
     function handleSubmit(e){
-        e.preventDefault();
+         e.preventDefault();
         const operacion = e.target.value;
-        fetch(`http://localhost:3500/v1/calculadora/${operacion}`, {
-            method: 'POST',
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({number1, number2})
-        })
-            .then(res =>res.json())
-            .then(responseData => {
-                setResultado(responseData.resultado)
-                // setResultado(responseData)
-                // console.log(resultado)
-            })
+
+        // Agregar lógica de operaciones
+        let resultadoOperacion;
+        const num1 = parseFloat(number1);
+        const num2 = parseFloat(number2);
+
+        if (operacion === "sumar") {
+            resultadoOperacion = num1 + num2;
+        } else if (operacion === "restar") {
+            resultadoOperacion = num1 - num2;
+        } else if (operacion === "dividir") {
+            resultadoOperacion = num1 / num2;
+        } else if (operacion === "Multiplicar") {
+            resultadoOperacion = num1 * num2;
+        }
+
+        setResultado(resultadoOperacion);
     }
 
     return (
@@ -31,7 +37,9 @@ function Calculadora(){
                 <input type="text" className="number" onChange={(e)=>{setNumber2(e.target.value)}}/><br />
                 <input type="submit" className="btnEnviar" value="sumar" onClick={handleSubmit}/>
                 <input type="submit" className="btnEnviar" value="restar" onClick={handleSubmit}/>
-                <input type="submit" className="btnEnviar" value="multiplicar" onClick={handleSubmit}/>
+                <input type="submit" className="btnEnviar" value="dividir" onClick={handleSubmit}/>
+                <input type="submit" className="btnEnviar" value="Multiplicar" onClick={handleSubmit}/>
+ 
             </form>
             <Resultado resultado={"El resultado es "+ resultado}/>
         </div>
