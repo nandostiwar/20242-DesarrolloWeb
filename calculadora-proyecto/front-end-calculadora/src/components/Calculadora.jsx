@@ -13,7 +13,7 @@ function Calculadora(){
 
         // Verificamos si los campos están vacíos o si no son números
         if (number1 === '' || number2 === '' || isNaN(number1) || isNaN(number2)) {
-            setResultado("Error: Ambos campos deben contener números válidos");
+            setResultado("Error:");
             return;
         }
 
