@@ -4,4 +4,7 @@ const persona = {
     semestre: 6
 };
 
+r = 89
+u = 90
+
 console.log(persona);
