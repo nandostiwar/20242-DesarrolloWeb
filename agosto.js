@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const persona = {
     nombre: "Edwin",
     edad: 19,
@@ -8,3 +9,6 @@ r = 89
 u = 90
 
 console.log(persona);
+=======
+
+>>>>>>> origin/main
