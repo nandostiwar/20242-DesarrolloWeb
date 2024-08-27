@@ -7,7 +7,7 @@ body{
 .container{
     text-align: center;
     justify-content: center;
-    background-color: gray;
+    background-color: rgb(214, 209, 209);
     padding: 50px;
     margin: 50px;
     border-radius: 50px;
@@ -27,13 +27,13 @@ body{
     border-radius: 10px;
     width: 150px;
     height: 50px;
-    background-color: rgb(121, 89, 89);
-    color: white;
-    border-color: rgb(121, 89, 89);
+    background-color: rgb(243, 243, 243);
+    color: rgb(24, 23, 23);
+    border-color: rgb(22, 21, 21);
     margin-left: 10px;
 }
 
 #txtCalculadora{
-    color: white;
+    color: rgb(14, 13, 13);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }

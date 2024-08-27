@@ -1,4 +1,4 @@
-const {add, subtract, multiply} = require('../operaciones/operaciones.js');
+const {add, subtract, multiply, menorqueX,mayorqueX,promedioX} = require('../operaciones/operaciones.js');
 
 function sumar(req, res){
     const {body} = req;
@@ -27,8 +27,35 @@ function multiplicar(req, res){
     })
 }
 
+function menorque(req, res){
+    const {body} = req;
+    const {number1, number2} = body;
+    const result = menorqueX(number1, number2);
+    res.json({
+        resultado: result
+    })
+}
+function mayorque(req, res){
+    const {body} = req;
+    const {number1, number2} = body;
+    const result =mayorqueX(number1, number2);
+    res.json({
+        resultado: result
+    })
+}
+function promedio(req, res){
+    const {body} = req;
+    const {number1, number2} = body;
+    const result = promedioX(number1, number2);
+    res.json({
+        resultado: result
+    })
+}
 module.exports = {
     sumar,
     restar,
-    multiplicar
+    multiplicar,
+    menorque,
+    mayorque,
+    promedio
 }
