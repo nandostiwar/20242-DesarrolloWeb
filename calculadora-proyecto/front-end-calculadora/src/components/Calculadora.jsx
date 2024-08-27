@@ -32,6 +32,9 @@ function Calculadora(){
                 <input type="submit" className="btnEnviar" value="sumar" onClick={handleSubmit}/>
                 <input type="submit" className="btnEnviar" value="restar" onClick={handleSubmit}/>
                 <input type="submit" className="btnEnviar" value="multiplicar" onClick={handleSubmit}/>
+                <input type="submit" className="btnEnviar" value="mayor" onClick={handleSubmit}/>
+                <input type="submit" className="btnEnviar" value="menor" onClick={handleSubmit}/>
+                <input type="submit" className="btnEnviar" value="promedio" onClick={handleSubmit}/>
             </form>
             <Resultado resultado={"El resultado es "+ resultado}/>
         </div>
