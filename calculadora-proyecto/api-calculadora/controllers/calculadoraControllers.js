@@ -45,7 +45,7 @@ function menor(req, res){
     })
 }
 
-function promedio(req, res){
+function promedi(req, res){
     const {body} = req;
     const {number1, number2} = body;
     const result = average(number1, number2);
