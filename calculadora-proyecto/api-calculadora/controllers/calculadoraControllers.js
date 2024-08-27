@@ -1,4 +1,4 @@
-const {add, subtract, multiply} = require('../operaciones/operaciones.js');
+const {add, subtract, multiply, great, less, avg} = require('../operaciones/operaciones.js');
 
 function sumar(req, res){
     const {body} = req;
@@ -27,8 +27,39 @@ function multiplicar(req, res){
     })
 }
 
+function may(req, res){
+    const {body} = req;
+    const {number1, number2} = body;
+    const result = great(number1, number2);
+    res.json({
+        resultado: result
+    });
+}
+
+function men(req, res){
+    const {body} = req;
+    const {number1, number2} = body;
+    const result = less(number1, number2);
+    res.json({
+        resultado: result
+    });
+}
+
+function prome(req, res){
+    const {body} = req;
+    const {number1, number2} = body;
+    const result = avg(number1, number2);
+    res.json({
+        resultado: result
+    });
+}
+
+
 module.exports = {
     sumar,
     restar,
-    multiplicar
+    multiplicar,
+    may,
+    men,
+    prome
 }

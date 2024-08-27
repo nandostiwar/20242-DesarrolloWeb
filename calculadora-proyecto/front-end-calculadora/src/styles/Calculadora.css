@@ -7,10 +7,10 @@ body{
 .container{
     text-align: center;
     justify-content: center;
-    background-color: gray;
-    padding: 50px;
-    margin: 50px;
-    border-radius: 50px;
+    background-color: rgb(0, 0, 0);
+    padding: 30px;
+    margin: 30px;
+    border-radius: 30px;
     width: 500px;
     display: block;
 }
@@ -24,16 +24,16 @@ body{
 }
 
 .btnEnviar{
-    border-radius: 10px;
+    border-radius: 25px;
     width: 150px;
     height: 50px;
-    background-color: rgb(121, 89, 89);
+    background-color: rgb(143, 158, 204);
     color: white;
-    border-color: rgb(121, 89, 89);
-    margin-left: 10px;
+    border-color: rgb(143, 158, 204);
+    margin-left: 20px;
 }
 
 #txtCalculadora{
-    color: white;
+    color: rgb(255, 255, 255);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
