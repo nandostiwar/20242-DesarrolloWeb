@@ -57,11 +57,7 @@ function Calculadora() {
                 <input type="submit" className="btnEnviar" value="restar" onClick={handleSubmit}/>
                 <input type="submit" className="btnEnviar" value="multiplicar" onClick={handleSubmit}/>
             </form>
-<<<<<<< HEAD
             <Resultado resultado={"El resultado es " + resultado}/>
-=======
-            <Resultado resultado={"El resultado es " + resultado} />
->>>>>>> 13efb85ca047811ca7b2e3fd036f0d80824f1cfe
         </div>
     )
 }
