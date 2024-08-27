@@ -3,24 +3,24 @@ import './styles/UserHome.css';
 import TextSigno from "./TextSigno.jsx";
 import { useState } from "react";
 
-function UserHome({user}){
-    if(user!=="user" || !user){
-        return <Navigate to="/"/>
+function UserHome({ user }) {
+    if (user !== "user" || !user) {
+        return <Navigate to="/" />
     }
     const home = useNavigate();
     const [textoSigno, setTextoSigno] = useState('');
 
-    function goHome(){
+    function goHome() {
         home("/");
     }
 
-    async function handleSelect(event){
+    async function handleSelect(event) {
         const signo = event.target.value;
-        if(signo!=="0"){
+        if (signo !== "0") {
             fetch(`http://localhost:4000/v1/signos/${signo}`)
                 .then(response => response.json())
                 .then(responseData => setTextoSigno(responseData))
-        } 
+        }
     }
 
     return (
@@ -40,7 +40,7 @@ function UserHome({user}){
                 <option value="Acuario">Acuario</option>
                 <option value="Piscis">Piscis</option>
             </select>
-            <TextSigno texto={textoSigno}/>
+            <TextSigno texto={textoSigno} />
             <button id="btnHome" onClick={goHome}>Home</button>
         </div>
     )
