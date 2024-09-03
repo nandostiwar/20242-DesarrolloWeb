@@ -1,56 +1,80 @@
 import { Navigate, useNavigate } from "react-router-dom";
-import './styles/AdminHome.css';
-import { useState, useEffect } from "react";
+import './styles/AdminHome.css'
+import { useState } from "react";
 
-function AdminHome({ user }) {
-    const navigate = useNavigate();
-    const [signos, setSignos] = useState(() => JSON.parse(localStorage.getItem('signos')) || {});
-    const [signoEditar, setSignoEditar] = useState("");
+function AdminHome({user}){
+    if(user!=='admin' || !user){
+        return <Navigate to="/"/>
+    }
+    const home = useNavigate();
     const [textoEditar, setTextoEditar] = useState("");
+    const [signoEditar, setSignoEditar] = useState("");
+    const [perfilEditar, setPerfilEditar] = useState("");
 
-    if (user !== 'admin') return <Navigate to="/" />;
-
-    useEffect(() => {
-        localStorage.setItem('signos', JSON.stringify(signos));
-    }, [signos]);
-
-    const handleSelect = (event) => {
+    function handleSelectSigno(event){
         const signo = event.target.value;
-        setSignoEditar(signo);
-        setTextoEditar(signos[signo] || "");
-    };
-
-    const handleClick = (e) => {
-        e.preventDefault();
-        if (!signoEditar || !textoEditar.trim()) {
-            alert("Por favor, completa los campos.");
-            return;
+        if(signo!=="0"){
+            setSignoEditar(signo);
         }
-        setSignos(prevSignos => ({ ...prevSignos, [signoEditar]: textoEditar }));
-        alert(`Texto para ${signoEditar} actualizado correctamente.`);
-        setTextoEditar("");
-    };
+    }
+
+    function handleSelectPerfil(event){
+        const perfil = event.target.value;
+        if(perfil!=="0"){
+            setPerfilEditar(perfil);
+        }
+    }
+
+    function goHome(){
+        home("/");
+    }
+
+    function handleClick(e){
+        e.preventDefault();
+        fetch(`http://localhost:4000/v1/signos/${signoEditar}`, {
+            method: 'PATCH',
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                "textoEditar": textoEditar,
+                "perfil": perfilEditar
+            })
+        })
+    }
 
     return (
         <div className="container">
-            <h2 id="textoAdmin">Edita un Signo Zodiacal</h2>
-            <select id="editSignos" onChange={handleSelect} defaultValue="0">
-                <option value="0" disabled>Selecciona un signo zodiacal</option>
-                {["Aries", "Geminis", "Cancer", "Leo", "Virgo", "Libra", "Escorpio", "Sagitario", "Capricornio", "Acuario", "Piscis"].map(signo => (
-                    <option key={signo} value={signo}>{signo}</option>
-                ))}
+            <h2 id="textoAdmin">Edita un Signo Zodiacal y Perfil</h2>
+            <select id="editSignos" onChange={handleSelectSigno}>
+                <option value="0">Selecciona un signo zodiacal</option>
+                <option value="Aries">Aries</option>
+                <option value="Geminis">Géminis</option>
+                <option value="Cancer">Cáncer</option>
+                <option value="Leo">Leo</option>
+                <option value="Virgo">Virgo</option>
+                <option value="Libra">Libra</option>
+                <option value="Escorpio">Escorpio</option>
+                <option value="Sagitario">Sagitario</option>
+                <option value="Capricornio">Capricornio</option>
+                <option value="Acuario">Acuario</option>
+                <option value="Piscis">Piscis</option>
+            </select>
+            <select id="editPerfil" onChange={handleSelectPerfil}>
+                <option value="0">Selecciona un perfil</option>
+                <option value="hombre">Hombre</option>
+                <option value="mujer">Mujer</option>
+                <option value="nino">Niño</option>
             </select>
             <textarea 
                 id="textoEditar" 
                 cols="50" 
                 rows="10" 
-                onChange={(e) => setTextoEditar(e.target.value)} 
-                value={textoEditar}>
-            </textarea>
+                onChange={(e)=> setTextoEditar(e.target.value)}
+                value={textoEditar}
+            ></textarea>
             <button id="btnEditar" onClick={handleClick}>Editar</button>
-            <button id="btnHomeAdmin" onClick={() => navigate("/")}>Home</button>
+            <button id="btnHomeAdmin" onClick={goHome}>Home</button>
         </div>
-    );
+    )
 }
 
 export default AdminHome;
