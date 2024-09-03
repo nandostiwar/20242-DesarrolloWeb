@@ -1,13 +1,57 @@
 {
-  "Aries": "Tarea probando uno dos tres",
-  "Geminis": "SUERTE DE GEMINIS CAMBIADA",
-  "Cancer": "Suerte de Cancer",
-  "Leo": "SUERTE DE LEO POSITIVA",
-  "Virgo": "Suerte de Virgo",
-  "Libra": "UNA LIBRA DE ARROZ",
-  "Escorpio": "Suerte de Escorpio",
-  "Sagitario": "Suerte de Sagitario",
-  "Capricornio": "Suerte de Capricornio",
-  "Acuario": "Suerte de Acuario",
-  "Piscis": "Suerte de Piscis"
+  "Aries": {
+    "hombre": "Texto para Aries hombre",
+    "mujer": "Texto para Aries mujer",
+    "nino": "Texto para Aries niño"
+  },
+  "Geminis": {
+    "hombre": "Texto para Geminis hombre",
+    "mujer": "Texto para Geminis mujer",
+    "nino": "Texto para Geminis niño"
+  },
+  "Cancer": {
+    "hombre": "Texto para Aries hombre",
+    "mujer": "Texto para Aries mujer",
+    "nino": "Texto para Aries niño"
+  },
+  "Leo": {
+    "hombre": "Probandooooo",
+    "mujer": "Probando para mujer",
+    "nino": "Probando para niño"
+  },
+  "Virgo": {
+    "hombre": "Texto para Aries hombre",
+    "mujer": "Texto para Aries mujer",
+    "nino": "Texto para Aries niño"
+  },
+  "Libra": {
+    "hombre": "Texto para Aries hombre",
+    "mujer": "Texto para Aries mujer",
+    "nino": "Texto para Aries niño"
+  },
+  "Escorpio": {
+    "hombre": "Texto para Aries hombre",
+    "mujer": "Texto para Aries mujer",
+    "nino": "Texto para Aries niño"
+  },
+  "Sagitario": {
+    "hombre": "Texto para Aries hombre",
+    "mujer": "Texto para Aries mujer",
+    "nino": "Texto para Aries niño"
+  },
+  "Capricornio": {
+    "hombre": "Texto para Aries hombre",
+    "mujer": "Texto para Aries mujer",
+    "nino": "Texto para Aries niño"
+  },
+  "Acuario": {
+    "hombre": "Texto para Aries hombre",
+    "mujer": "Texto para Aries mujer",
+    "nino": "Texto para Aries niño"
+  },
+  "Piscis": {
+    "hombre": "Texto para Aries hombre",
+    "mujer": "Texto para Aries mujer",
+    "nino": "Texto para Aries niño"
+  }
 }
