@@ -11,6 +11,9 @@ function AdminHome({ user }) {
     const [textoEditar, setTextoEditar] = useState("");
     const [signoEditar, setSignoEditar] = useState("");
 
+    // Lista de palabras no permitidas
+    const palabrasProhibidas = ["Limon", "Manzana", "Pera"];
+
     function handleSelect(event) {
         const signo = event.target.value;
         if (signo !== "0") {
@@ -24,11 +27,20 @@ function AdminHome({ user }) {
         home("/");
     }
 
+    function contienePalabrasProhibidas(texto) {
+        // Verifica si el texto contiene alguna de las palabras prohibidas
+        return palabrasProhibidas.some(palabra => texto.includes(palabra));
+    }
+
     function handleClick(e) {
         e.preventDefault();
         if (signoEditar) {
-            localStorage.setItem(signoEditar, textoEditar);
-            alert(`Texto para ${signoEditar} guardado correctamente.`);
+            if (contienePalabrasProhibidas(textoEditar)) {
+                alert("El texto contiene palabras no permitidas.");
+            } else {
+                localStorage.setItem(signoEditar, textoEditar);
+                alert(`Texto para ${signoEditar} guardado correctamente.`);
+            }
         } else {
             alert("Por favor, selecciona un signo zodiacal.");
         }
@@ -63,6 +75,5 @@ function AdminHome({ user }) {
         </div>
     );
 }
-
 
 export default AdminHome;
