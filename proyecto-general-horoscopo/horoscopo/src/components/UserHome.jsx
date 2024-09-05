@@ -9,7 +9,6 @@ function UserHome({user}){
     }
     const home = useNavigate();
     const [textoSigno, setTextoSigno] = useState('');
-    const [perfil, setPerfil] = useState('');
 
     function goHome(){
         home("/");
