@@ -57,19 +57,26 @@ const setCredenciales = async (req, res) => {
         res.status(500).json({ message: "Error processing login" });
     }
 };
+
 const changePassword = async (req, res) => {
-    const { username, oldPassword, newPassword } = req.body;
-    const credenciales = await fs.readFile(path.join(__dirname, '../../db/credenciales.json'));
-    const users = JSON.parse(credenciales).users;
+    try {
+        const { username, oldPassword, newPassword } = req.body;
+        const credencialesPath = path.join(__dirname, '../../db/credenciales.json');
+        const credenciales = await fs.readFile(credencialesPath);
+        const data = JSON.parse(credenciales);
+        const users = data.users;
 
-    const userIndex = users.findIndex(user => user.username === username && user.password === oldPassword);
+        const userIndex = users.findIndex(user => user.username === username && user.password === oldPassword);
 
-    if (userIndex !== -1) {
-        users[userIndex].password = newPassword;
-        await fs.writeFile(path.join(__dirname, '../../db/credenciales.json'), JSON.stringify({ users }, null, 2), { encoding: 'utf-8' });
-        res.json({ message: 'Contraseña cambiada con éxito.' });
-    } else {
-        res.status(400).json({ message: 'Usuario o contraseña incorrectos.' });
+        if (userIndex !== -1) {
+            users[userIndex].password = newPassword;
+            await fs.writeFile(credencialesPath, JSON.stringify({ users }, null, 2), { encoding: 'utf-8' });
+            res.json({ message: "Contraseña cambiada con éxito" });
+        } else {
+            res.status(401).json({ message: "Credenciales incorrectas" });
+        }
+    } catch (error) {
+        res.status(500).json({ message: "Error cambiando la contraseña" });
     }
 };
 
