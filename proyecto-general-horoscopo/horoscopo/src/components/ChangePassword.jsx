@@ -1,4 +1,4 @@
-import './styles/ChangePassword.css'; // Asegúrate de que esta ruta sea correcta
+import './styles/ChangePassword.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -9,6 +9,11 @@ function ChangePassword({ user }) {
 
     const handleChangePassword = async (event) => {
         event.preventDefault();
+        if (!oldPassword || !newPassword) {
+            alert("Por favor completa todos los campos.");
+            return;
+        }
+
         try {
             const response = await fetch('http://localhost:4000/v1/signos/changePassword', {
                 method: 'POST',
@@ -30,6 +35,10 @@ function ChangePassword({ user }) {
             alert("No se pudo conectar al servidor. Intenta de nuevo más tarde.");
         }
     };
+
+    if (!user) {
+        return <p>No se ha identificado ningún usuario. Por favor, inicia sesión primero.</p>;
+    }
 
     return (
         <form onSubmit={handleChangePassword}>

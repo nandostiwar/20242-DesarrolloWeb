@@ -20,11 +20,10 @@ function Form({ callback }) {
 
             const data = await response.json();
             if (response.ok) {
+                callback(username);  // Guardamos el nombre de usuario
                 if (data.role === 'user') {
-                    callback("user");
                     goTo("/userHome");
                 } else if (data.role === 'admin') {
-                    callback("admin");
                     goTo("/adminHome");
                 }
             } else {
@@ -54,4 +53,3 @@ function Form({ callback }) {
 }
 
 export default Form;
-
