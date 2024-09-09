@@ -1,10 +1,10 @@
-.container{
+.container {
     height: 300px;
     display: grid;
     place-items: center;
 }
 
-#editSignos{
+#editSignos {
     margin-top: 0px;
     margin: 100px;
     width: 400px;
@@ -14,7 +14,7 @@
     color: white;
 }
 
-#btnEditar{
+#btnEditar {
     margin-top: 10%;
     padding: 10px;
     padding-left: 20px;
@@ -24,18 +24,18 @@
     color: white;
 }
 
-#textoAdmin{
+#textoAdmin {
     font-style: italic;
 }
 
-#textoEditar{
+#textoEditar {
     border-radius: 10px;
     display: flex;
     background-color: rgb(95, 82, 82);
     color: white;
 }
 
-#btnHomeAdmin{
+#btnHomeAdmin {
     margin-top: 15px;
     padding: 5px;
     padding-left: 15px;

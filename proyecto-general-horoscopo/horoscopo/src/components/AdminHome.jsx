@@ -1,56 +1,86 @@
 import { Navigate, useNavigate } from "react-router-dom";
-import './styles/AdminHome.css';
-import { useState, useEffect } from "react";
+import './styles/AdminHome.css'
+import { useState } from "react";
 
 function AdminHome({ user }) {
-    const navigate = useNavigate();
-    const [signos, setSignos] = useState(() => JSON.parse(localStorage.getItem('signos')) || {});
-    const [signoEditar, setSignoEditar] = useState("");
+    if (user !== 'admin' || !user) {
+        return <Navigate to="/" />
+    }
+    const home = useNavigate();
     const [textoEditar, setTextoEditar] = useState("");
+    const [signoEditar, setSignoEditar] = useState("");
+    const [generoEditar, setGeneroEditar] = useState(""); // Nuevo estado para el género seleccionado
 
-    if (user !== 'admin') return <Navigate to="/" />;
+    // Lista de palabras prohibidas
+    const palabrasProhibidas = ["hpta", "malparido", "perra"];
 
-    useEffect(() => {
-        localStorage.setItem('signos', JSON.stringify(signos));
-    }, [signos]);
-
-    const handleSelect = (event) => {
+    function handleSelectSigno(event) {
         const signo = event.target.value;
-        setSignoEditar(signo);
-        setTextoEditar(signos[signo] || "");
-    };
-
-    const handleClick = (e) => {
-        e.preventDefault();
-        if (!signoEditar || !textoEditar.trim()) {
-            alert("Por favor, completa los campos.");
-            return;
+        if (signo !== "0") {
+            setSignoEditar(signo);
         }
-        setSignos(prevSignos => ({ ...prevSignos, [signoEditar]: textoEditar }));
-        alert(`Texto para ${signoEditar} actualizado correctamente.`);
-        setTextoEditar("");
-    };
+    }
+
+    function handleSelectGenero(event) {
+        const genero = event.target.value;
+        if (genero !== "0") {
+            setGeneroEditar(genero);
+        }
+    }
+
+    function goHome() {
+        home("/");
+    }
+
+    function handleClick(e) {
+        e.preventDefault();
+
+        // Verificar si el texto contiene alguna palabra prohibida
+        const textoProhibido = palabrasProhibidas.some(palabra => textoEditar.toLowerCase().includes(palabra));
+        if (textoProhibido) {
+            alert("El texto contiene palabras no permitidas. Por favor, modifícalo.");
+            return; // Evitar que se envíe la solicitud si hay palabras prohibidas
+        }
+
+        if (signoEditar && generoEditar) {
+            fetch(`http://localhost:4000/v1/signos/${signoEditar}?genero=${generoEditar}`, {
+                method: 'PATCH',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ "textoEditar": textoEditar })
+            });
+        }
+    }
 
     return (
-        <div className="container">
+        <div class="container">
             <h2 id="textoAdmin">Edita un Signo Zodiacal</h2>
-            <select id="editSignos" onChange={handleSelect} defaultValue="0">
-                <option value="0" disabled>Selecciona un signo zodiacal</option>
-                {["Aries", "Geminis", "Cancer", "Leo", "Virgo", "Libra", "Escorpio", "Sagitario", "Capricornio", "Acuario", "Piscis"].map(signo => (
-                    <option key={signo} value={signo}>{signo}</option>
-                ))}
+            <select id="editSignos" onChange={handleSelectSigno}>
+                <option value="0">Seleciona un signo zodiacal</option>
+                <option value="Aries">Aries</option>
+                <option value="Geminis">Géminis</option>
+                <option value="Cancer">Cáncer</option>
+                <option value="Leo">Leo</option>
+                <option value="Virgo">Virgo</option>
+                <option value="Libra">Libra</option>
+                <option value="Escorpio">Escorpio</option>
+                <option value="Sagitario">Sagitario</option>
+                <option value="Capricornio">Capricornio</option>
+                <option value="Acuario">Acuario</option>
+                <option value="Piscis">Piscis</option>
             </select>
-            <textarea
-                id="textoEditar"
-                cols="50"
-                rows="10"
-                onChange={(e) => setTextoEditar(e.target.value)}
-                value={textoEditar}>
+            <select id="selectgenero" onChange={handleSelectGenero}>
+                <option value="0">Seleciona un genero</option>
+                <option value="hombre">hombre</option>
+                <option value="mujer">mujer</option>
+                <option value="niño">niño</option>
+            </select>
+
+            <textarea id="textoEditar" cols="50" rows="10" onChange={(e) => setTextoEditar(e.target.value)}>
             </textarea>
             <button id="btnEditar" onClick={handleClick}>Editar</button>
-            <button id="btnHomeAdmin" onClick={() => navigate("/")}>Home</button>
+            <button id="btnHomeAdmin" onClick={goHome}>Home</button>
         </div>
-    );
+    )
 }
 
 export default AdminHome;
