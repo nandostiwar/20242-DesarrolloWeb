@@ -1,61 +1,24 @@
-const {add, subtract, multiply,prom,maq,men} = require('../operaciones/operaciones.js');
+const { evaluarEcuacion } = require('../operaciones/operaciones');
 
-function sumar(req, res){
-    const {body} = req;
-    const {number1, number2} = body;
-    const result = add(number1, number2);
-    res.json({
-        resultado: result
-    });
-}
+// Controlador para ordenar los valores
+const ordenarValores = (req, res) => {
+  const { values, order } = req.body;
+  const sortedValues = values.sort((a, b) => (order === 'ascendente' ? a - b : b - a));
+  res.json({ sortedValues });
+}; 
 
-function restar(req, res){
-    const {body} = req;
-    const {number1, number2} = body;
-    const result = subtract(number1, number2);
-    res.json({
-        resultado: result
-    })
-}
-
-function multiplicar(req, res){
-    const {body} = req;
-    const {number1, number2} = body;
-    const result = multiply(number1, number2);
-    res.json({
-        resultado: result
-    })
-}
-function Promedio(req, res){
-    const {body} = req;
-    const {number1, number2} = body;
-    const result = prom(number1, number2);
-    res.json({
-        resultado: result
-    })
-}
-function mayor_que(req, res){
-    const {body} = req;
-    const {number1, number2} = body;
-    const result = maq(number1, number2);
-    res.json({
-        resultado: result
-    })
-}
-function Menor(req, res){
-    const {body} = req;
-    const {number1, number2} = body;
-    const result = men(number1, number2);
-    res.json({
-        resultado: result
-    })
-}
+// Controlador para calcular la ecuación
+const calcularEcuacion = (req, res) => {
+  const { values, ecuacion } = req.body;
+  try {
+    const result = evaluarEcuacion(values, ecuacion);
+    res.json({ result });
+  } catch (error) {
+    res.json({ result: 'Error en la ecuación' });
+  }
+};
 
 module.exports = {
-    sumar,
-    restar,
-    multiplicar,
-    mayor_que,
-    Menor,
-    Promedio
-}
+  ordenarValores,
+  calcularEcuacion,
+};

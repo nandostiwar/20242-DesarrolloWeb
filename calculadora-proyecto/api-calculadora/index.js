@@ -1,15 +1,17 @@
 const express = require('express');
-const {urlencoded, json} = require('express');
-const router = require('./routes/calculadora.routes.js');
 const cors = require('cors');
-
 const app = express();
+const PORT = 3500;
 
-app.use(urlencoded({extended: true}));
-app.use(json());
+// Importar rutas
+const calculadoraRoutes = require('./routes/calculadora.routes');
+
 app.use(cors());
+app.use(express.json());
 
-app.use('/v1/calculadora', router);
+// Usar las rutas
+app.use('/api/calculadora', calculadoraRoutes);
+
 
 app.listen(3500, ()=>{
     console.log("Listening at port 3500");

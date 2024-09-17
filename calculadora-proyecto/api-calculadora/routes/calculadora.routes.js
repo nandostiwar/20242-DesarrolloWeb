@@ -1,12 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const calculadoraControllers = require('../controllers/calculadoraControllers.js');
+const { ordenarValores, calcularEcuacion } = require('../controllers/calculadoraControllers');
 
-router
-    .post('/sumar', calculadoraControllers.sumar)
-    .post('/restar', calculadoraControllers.restar)
-    .post('/multiplicar', calculadoraControllers.multiplicar)
-    .post('/Promedio', calculadoraControllers.Promedio)
-    .post('/mayor_que', calculadoraControllers.mayor_que)
-    .post('/Menor', calculadoraControllers.Menor)
+// Ruta para ordenar valores
+router.post('/ordenar', ordenarValores);
+
+// Ruta para calcular la ecuación
+router.post('/calcular', calcularEcuacion);
+
 module.exports = router;
