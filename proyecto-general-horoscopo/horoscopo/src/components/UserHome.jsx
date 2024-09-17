@@ -22,6 +22,9 @@ function UserHome({user}){
                 .then(responseData => setTextoSigno(responseData))
         } 
     }
+    function handleSelectPerfil(event){
+        setPerfil(event.target.value);
+    }
 
     return (
         <div className="container">
@@ -39,6 +42,13 @@ function UserHome({user}){
                 <option value="Capricornio">Capricornio</option>
                 <option value="Acuario">Acuario</option>
                 <option value="Piscis">Piscis</option>
+            </select>
+            <div id="txtSeleccionPage"><h3>Selecciona tu perfil</h3></div>
+            <select id="selectSignos" onClick={handleSelectPerfil}>
+                <option value="0">Seleciona un perfil</option>
+                <option value="Aries">Hombre</option>
+                <option value="Geminis">Mujer</option>
+                <option value="Cancer">Niño</option>
             </select>
             <TextSigno texto={textoSigno}/>
             <button id="btnHome" onClick={goHome}>Home</button>

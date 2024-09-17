@@ -10,6 +10,7 @@ function AdminHome({ user }) {
     const [textoEditar, setTextoEditar] = useState("");
     const [signoEditar, setSignoEditar] = useState("");
 
+    const palabrasProhibidas = ["popo", "puta", "puto"];
 
     function handleSelect(event) {
         const signo = event.target.value;
@@ -22,23 +23,22 @@ function AdminHome({ user }) {
         home("/");
     }
 
-    const palabrasProhibidas = ["matar", "asesinar", "violar"];
-
     function handleClick(e) {
         e.preventDefault();
+        
+        // Verificar si el texto contiene alguna palabra prohibida
+        const contienePalabraProhibida = palabrasProhibidas.some(palabra => textoEditar.includes(palabra));
 
-        for (let palabra of palabrasProhibidas) {
-            if (textoEditar.includes(palabra)) {
-                alert("Paralabra prohibida encontrada: " + palabra);
-                return;
-            }
+        if (contienePalabraProhibida) {
+            alert("No se permite el uso de lenguaje inapropiado.");
+        } else {
+            // Si no contiene palabras prohibidas, proceder con la edición
+            fetch(`http://localhost:4000/v1/signos/${signoEditar}`, {
+                method: 'PATCH',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ "textoEditar": textoEditar })
+            });
         }
-
-        fetch(`http://localhost:4000/v1/signos/${signoEditar}`, {
-            method: 'PATCH',
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ "textoEditar": textoEditar })
-        });
     }
 
     return (
@@ -58,12 +58,19 @@ function AdminHome({ user }) {
                 <option value="Acuario">Acuario</option>
                 <option value="Piscis">Piscis</option>
             </select>
+            <div id="txtSeleccionPage"><h3>Selecciona tu perfil</h3></div>
+            <select id="selectSignos">
+                <option value="0">Selecciona un perfil</option>
+                <option value="Hombre">Hombre</option>
+                <option value="Mujer">Mujer</option>
+                <option value="Niño">Niño</option>
+            </select>
             <textarea id="textoEditar" cols="50" rows="10" onChange={(e) => setTextoEditar(e.target.value)}>
             </textarea>
             <button id="btnEditar" onClick={handleClick}>Editar</button>
             <button id="btnHomeAdmin" onClick={goHome}>Home</button>
         </div>
-    );
+    )
 }
 
 export default AdminHome;
