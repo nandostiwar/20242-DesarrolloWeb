@@ -1,10 +1,10 @@
-body{
+body {
     text-align: center;
     justify-content: center;
     display: flex;
 }
 
-.container{
+.container {
     text-align: center;
     justify-content: center;
     background-color: gray;
@@ -15,25 +15,72 @@ body{
     display: block;
 }
 
-.number{
-    margin: 20px;
-    height: 20px;
-    border-radius: 20px;
-    height: 35px;
-    text-align: center;
+.casillas div {
+    margin-bottom: 20px;
 }
 
-.btnEnviar{
+input[type="text"] {
+    margin: 10px;
+    height: 35px;
+    width: 80px;
+    border-radius: 20px;
+    text-align: center;
+    border: 2px solid #ccc;
+}
+
+input[type="checkbox"] {
+    margin-left: 10px;
+    transform: scale(1.5);
+    cursor: pointer;
+}
+
+.botones button {
     border-radius: 10px;
     width: 150px;
     height: 50px;
     background-color: rgb(121, 89, 89);
     color: white;
-    border-color: rgb(121, 89, 89);
-    margin-left: 10px;
+    border: none;
+    margin: 20px 10px;
+    cursor: pointer;
+    font-size: 16px;
 }
 
-#txtCalculadora{
+.botones button:hover {
+    background-color: rgb(100, 70, 70);
+}
+
+.operacion input {
+    height: 35px;
+    width: 200px;
+    border-radius: 20px;
+    text-align: center;
+    border: 2px solid #ccc;
+    margin: 20px 0;
+}
+
+#txtCalculadora {
     color: white;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.operacion button {
+    border-radius: 10px;
+    width: 150px;
+    height: 50px;
+    background-color: rgb(121, 89, 89);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.operacion button:hover {
+    background-color: rgb(100, 70, 70);
+}
+
+.resultado {
+    margin-top: 20px;
+    font-size: 18px;
+    color: white;
 }
