@@ -1,44 +1,109 @@
-import { useState } from "react";
-import '../styles/Calculadora.css'
+import React, { useState, useEffect } from 'react';
+import '../styles/Calculadora.css';
 import Resultado from "./Resultado";
 
-function Calculadora(){
-    const [number1, setNumber1] = useState('');
-    const [number2, setNumber2] = useState('');
-    const [resultado, setResultado] = useState('');
+function Calculadora() {
+    const [numbers, setNumbers] = useState([
+        { letter: 'a', value: 0 },
+        { letter: 'b', value: 0 },
+        { letter: 'c', value: 0 },
+        { letter: 'd', value: 0 },
+        { letter: 'e', value: 0 },
+        { letter: 'f', value: 0 }
+    ]);
+    const [selectedNumbers, setSelectedNumbers] = useState([]);
+    const [ascNumbers, setAscNumbers] = useState([]);
+    const [descNumbers, setDescNumbers] = useState([]);
+    const [equation, setEquation] = useState('');
+    const [equationResult, setEquationResult] = useState('');
 
-    function handleSubmit(e){
-        e.preventDefault();
-        const operacion = e.target.value;
-        fetch(`http://localhost:3500/v1/calculadora/${operacion}`, {
+    const handleNumberChange = (index, newValue) => {
+        const updatedNumbers = [...numbers];
+        updatedNumbers[index].value = parseInt(newValue) || 0;
+        setNumbers(updatedNumbers);
+    };
+
+    const handleNumberSelect = (number) => {
+        const alreadySelected = selectedNumbers.includes(number);
+        setSelectedNumbers(alreadySelected ? selectedNumbers.filter(n => n !== number) : [...selectedNumbers, number]);
+    };
+
+    const handleSortAsc = () => {
+        fetch('http://localhost:4000/v1/calculadora/sortAsc', {
             method: 'POST',
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({number1, number2})
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ numbers: selectedNumbers })
         })
-            .then(res =>res.json())
-            .then(responseData => {
-                setResultado(responseData.resultado)
-                // setResultado(responseData)
-                // console.log(resultado)
-            })
-    }
+        .then(res => res.json())
+        .then(data => setAscNumbers(data.sorted));
+    };
+
+    const handleSortDesc = () => {
+        fetch('http://localhost:3500/v1/calculadora/sortDesc', {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ numbers: selectedNumbers })
+        })
+        .then(res => res.json())
+        .then(data => setDescNumbers(data.sorted));
+    };
+
+    const handleEquation = () => {
+        const values = Object.fromEntries(numbers.map(item => [item.letter, Number(item.value)]));
+        fetch('http://localhost:3500/v1/calculadora/equation', {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ equation, values })
+        })
+        .then(res => res.json())
+        .then(data => setEquationResult(data.result));
+    };
 
     return (
         <div className="container">
-            <h1 id="txtCalculadora">CALCULADORA</h1>
-            <form>
-                <input type="text" className="number" onChange={(e)=>{setNumber1(e.target.value)}}/><br />
-                <input type="text" className="number" onChange={(e)=>{setNumber2(e.target.value)}}/><br />
-                <input type="submit" className="btnEnviar" value="sumar" onClick={handleSubmit}/>
-                <input type="submit" className="btnEnviar" value="restar" onClick={handleSubmit}/>
-                <input type="submit" className="btnEnviar" value="multiplicar" onClick={handleSubmit}/>
-                <input type="submit" className="btnEnviar" value="menor" onClick={handleSubmit}/>
-                <input type="submit" className="btnEnviar" value="mayor" onClick={handleSubmit}/>
-                <input type="submit" className="btnEnviar" value="promedio" onClick={handleSubmit}/>
-            </form>
-            <Resultado resultado={"El resultado es "+ resultado}/>
+            <h1 id="txtCalculadora">PARCIAL 1</h1>
+            <div className="number-selection">
+                {numbers.map((item, index) => (
+                    <div key={index}>
+                        <label>{item.letter})</label>
+                        <input
+                            type="number"
+                            value={item.value}
+                            onChange={(e) => handleNumberChange(index, e.target.value)}
+                        />
+                        <input
+                            type="checkbox"
+                            onChange={() => handleNumberSelect(item.value)}
+                            checked={selectedNumbers.includes(item.value)}
+                        />
+                    </div>
+                ))}
+            </div>
+            <div className="sorting">
+                <button onClick={handleSortAsc}>Ascendente</button>
+                <input type="text" value={ascNumbers.join(', ')} readOnly />
+                <button onClick={handleSortDesc}>Descendente</button>
+                <input type="text" value={descNumbers.join(', ')} readOnly />
+            </div>
+            <div className="equation">
+                <label>Ecuación:</label>
+                <input
+                    type="text"
+                    value={equation}
+                    onChange={(e) => setEquation(e.target.value)}
+                    placeholder="Ingresa una ecuación (ej. 2a + 3b)"
+                />
+                <button onClick={handleEquation}>Calcular</button>
+                <label>Resultado:</label>
+                <input type="text" value={equationResult} readOnly />
+            </div>
+            <Resultado
+                ascNumbers={ascNumbers}
+                descNumbers={descNumbers}
+                equationResult={equationResult}
+            />
         </div>
-    )
+    );
 }
 
-export default Calculadora
+export default Calculadora;

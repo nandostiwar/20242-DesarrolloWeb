@@ -3,11 +3,8 @@ const router = express.Router();
 const calculadoraControllers = require('../controllers/calculadoraControllers.js');
 
 router
-    .post('/sumar', calculadoraControllers.sumar)
-    .post('/restar', calculadoraControllers.restar)
-    .post('/multiplicar', calculadoraControllers.multiplicar)
-    .post('/mayor', calculadoraControllers.mayor)
-    .post('/menor', calculadoraControllers.menor)
-    .post('/promedio', calculadoraControllers.promedi)
+    .post('/sortAsc', calculadoraControllers.ordenarAscendente)    
+    .post('/sortDesc', calculadoraControllers.ordenarDescendente)  
+    .post('/equation', calculadoraControllers.resolverEcuacion)
 
 module.exports = router;
