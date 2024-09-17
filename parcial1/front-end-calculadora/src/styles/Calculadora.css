@@ -1,0 +1,89 @@
+/* Calculadora.css */
+
+/* Estilo general para el body */
+body {
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    background-color: #f7ad0cd3; /* Color de fondo suave para el body */
+    margin: 0;
+    height: 100vh; /* Ajustar la altura del body */
+}
+
+/* Contenedor principal */
+.container {
+    background-color: gray;
+    padding: 50px;
+    margin: 50px;
+    border-radius: 50px;
+    width: 500px;
+    display: block;
+    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+/* Diseño de los campos de entrada (números) */
+input[type="text"] {
+    width: 40px; /* Tamaño pequeño y cuadrado */
+    height: 40px; /* Tamaño pequeño y cuadrado */
+    text-align: center;
+    font-size: 16px; /* Tamaño del texto */
+    padding: 0;
+    margin: 0;
+    border: none;
+    border-radius: 5px; /* Esquinas redondeadas */
+    background-color: #fff; /* Fondo blanco para los campos de entrada */
+    color: #000; /* Texto en color negro para el contraste */
+}
+
+/* Diseño de los botones */
+button {
+    border-radius: 10px;
+    width: 150px;
+    height: 50px;
+    background-color: rgb(121, 89, 89);
+    color: white;
+    border: none;
+    margin: 10px;
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    font-size: 16px; /* Tamaño del texto en los botones */
+}
+
+/* Estilo para las etiquetas con los campos de entrada */
+label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 5px;
+}
+
+/* Espaciado entre las filas de botones */
+.button-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.button-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+/* Estilo del título */
+#txtCalculadora {
+    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-bottom: 20px;
+}
+
+/* Estilo para la lista de números ordenados */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    font-size: 18px;
+    margin: 5px 0;
+}
