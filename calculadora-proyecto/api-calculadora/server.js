@@ -13,7 +13,7 @@ app.use('/sort', calculadoraRoutes);
 app.use('/calculate', calculadoraRoutes);
 
 // Puerto
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3000; // 3000 es un valor por defecto si no se define PORT en el entorno
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

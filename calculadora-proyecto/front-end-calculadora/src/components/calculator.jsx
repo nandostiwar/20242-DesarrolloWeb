@@ -24,7 +24,7 @@ function Calculator() {
   // Llamada a la API para ordenar en orden ascendente
   const handleSortAsc = async () => {
     try {
-      const response = await axios.post('http://localhost:4000/sort/asc', {
+      const response = await axios.post('http://localhost:3001/sort/asc', {
         values: selectedValues
       });
       setSelectedValues(response.data.sortedValues);
@@ -36,7 +36,7 @@ function Calculator() {
   // Llamada a la API para ordenar en orden descendente
   const handleSortDesc = async () => {
     try {
-      const response = await axios.post('http://localhost:4000/sort/desc', {
+      const response = await axios.post('http://localhost:3001/sort/desc', {
         values: selectedValues
       });
       setSelectedValues(response.data.sortedValues);
@@ -52,7 +52,7 @@ function Calculator() {
       return;
     }
     try {
-      const response = await axios.post('http://localhost:4000/calculate', {
+      const response = await axios.post('http://localhost:3001/calculate', {
         values: selectedValues
       });
       setEquationResult(response.data.equationResult);
