@@ -1,0 +1,51 @@
+[
+  {
+    "operacion": "resolverEcuacion",
+    "data": {
+      "equation": "2A+3B",
+      "variables": {
+        "A": 12,
+        "B": 90,
+        "C": 7,
+        "D": 6,
+        "E": 9,
+        "F": 14
+      },
+      "ecuacionResuelta": "2 * 12+3 * 90",
+      "resultado": 294
+    },
+    "timestamp": "2024-09-17T22:16:10.077Z"
+  },
+  {
+    "operacion": "ordenarAscendente",
+    "data": {
+      "input": [
+        12,
+        14,
+        90
+      ],
+      "resultado": [
+        12,
+        14,
+        90
+      ]
+    },
+    "timestamp": "2024-09-17T22:16:48.431Z"
+  },
+  {
+    "operacion": "ordenarDescendente",
+    "data": {
+      "input": [
+        90,
+        14,
+        12
+      ],
+      "resultado": [
+        90,
+        14,
+        12
+      ]
+    },
+    "timestamp": "2024-09-17T22:16:49.656Z"
+  }
+]
