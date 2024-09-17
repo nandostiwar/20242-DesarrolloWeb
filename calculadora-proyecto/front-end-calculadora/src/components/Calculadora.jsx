@@ -1,51 +1,133 @@
 import { useState } from "react";
-import '../styles/Calculadora.css'
-import Resultado from "./Resultado";
+import '../styles/Calculadora.css';
 
 function Calculadora() {
-    const [number1, setNumber1] = useState('');
-    const [number2, setNumber2] = useState('');
-    const [resultado, setResultado] = useState('');
+    const [numbers, setNumbers] = useState([
+        { label: 'A', value: 12, checked: false },
+        { label: 'B', value: 90, checked: false },
+        { label: 'C', value: 7, checked: false },
+        { label: 'D', value: 6, checked: false },
+        { label: 'E', value: 9, checked: false },
+        { label: 'F', value: 14, checked: false }
+    ]);
 
-    function handleSubmit(e) {
-        e.preventDefault();
-        const operacion = e.target.value;
+    const [ascendenteResult, setAscendenteResult] = useState('');
+    const [descendenteResult, setDescendenteResult] = useState('');
+    const [equation, setEquation] = useState('');
+    const [equationResult, setEquationResult] = useState('');
 
-        if (operacion == "sumar"){setResultado(parseFloat(number1)+parseFloat(number2))}
-        if (operacion == "restar"){setResultado("restar")}
-        if (operacion == "multiplicar"){setResultado("multiplicar")}
+    const handleCheckboxChange = (index) => {
+        const updatedNumbers = [...numbers];
+        updatedNumbers[index].checked = !updatedNumbers[index].checked;
+        setNumbers(updatedNumbers);
+    };
 
-        fetch(`http://localhost:3500/v1/calculadora/${operacion}`, {
-            method: 'POST',
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ number1, number2 })
-        })
-            .then(res => res.json())
-            .then(responseData => {
-                setResultado(responseData.resultado)
-                // setResultado(responseData)
-                // console.log(resultado)
-            })
-    }
+    const handleValueChange = (index, newValue) => {
+        const updatedNumbers = [...numbers];
+        updatedNumbers[index].value = parseInt(newValue, 10) || 0;
+        setNumbers(updatedNumbers);
+    };
+
+    const handleOrder = async (orderType) => {
+        const selectedNumbers = numbers
+            .filter(number => number.checked)
+            .map(number => number.value);
+
+        if (selectedNumbers.length === 0) {
+            console.error("Debe seleccionar al menos un número.");
+            return;
+        }
+
+        const operationEndpoint = orderType === 'ascendente' ? 'ascendente' : 'descendente';
+
+        try {
+            const response = await fetch(`http://localhost:3500/v1/calculadora/${operationEndpoint}`, {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ numbers: selectedNumbers })
+            });
+
+            const data = await response.json();
+            if (orderType === 'ascendente') {
+                setAscendenteResult(data.resultado.join(' '));
+            } else {
+                setDescendenteResult(data.resultado.join(' '));
+            }
+        } catch (error) {
+            console.error("Error al hacer la petición:", error);
+        }
+    };
+
+    const handleEquationSubmit = async () => {
+        try {
+            const response = await fetch('http://localhost:3500/v1/calculadora/ecuacion', {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ 
+                    equation,
+                    numbers: numbers // Enviar todos los números con sus valores
+                })
+            });
+
+            const data = await response.json();
+            setEquationResult(data.resultado); // Muestra el resultado de la ecuación
+        } catch (error) {
+            console.error("Error al hacer la petición:", error);
+        }
+    };
 
     return (
         <div className="container">
-            <h1 id="txtCalculadora">CALCULADORA</h1>
-            <form>
-                <input type="text" className="number" onChange={(e) => { setNumber1(e.target.value) }} /><br />
-                <input type="text" className="number" onChange={(e) => { setNumber2(e.target.value) }} /><br />
-                <input type="submit" className="btnEnviar" value="sumar" onClick={handleSubmit} />
-                <input type="submit" className="btnEnviar" value="restar" onClick={handleSubmit} />
-                <input type="submit" className="btnEnviar" value="multiplicar" onClick={handleSubmit} />
-                <input type="submit" className="btnEnviat" value="dividir" onclick={handleSubmit} />
-            </form>
-<<<<<<< HEAD
-            <Resultado resultado={"El resultado es " + resultado}/>
-=======
-            <Resultado resultado={"El resultado es " + resultado} />
->>>>>>> 13efb85ca047811ca7b2e3fd036f0d80824f1cfe
+            <h1 id="txtCalculadora">CALCULADORA PERSONALIZADA</h1>
+
+            <div className="number-selection">
+                {numbers.map((number, index) => (
+                    <div key={index} className="number-item">
+                        <label>
+                            {number.label}
+                            <input 
+                                type="number" 
+                                className="number-value" 
+                                value={number.value} 
+                                onChange={(e) => handleValueChange(index, e.target.value)} 
+                            />
+                            <input 
+                                type="checkbox" 
+                                checked={number.checked} 
+                                onChange={() => handleCheckboxChange(index)} 
+                            />
+                        </label>
+                    </div>
+                ))}
+            </div>
+
+            <div className="ordering-buttons">
+                <button onClick={() => handleOrder('ascendente')}>Ascendente</button>
+                <input type="text" className="result-box" value={ascendenteResult} readOnly />
+
+                <button onClick={() => handleOrder('descendente')}>Descendente</button>
+                <input type="text" className="result-box" value={descendenteResult} readOnly />
+            </div>
+
+            <div className="equation-section">
+                <h2>Ecuación</h2>
+                <input 
+                    type="text" 
+                    className="equation-input" 
+                    value={equation} 
+                    onChange={(e) => setEquation(e.target.value)} 
+                    placeholder="Ingresa una ecuación" 
+                />
+                <button onClick={handleEquationSubmit}>Calcular Ecuación</button>
+                <input type="text" className="result-box" value={equationResult} readOnly />
+            </div>
         </div>
-    )
+    );
 }
 
-export default Calculadora
+export default Calculadora;
+
+
+
+
+
