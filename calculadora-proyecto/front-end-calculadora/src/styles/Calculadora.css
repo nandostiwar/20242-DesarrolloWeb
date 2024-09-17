@@ -1,39 +1,63 @@
-body{
-    text-align: center;
-    justify-content: center;
+.container {
+    width: 80%;
+    margin: auto;
+}
+
+.number-inputs {
     display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
-.container{
-    text-align: center;
-    justify-content: center;
-    background-color: rgb(214, 209, 209);
-    padding: 50px;
-    margin: 50px;
-    border-radius: 50px;
-    width: 500px;
-    display: block;
+.number-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.number{
-    margin: 20px;
-    height: 20px;
-    border-radius: 20px;
-    height: 35px;
-    text-align: center;
+.number-label {
+    font-weight: bold;
 }
 
-.btnEnviar{
-    border-radius: 10px;
+.number-input {
+    width: 60px;
+}
+
+.number-checkbox {
+    transform: scale(1.2);
+}
+
+.sort-buttons {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.sort-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sort-result {
+    margin-top: 10px;
     width: 150px;
-    height: 50px;
-    background-color: rgb(243, 243, 243);
-    color: rgb(24, 23, 23);
-    border-color: rgb(22, 21, 21);
-    margin-left: 10px;
 }
 
-#txtCalculadora{
-    color: rgb(14, 13, 13);
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+.expression-input {
+    margin-top: 20px;
+}
+
+.expression-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.expression-field {
+    width: 200px;
+}
+
+.result-group {
+    margin-top: 10px;
 }
