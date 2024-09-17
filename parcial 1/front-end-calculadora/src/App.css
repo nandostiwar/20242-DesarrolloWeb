@@ -1,0 +1,11 @@
+body {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    background-color: rgb(240, 176, 99);
+    height: 100vh; /* Asegura que el cuerpo ocupa toda la altura de la ventana */
+    margin: 0; /* Elimina el margen por defecto del cuerpo */
+}
+
+
