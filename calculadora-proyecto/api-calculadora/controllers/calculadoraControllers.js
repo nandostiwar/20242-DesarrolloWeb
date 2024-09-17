@@ -1,5 +1,24 @@
 const {add, subtract, multiply, greater_than, less_than, percent } = require('../operaciones/operaciones.js');
 
+function ordenarCheckboxes(req, res) {
+    const { number1, number2, checkboxes } = req.body;
+
+    // Verificar que el array de checkboxes esté presente y sea un array
+    if (!checkboxes || !Array.isArray(checkboxes)) {
+        return res.status(400).json({ error: 'Se requiere un array de checkboxes' });
+    }
+
+    // Ordenar los números de los checkboxes de forma ascendente
+    const sortedCheckboxes = checkboxes.sort(function(a, b) {
+        return a - b;
+    });
+
+    // Devolver los números ordenados
+    res.json({
+        resultado: sortedCheckboxes,
+    });
+}
+
 function sumar(req, res){
     const {body} = req;
     const {number1, number2} = body;
@@ -60,5 +79,6 @@ module.exports = {
     multiplicar,
     mayor_que,
     menor_que,
-    promedio
+    promedio,
+    ordenarCheckboxes
 }
