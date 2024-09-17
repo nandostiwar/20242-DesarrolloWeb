@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import '../styles/Calculadora.css';
 import Resultado from "./Resultado";
 
@@ -39,7 +39,7 @@ function Calculadora() {
     };
 
     const handleSortDesc = () => {
-        fetch('http://localhost:3500/v1/calculadora/sortDesc', {
+        fetch('http://localhost:4000/v1/calculadora/sortDesc', {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ numbers: selectedNumbers })
@@ -50,7 +50,7 @@ function Calculadora() {
 
     const handleEquation = () => {
         const values = Object.fromEntries(numbers.map(item => [item.letter, Number(item.value)]));
-        fetch('http://localhost:3500/v1/calculadora/equation', {
+        fetch('http://localhost:4000/v1/calculadora/equation', {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ equation, values })
@@ -61,15 +61,16 @@ function Calculadora() {
 
     return (
         <div className="container">
-            <h1 id="txtCalculadora">PARCIAL 1</h1>
+            <h1 className="title">Calculadora Matemática</h1>
             <div className="number-selection">
                 {numbers.map((item, index) => (
-                    <div key={index}>
+                    <div key={index} className="input-group">
                         <label>{item.letter})</label>
                         <input
                             type="number"
                             value={item.value}
                             onChange={(e) => handleNumberChange(index, e.target.value)}
+                            className="input-field"
                         />
                         <input
                             type="checkbox"
@@ -80,10 +81,10 @@ function Calculadora() {
                 ))}
             </div>
             <div className="sorting">
-                <button onClick={handleSortAsc}>Ascendente</button>
-                <input type="text" value={ascNumbers.join(', ')} readOnly />
-                <button onClick={handleSortDesc}>Descendente</button>
-                <input type="text" value={descNumbers.join(', ')} readOnly />
+                <button onClick={handleSortAsc} className="btn">Ordenar Ascendente</button>
+                <input type="text" value={ascNumbers.join(', ')} readOnly className="output-field" />
+                <button onClick={handleSortDesc} className="btn">Ordenar Descendente</button>
+                <input type="text" value={descNumbers.join(', ')} readOnly className="output-field" />
             </div>
             <div className="equation">
                 <label>Ecuación:</label>
@@ -92,10 +93,11 @@ function Calculadora() {
                     value={equation}
                     onChange={(e) => setEquation(e.target.value)}
                     placeholder="Ingresa una ecuación (ej. 2a + 3b)"
+                    className="input-field"
                 />
-                <button onClick={handleEquation}>Calcular</button>
+                <button onClick={handleEquation} className="btn">Calcular</button>
                 <label>Resultado:</label>
-                <input type="text" value={equationResult} readOnly />
+                <input type="text" value={equationResult} readOnly className="output-field" />
             </div>
             <Resultado
                 ascNumbers={ascNumbers}
@@ -107,3 +109,4 @@ function Calculadora() {
 }
 
 export default Calculadora;
+

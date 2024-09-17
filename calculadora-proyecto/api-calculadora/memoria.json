@@ -1,0 +1,36 @@
+[
+  {
+    "tipo": "descendente",
+    "resultado": [
+      5,
+      2
+    ],
+    "fecha": "2024-09-17T21:46:23.322Z"
+  },
+  {
+    "tipo": "ascendente",
+    "resultado": [
+      2,
+      5
+    ],
+    "fecha": "2024-09-17T21:46:24.816Z"
+  },
+  {
+    "tipo": "ascendente",
+    "resultado": [
+      -13,
+      2,
+      5
+    ],
+    "fecha": "2024-09-17T21:46:30.885Z"
+  },
+  {
+    "tipo": "descendente",
+    "resultado": [
+      5,
+      2,
+      -13
+    ],
+    "fecha": "2024-09-17T21:46:33.794Z"
+  }
+]

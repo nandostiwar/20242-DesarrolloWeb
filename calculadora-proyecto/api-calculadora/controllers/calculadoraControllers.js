@@ -3,7 +3,7 @@ const { sortAscending, sortDescending, solveEquation } = require('../operaciones
 
 // Función para guardar los resultados en un archivo JSON
 function guardarOperacion(tipo, resultado) {
-    const filePath = './operaciones.json';
+    const filePath = './memoria.json';
     // Leer el archivo JSON actual
     let data = [];
     if (fs.existsSync(filePath)) {
