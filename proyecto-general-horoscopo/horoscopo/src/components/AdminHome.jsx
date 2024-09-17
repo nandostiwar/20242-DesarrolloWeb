@@ -10,15 +10,25 @@ function AdminHome({ user }) {
     const home = useNavigate();
     const [textoEditar, setTextoEditar] = useState("");
     const [signoEditar, setSignoEditar] = useState("");
+    const [categoriaEditar, setCategoriaEditar] = useState("");
 
     // Lista de palabras no permitidas
     const palabrasProhibidas = ["Limon", "Manzana", "Pera"];
 
-    function handleSelect(event) {
+    function handleSelectSigno(event) {
         const signo = event.target.value;
         if (signo !== "0") {
             setSignoEditar(signo);
-            const textoGuardado = localStorage.getItem(signo);
+            const textoGuardado = localStorage.getItem(`${signo}-${categoriaEditar}`);
+            setTextoEditar(textoGuardado || ""); // Recupera el texto guardado si existe
+        }
+    }
+
+    function handleSelectCategoria(event) {
+        const categoria = event.target.value;
+        if (categoria !== "0") {
+            setCategoriaEditar(categoria);
+            const textoGuardado = localStorage.getItem(`${signoEditar}-${categoria}`);
             setTextoEditar(textoGuardado || ""); // Recupera el texto guardado si existe
         }
     }
@@ -28,28 +38,29 @@ function AdminHome({ user }) {
     }
 
     function contienePalabrasProhibidas(texto) {
-        // Verifica si el texto contiene alguna de las palabras prohibidas
         return palabrasProhibidas.some(palabra => texto.includes(palabra));
     }
 
     function handleClick(e) {
         e.preventDefault();
-        if (signoEditar) {
+        if (signoEditar && categoriaEditar) {
             if (contienePalabrasProhibidas(textoEditar)) {
                 alert("El texto contiene palabras no permitidas.");
             } else {
-                localStorage.setItem(signoEditar, textoEditar);
-                alert(`Texto para ${signoEditar} guardado correctamente.`);
+                localStorage.setItem(`${signoEditar}-${categoriaEditar}`, textoEditar);
+                alert(`Texto para ${signoEditar} (${categoriaEditar}) guardado correctamente.`);
             }
         } else {
-            alert("Por favor, selecciona un signo zodiacal.");
+            alert("Por favor, selecciona un signo zodiacal y una categoría.");
         }
     }
 
     return (
         <div className="container">
             <h2 id="textoAdmin">Edita un Signo Zodiacal</h2>
-            <select id="editSignos" onChange={handleSelect}>
+
+            {/* Selección de signo zodiacal */}
+            <select id="editSignos" onChange={handleSelectSigno}>
                 <option value="0">Selecciona un signo zodiacal</option>
                 <option value="Aries">Aries</option>
                 <option value="Geminis">Géminis</option>
@@ -63,6 +74,16 @@ function AdminHome({ user }) {
                 <option value="Acuario">Acuario</option>
                 <option value="Piscis">Piscis</option>
             </select>
+
+            {/* Selección de categoría */}
+            <select id="editCategoria" onChange={handleSelectCategoria}>
+                <option value="0">Selecciona una categoría</option>
+                <option value="niño">Niño</option>
+                <option value="mujer">Mujer</option>
+                <option value="hombre">Hombre</option>
+            </select>
+
+            {/* Área de texto */}
             <textarea
                 id="textoEditar"
                 cols="50"
@@ -70,6 +91,7 @@ function AdminHome({ user }) {
                 value={textoEditar}
                 onChange={(e) => setTextoEditar(e.target.value)}
             />
+
             <button id="btnEditar" onClick={handleClick}>Guardar</button>
             <button id="btnHomeAdmin" onClick={goHome}>Home</button>
         </div>
@@ -77,3 +99,4 @@ function AdminHome({ user }) {
 }
 
 export default AdminHome;
+
