@@ -1,64 +1,30 @@
-const {add, subtract, multiply, greatherthan, lessthan, average} = require('../operaciones/operaciones.js');
+// calculadoraControllers.js
 
-function sumar(req, res){
-    const {body} = req;
-    const {number1, number2} = body;
-    const result = add(number1, number2);
-    res.json({
-        resultado: result
-    });
-}
+const { realizarOperacion, ordenarValores } = require('./operaciones');
 
-function restar(req, res){
-    const {body} = req;
-    const {number1, number2} = body;
-    const result = subtract(number1, number2);
-    res.json({
-        resultado: result
-    })
-}
+// Controlador para la operación matemática
+const calcularOperacion = (req, res) => {
+    const { expresion, valores } = req.body;
+    try {
+        const resultado = realizarOperacion(expresion, valores);
+        res.status(200).json({ resultado });
+    } catch (error) {
+        res.status(400).json({ error: 'Error al calcular la operación' });
+    }
+};
 
-function multiplicar(req, res){
-    const {body} = req;
-    const {number1, number2} = body;
-    const result = multiply(number1, number2);
-    res.json({
-        resultado: result
-    })
-}
-
-function mayor(req, res){
-    const {body} = req;
-    const {number1, number2} = body;
-    const result = greatherthan(number1, number2);
-    res.json({
-        resultado: result
-    })
-}
-function menor(req, res){
-    const {body} = req;
-    const {number1, number2} = body;
-    const result = lessthan(number1, number2);
-    res.json({
-        resultado: result
-    })
-}
-function promedio(req, res){
-    const {body} = req;
-    const {number1, number2} = body;
-    const result = average(number1, number2);
-    res.json({
-        resultado: result
-    })
-}
+// Controlador para ordenar los valores
+const ordenar = (req, res) => {
+    const { valores, tipo } = req.body;
+    try {
+        const resultado = ordenarValores(valores, tipo);
+        res.status(200).json({ resultado });
+    } catch (error) {
+        res.status(400).json({ error: 'Error al ordenar los valores' });
+    }
+};
 
 module.exports = {
-    sumar,
-    restar,
-    multiplicar,
-    mayor,
-    menor,
-    promedio
-
-
-}
+    calcularOperacion,
+    ordenar
+};

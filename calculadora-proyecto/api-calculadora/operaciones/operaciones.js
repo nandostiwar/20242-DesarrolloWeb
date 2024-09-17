@@ -1,55 +1,31 @@
-const { sumar, restar, multiplicar, mayor, menor, promedio } = require("../controllers/calculadoraControllers");
+// operaciones.js
 
-/**
- * Sumar dos cantidades numéricas
- * @param {Number} a 
- * @param {Number} b 
- * @returns Number
- */
-function add(a, b){
-    let number1 = parseInt(a);
-    let number2 = parseInt(b);
-    return number1 + number2;
-}
+// Función para realizar la operación matemática
+const realizarOperacion = (expresion, valores) => {
+    let expresionEvaluada = expresion;
+    
+    // Reemplazar las letras por los valores correspondientes
+    for (const letra in valores) {
+        const regex = new RegExp(`\\b${letra}\\b`, 'g');
+        expresionEvaluada = expresionEvaluada.replace(regex, valores[letra]);
+    }
 
-function subtract(a, b){
-    let number1 = parseInt(a);
-    let number2 = parseInt(b);
-    return number1 - number2;
-}
+    // Evaluar la expresión con los valores
+    return eval(expresionEvaluada);
+};
 
-function multiply(a, b){
-    let number1 = parseInt(a);
-    let number2 = parseInt(b);
-    return number1 * number2;
-}
-function greatherthan(a, b){
-    let number1 = parseInt(a);
-    let number2 = parseInt(b);
-    if (number1 > number2) {return number1 }
-    else {return number2}
-}
-function lessthan(a, b){
-    let number1 = parseInt(a);
-    let number2 = parseInt(b);
-    if (number1 < number2) {return number1}
-    else {return number2}
-}
+// Función para ordenar los valores seleccionados
+const ordenarValores = (valores, tipo) => {
+    const valoresNumericos = valores.map(v => parseFloat(v)).filter(v => !isNaN(v));
 
-function average(a, b){
-    let number1 = parseInt(a);
-    let number2 = parseInt(b);
-    return (number1 + number2)/2;
-}
-
+    if (tipo === 'ascendente') {
+        return valoresNumericos.sort((a, b) => a - b);
+    } else {
+        return valoresNumericos.sort((a, b) => b - a);
+    }
+};
 
 module.exports = {
-    add,
-    subtract,
-    multiply,
-    greatherthan,
-    lessthan,
-    average
-   
-
-}
+    realizarOperacion,
+    ordenarValores
+};

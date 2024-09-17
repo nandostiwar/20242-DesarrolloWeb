@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from "react"; 
 import '../styles/Calculadora.css';
 import Resultado from "./Resultado";
 
@@ -36,9 +36,19 @@ function Calculadora() {
 
     // Manejar operaciones
     const handleOperacion = () => {
-        // Usamos eval solo como ejemplo, en producción evitarlo por razones de seguridad
         try {
-            const res = eval(operacion);
+            // Reemplazar letras con sus valores en la operación
+            let operacionEvaluada = operacion;
+            for (const letra in casillas) {
+                const valor = casillas[letra];
+                if (valor) {
+                    const regex = new RegExp(`\\b${letra}\\b`, 'g');
+                    operacionEvaluada = operacionEvaluada.replace(regex, valor);
+                }
+            }
+
+            // Evaluar la operación
+            const res = eval(operacionEvaluada);
             setResultado(res);
         } catch {
             setResultado('Error en la operación');
@@ -88,3 +98,4 @@ function Calculadora() {
 }
 
 export default Calculadora;
+

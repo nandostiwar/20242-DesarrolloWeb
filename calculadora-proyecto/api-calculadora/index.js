@@ -1,16 +1,19 @@
+// index.js
+
 const express = require('express');
-const {urlencoded, json} = require('express');
-const router = require('./routes/calculadora.routes.js');
-const cors = require('cors');
+const bodyParser = require('body-parser');
+const calculadoraRoutes = require('./calculadora.routes');
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-app.use(urlencoded({extended: true}));
-app.use(json());
-app.use(cors());
+// Middleware
+app.use(bodyParser.json());
 
-app.use('/v1/calculadora', router);
+// Rutas
+app.use('/calculadora', calculadoraRoutes);
 
-app.listen(3500, ()=>{
-    console.log("Listening at port 3500");
-})
+// Servidor
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en el puerto ${PORT}`);
+});
