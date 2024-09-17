@@ -1,6 +1,6 @@
 import '../styles/Resultado.css';
 
-function Resultado({resultado}){
+function Resultado({ resultado }) {
     return (
         <p>{resultado}</p>
     )
