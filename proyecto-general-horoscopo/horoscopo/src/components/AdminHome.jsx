@@ -2,6 +2,9 @@ import { Navigate, useNavigate } from "react-router-dom";
 import './styles/AdminHome.css';
 import { useState, useEffect } from "react";
 
+// Declarar la palabra prohibida
+const PALABRA_PROHIBIDA = "prohibido";
+
 function AdminHome({ user }) {
     const navigate = useNavigate();
     const [signos, setSignos] = useState(() => JSON.parse(localStorage.getItem('signos')) || {});
@@ -26,6 +29,14 @@ function AdminHome({ user }) {
             alert("Por favor, completa los campos.");
             return;
         }
+
+           // Verificar si el texto contiene la palabra prohibida
+        if (textoEditar.includes(PALABRA_PROHIBIDA)) {
+            alert(`La palabra "${PALABRA_PROHIBIDA}" no está permitida.`);
+            return;
+        }
+
+
         setSignos(prevSignos => ({ ...prevSignos, [signoEditar]: textoEditar }));
         alert(`Texto para ${signoEditar} actualizado correctamente.`);
         setTextoEditar("");
