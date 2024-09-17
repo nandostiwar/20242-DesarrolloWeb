@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const calculadoraControllers = require('../controllers/calculadoraControllers.js');
+const calculadoraController = require('../controllers/calculadoraControllers');
 
-router
-    .post('/sumar', calculadoraControllers.sumar)
-    .post('/restar', calculadoraControllers.restar)
-    .post('/multiplicar', calculadoraControllers.multiplicar)
-    .post('/Mayor', calculadoraControllers.may)
-    .post('/Menor', calculadoraControllers.men)
-    .post('/Promedio', calculadoraControllers.prome)
+// Ruta para ordenar en orden ascendente
+router.post('/sort/asc', calculadoraController.sortAsc);
+
+// Ruta para ordenar en orden descendente
+router.post('/sort/desc', calculadoraController.sortDesc);
+
+// Ruta para calcular la ecuación 2(valor1) + 3(valor2)
+router.post('/calculate', calculadoraController.calculateEquation);
 
 module.exports = router;

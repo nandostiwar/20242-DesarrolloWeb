@@ -1,28 +1,19 @@
 const express = require('express');
 const cors = require('cors');
+const calculadoraRoutes = require('./routes/calculadora.routes');
 
 const app = express();
-app.use(cors());
-app.use(express.json());
 
-app.post('/calculate', (req, res) => {
-  const { values, type, equationResult } = req.body;
-  let result;
+// Middleware
+app.use(cors()); // Habilita CORS para que el front-end pueda comunicarse con el back-end
+app.use(express.json()); // Para procesar solicitudes JSON
 
-  if (type === 'asc') {
-    result = values.sort((a, b) => a - b);
-  } else if (type === 'desc') {
-    result = values.sort((a, b) => b - a);
-  } else if (type === 'equation') {
-    result = equationResult;
-  }
+// Rutas
+app.use('/sort', calculadoraRoutes);
+app.use('/calculate', calculadoraRoutes);
 
-  res.json({
-    type: type,
-    result: result,
-  });
-});
-
-app.listen(4000, () => {
-  console.log('Server is running on port 4000');
+// Puerto
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });

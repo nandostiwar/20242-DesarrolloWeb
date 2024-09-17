@@ -1,62 +1,89 @@
-// Elimina la importación innecesaria de React si usas React 17+
-import { useState } from 'react'; // Solo mantén el hook que usas
+import { useState } from 'react';
 import axios from 'axios';
-import '../styles/calculator.css';  // Asegúrate de que el archivo CSS esté en la ruta correcta
+import '../styles/calculator.css';
 
 function Calculator() {
+  const [userValues, setUserValues] = useState({ A: '', B: '', C: '', D: '', E: '', F: '' });
   const [selectedValues, setSelectedValues] = useState([]);
-  const [result, setResult] = useState(null);
   const [equationResult, setEquationResult] = useState(null);
 
-  const values = { A: 12, B: 90, C: 8, D: 6, E: 9, F: 14 };
+  // Maneja el cambio en los campos del formulario
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUserValues((prevValues) => ({
+      ...prevValues,
+      [name]: value
+    }));
+  };
 
+  // Maneja la selección de valores por parte del usuario
   const handleSelect = (value) => {
     setSelectedValues((prevValues) => [...prevValues, value]);
   };
 
-  const handleSortAsc = () => {
-    const sortedValues = [...selectedValues].sort((a, b) => a - b);
-    setSelectedValues(sortedValues);
-    sendRequest(sortedValues, 'asc');
+  // Llamada a la API para ordenar en orden ascendente
+  const handleSortAsc = async () => {
+    try {
+      const response = await axios.post('http://localhost:4000/sort/asc', {
+        values: selectedValues
+      });
+      setSelectedValues(response.data.sortedValues);
+    } catch (error) {
+      console.error("Error sorting asc:", error);
+    }
   };
 
-  const handleSortDesc = () => {
-    const sortedValues = [...selectedValues].sort((a, b) => b - a);
-    setSelectedValues(sortedValues);
-    sendRequest(sortedValues, 'desc');
+  // Llamada a la API para ordenar en orden descendente
+  const handleSortDesc = async () => {
+    try {
+      const response = await axios.post('http://localhost:4000/sort/desc', {
+        values: selectedValues
+      });
+      setSelectedValues(response.data.sortedValues);
+    } catch (error) {
+      console.error("Error sorting desc:", error);
+    }
   };
 
-  const handleEquation = () => {
+  // Llamada a la API para calcular la ecuación 2(valor1) + 3(valor2)
+  const handleEquation = async () => {
     if (selectedValues.length < 2) {
       alert("Select at least two values for the equation.");
       return;
     }
-    const [A, B] = selectedValues;
-    const equationResult = A + B;
-    setEquationResult(equationResult);
-    sendRequest([A, B], 'equation', equationResult);
-  };
-
-  const sendRequest = async (data, type, equationResult = null) => {
     try {
       const response = await axios.post('http://localhost:4000/calculate', {
-        values: data,
-        type: type,
-        equationResult: equationResult
+        values: selectedValues
       });
-      setResult(response.data);
+      setEquationResult(response.data.equationResult);
     } catch (error) {
-      console.error("Error sending request:", error);
+      console.error("Error calculating equation:", error);
     }
   };
 
   return (
     <div>
       <h1>Calculator</h1>
+      <form>
+        {Object.keys(userValues).map((key) => (
+          <div key={key}>
+            <label>
+              {key}:
+              <input
+                type="number"
+                name={key}
+                value={userValues[key]}
+                onChange={handleChange}
+              />
+            </label>
+          </div>
+        ))}
+      </form>
+      
       <div>
-        {Object.keys(values).map((key) => (
-          <button key={key} onClick={() => handleSelect(values[key])}>
-            {key} = {values[key]}
+        {Object.keys(userValues).map((key) => (
+          <button key={key} onClick={() => handleSelect(Number(userValues[key]))}>
+            {key} = {userValues[key]}
           </button>
         ))}
       </div>
@@ -67,16 +94,9 @@ function Calculator() {
 
       <button onClick={handleSortAsc}>Sort Ascending</button>
       <button onClick={handleSortDesc}>Sort Descending</button>
-      <button onClick={handleEquation}>Calculate Equation (A + B)</button>
+      <button onClick={handleEquation}>Calculate Equation (2A + 3B)</button>
 
       {equationResult && <h3>Equation Result: {equationResult}</h3>}
-      
-      {result && (
-        <div>
-          <h3>Response from Server</h3>
-          <pre>{JSON.stringify(result, null, 2)}</pre>
-        </div>
-      )}
     </div>
   );
 }
