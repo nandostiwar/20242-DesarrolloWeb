@@ -5,6 +5,10 @@ function ascendenteHandler(req, res) {
     const { number1, number2, number3, number4 } = req.body;
     const numeros = [parseInt(number1), parseInt(number2), parseInt(number3), parseInt(number4)];
     const resultado = ascendente(numeros);
+
+    // Guardar operación en JSON
+    guardarOperacion('ascendente', resultado);
+
     res.json({ resultado });
 }
 
@@ -12,6 +16,10 @@ function descendenteHandler(req, res) {
     const { number1, number2, number3, number4 } = req.body;
     const numeros = [parseInt(number1), parseInt(number2), parseInt(number3), parseInt(number4)];
     const resultado = descendente(numeros);
+
+    // Guardar operación en JSON
+    guardarOperacion('descendente', resultado);
+
     res.json({ resultado });
 }
 
@@ -33,10 +41,11 @@ function ecuacionHandler(req, res) {
         res.status(400).json({ error: resultado });
     }
 
-    // Guardar la operación en el JSON
+    // Guardar operación en el JSON
     guardarOperacion('ecuacion', resultado);
 }
 
+// Función para guardar las operaciones en un archivo JSON
 function guardarOperacion(tipo, resultado) {
     const filePath = './operaciones.json';
 

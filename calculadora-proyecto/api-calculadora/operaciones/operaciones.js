@@ -23,7 +23,6 @@ function descendente(numeros) {
  * @returns Number | String - El resultado de la ecuación o un error si es inválido
  */
 function evaluarEcuacion(ecuacion, valores) {
-    // Convertir los valores a números, manejando posibles entradas vacías
     const { a, b, c, d } = {
         a: parseFloat(valores.a) || 0,
         b: parseFloat(valores.b) || 0,
@@ -32,20 +31,16 @@ function evaluarEcuacion(ecuacion, valores) {
     };
 
     try {
-        // Reemplazamos las letras por sus valores numéricos
+        // Reemplazar las letras por sus valores numéricos (con multiplicación si es necesario)
         let ecuacionEvaluada = ecuacion
-            .replace(/a/g, a)
-            .replace(/b/g, b)
-            .replace(/c/g, c)
-            .replace(/d/g, d);
-
-        // Reemplazamos los coeficientes y letras por la forma correcta de multiplicar
-        ecuacionEvaluada = ecuacionEvaluada.replace(/(\d+)\*([a-d])/g, (_, coef, variable) => {
-            return `${coef} * ${valores[variable]}`;
-        });
-
-        // Reemplazamos todos los caracteres que no sean números, operadores o paréntesis
-        ecuacionEvaluada = ecuacionEvaluada.replace(/[^\d+\-*/(). ]/g, '');
+            .replace(/(\d+)\*?a/g, (_, coef) => `${coef} * ${a}`)
+            .replace(/(\d+)\*?b/g, (_, coef) => `${coef} * ${b}`)
+            .replace(/(\d+)\*?c/g, (_, coef) => `${coef} * ${c}`)
+            .replace(/(\d+)\*?d/g, (_, coef) => `${coef} * ${d}`)
+            .replace(/\ba\b/g, a)
+            .replace(/\bb\b/g, b)
+            .replace(/\bc\b/g, c)
+            .replace(/\bd\b/g, d);
 
         // Evaluamos la ecuación de manera segura
         const resultado = Function('"use strict";return (' + ecuacionEvaluada + ')')();
