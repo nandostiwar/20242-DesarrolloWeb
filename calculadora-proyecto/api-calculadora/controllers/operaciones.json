@@ -1,0 +1,82 @@
+[
+  {
+    "tipo": "descendente",
+    "resultado": [
+      90,
+      12,
+      null,
+      null
+    ],
+    "fecha": "2024-09-19T20:49:42.537Z"
+  },
+  {
+    "tipo": "ascendente",
+    "resultado": [
+      12,
+      90,
+      null,
+      null
+    ],
+    "fecha": "2024-09-19T20:49:44.501Z"
+  },
+  {
+    "tipo": "ecuacion",
+    "resultado": 294,
+    "fecha": "2024-09-19T20:49:45.902Z"
+  },
+  {
+    "tipo": "descendente",
+    "resultado": [
+      90,
+      12,
+      null,
+      null
+    ],
+    "fecha": "2024-09-19T20:50:28.818Z"
+  },
+  {
+    "tipo": "ascendente",
+    "resultado": [
+      12,
+      90,
+      null,
+      null
+    ],
+    "fecha": "2024-09-19T20:50:30.799Z"
+  },
+  {
+    "tipo": "ecuacion",
+    "resultado": 294,
+    "fecha": "2024-09-19T20:50:32.366Z"
+  },
+  {
+    "tipo": "descendente",
+    "resultado": [
+      4,
+      3,
+      2,
+      1
+    ],
+    "fecha": "2024-09-19T20:53:28.736Z"
+  },
+  {
+    "tipo": "ascendente",
+    "resultado": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "fecha": "2024-09-19T20:53:31.735Z"
+  },
+  {
+    "tipo": "ecuacion",
+    "resultado": "Error en la ecuación",
+    "fecha": "2024-09-19T20:54:03.333Z"
+  },
+  {
+    "tipo": "ecuacion",
+    "resultado": 20,
+    "fecha": "2024-09-19T20:54:15.839Z"
+  }
+]

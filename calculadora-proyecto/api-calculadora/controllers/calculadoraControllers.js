@@ -1,5 +1,6 @@
 const { ascendente, descendente, evaluarEcuacion } = require('../operaciones/operaciones.js');
 const fs = require('fs');
+const path = require('path');
 
 function ascendenteHandler(req, res) {
     const { number1, number2, number3, number4 } = req.body;
