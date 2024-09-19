@@ -47,16 +47,14 @@ function ecuacionHandler(req, res) {
 
 // Función para guardar las operaciones en un archivo JSON
 function guardarOperacion(tipo, resultado) {
-    const filePath = './operaciones.json';
+    const filePath = path.join(__dirname, 'operaciones.json'); // Usa una ruta absoluta
 
-    // Leer el archivo JSON actual
     let data = [];
     if (fs.existsSync(filePath)) {
         const fileData = fs.readFileSync(filePath, 'utf-8');
         data = JSON.parse(fileData);
     }
 
-    // Agregar nueva operación
     const nuevaOperacion = {
         tipo,
         resultado,
@@ -64,8 +62,8 @@ function guardarOperacion(tipo, resultado) {
     };
     data.push(nuevaOperacion);
 
-    // Escribir el nuevo contenido en el archivo
     fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+    console.log(`Guardando operación: ${tipo} con resultado: ${resultado}`);
 }
 
 module.exports = {
