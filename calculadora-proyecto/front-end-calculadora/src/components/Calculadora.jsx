@@ -4,12 +4,12 @@ import Resultado from "./Resultado";
 
 function Calculadora() {
     const [numbers, setNumbers] = useState([
-        { letter: 'a', value: 0 },
-        { letter: 'b', value: 0 },
-        { letter: 'c', value: 0 },
-        { letter: 'd', value: 0 },
-        { letter: 'e', value: 0 },
-        { letter: 'f', value: 0 }
+        { letter: 'a', value: '' },
+        { letter: 'b', value: '' },
+        { letter: 'c', value: '' },
+        { letter: 'd', value: '' },
+        { letter: 'e', value: '' },
+        { letter: 'f', value: '' }
     ]);
     const [selectedNumbers, setSelectedNumbers] = useState([]);
     const [ascNumbers, setAscNumbers] = useState([]);
@@ -19,13 +19,15 @@ function Calculadora() {
 
     const handleNumberChange = (index, newValue) => {
         const updatedNumbers = [...numbers];
-        updatedNumbers[index].value = parseInt(newValue) || 0;
+        updatedNumbers[index].value = newValue === '' ? '' : parseInt(newValue, 10);
         setNumbers(updatedNumbers);
     };
+
     const handleNumberSelect = (number) => {
         const alreadySelected = selectedNumbers.includes(number);
         setSelectedNumbers(alreadySelected ? selectedNumbers.filter(n => n !== number) : [...selectedNumbers, number]);
     };
+
     const handleSortAsc = () => {
         fetch('http://localhost:3500/v1/calculadora/sortAsc', {
             method: 'POST',
@@ -35,6 +37,7 @@ function Calculadora() {
         .then(res => res.json())
         .then(data => setAscNumbers(data.sorted));
     };
+
     const handleSortDesc = () => {
         fetch('http://localhost:3500/v1/calculadora/sortDesc', {
             method: 'POST',
@@ -44,6 +47,7 @@ function Calculadora() {
         .then(res => res.json())
         .then(data => setDescNumbers(data.sorted));
     };
+
     const handleEquation = () => {
         const values = Object.fromEntries(numbers.map(item => [item.letter, Number(item.value)]));
         fetch('http://localhost:3500/v1/calculadora/equation', {
@@ -57,15 +61,16 @@ function Calculadora() {
 
     return (
         <div className="container">
-             <h1 id="txtCalculadora">PARCIAL 1</h1>
+            <h1 id="txtCalculadora">Calculadora de Ordenamiento y Ecuaciones</h1>
             <div className="number-selection">
                 {numbers.map((item, index) => (
                     <div key={index}>
-                        <label>{item.letter})</label>
+                        <label>{item.letter}.</label>
                         <input
-                            type="number"
+                            type="text"
                             value={item.value}
                             onChange={(e) => handleNumberChange(index, e.target.value)}
+                            pattern="[0-9]*"
                         />
                         <input
                             type="checkbox"
@@ -75,14 +80,16 @@ function Calculadora() {
                     </div>
                 ))}
             </div>
+
             <div className="sorting">
                 <button onClick={handleSortAsc}>Ascendente</button>
                 <input type="text" value={ascNumbers.join(', ')} readOnly />
                 <button onClick={handleSortDesc}>Descendente</button>
                 <input type="text" value={descNumbers.join(', ')} readOnly />
             </div>
+
             <div className="equation">
-                <label>Ecuación:</label>
+                <label className="equation-label">Ecuación:</label>
                 <input
                     type="text"
                     value={equation}
@@ -90,8 +97,12 @@ function Calculadora() {
                     placeholder="Ingresa una ecuación (ej. 2a + 3b)"
                 />
                 <button onClick={handleEquation}>Calcular</button>
-                <label>Resultado:</label>
+                <label className="equation-label">Resultado:</label>
                 <input type="text" value={equationResult} readOnly />
+            </div>
+            
+            <div className="credit">
+                <small>by Valentina Tabares - Programación web</small>
             </div>
             <Resultado
                 ascNumbers={ascNumbers}
@@ -99,6 +110,8 @@ function Calculadora() {
                 equationResult={equationResult}
             />
         </div>
-          );
-        }
- export default Calculadora;        
+    );
+}
+
+export default Calculadora;
+
