@@ -1,101 +1,104 @@
-import { useState } from "react"; 
+import React, { useState, useEffect } from 'react';
 import '../styles/Calculadora.css';
 import Resultado from "./Resultado";
 
 function Calculadora() {
-    // Estado para las casillas de números A-F
-    const [casillas, setCasillas] = useState({ A: '', B: '', C: '', D: '', E: '', F: '' });
-    // Estado para las casillas seleccionadas
-    const [seleccionadas, setSeleccionadas] = useState({ A: false, B: false, C: false, D: false, E: false, F: false });
-    const [operacion, setOperacion] = useState('');
-    const [resultado, setResultado] = useState('');
+    const [numbers, setNumbers] = useState([
+        { letter: 'a', value: 0 },
+        { letter: 'b', value: 0 },
+        { letter: 'c', value: 0 },
+        { letter: 'd', value: 0 },
+        { letter: 'e', value: 0 },
+        { letter: 'f', value: 0 }
+    ]);
+    const [selectedNumbers, setSelectedNumbers] = useState([]);
+    const [ascNumbers, setAscNumbers] = useState([]);
+    const [descNumbers, setDescNumbers] = useState([]);
+    const [equation, setEquation] = useState('');
+    const [equationResult, setEquationResult] = useState('');
 
-    // Manejar cambios en las casillas
-    const handleChange = (e, letra) => {
-        setCasillas({ ...casillas, [letra]: e.target.value });
+    const handleNumberChange = (index, newValue) => {
+        const updatedNumbers = [...numbers];
+        updatedNumbers[index].value = parseInt(newValue) || 0;
+        setNumbers(updatedNumbers);
     };
-
-    // Manejar selección de casillas
-    const handleSelect = (e, letra) => {
-        setSeleccionadas({ ...seleccionadas, [letra]: e.target.checked });
+    const handleNumberSelect = (number) => {
+        const alreadySelected = selectedNumbers.includes(number);
+        setSelectedNumbers(alreadySelected ? selectedNumbers.filter(n => n !== number) : [...selectedNumbers, number]);
     };
-
-    // Ordenar valores
-    const handleOrdenar = (tipo) => {
-        const valoresSeleccionados = Object.keys(casillas)
-            .filter(letra => seleccionadas[letra])
-            .map(letra => parseFloat(casillas[letra]))
-            .filter(val => !isNaN(val));
-
-        const valoresOrdenados = tipo === 'ascendente'
-            ? valoresSeleccionados.sort((a, b) => a - b)
-            : valoresSeleccionados.sort((a, b) => b - a);
-
-        setResultado(valoresOrdenados.join(', '));
+    const handleSortAsc = () => {
+        fetch('http://localhost:3500/v1/calculadora/sortAsc', {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ numbers: selectedNumbers })
+        })
+        .then(res => res.json())
+        .then(data => setAscNumbers(data.sorted));
     };
-
-    // Manejar operaciones
-    const handleOperacion = () => {
-        try {
-            // Reemplazar letras con sus valores en la operación
-            let operacionEvaluada = operacion;
-            for (const letra in casillas) {
-                const valor = casillas[letra];
-                if (valor) {
-                    const regex = new RegExp(`\\b${letra}\\b`, 'g');
-                    operacionEvaluada = operacionEvaluada.replace(regex, valor);
-                }
-            }
-
-            // Evaluar la operación
-            const res = eval(operacionEvaluada);
-            setResultado(res);
-        } catch {
-            setResultado('Error en la operación');
-        }
+    const handleSortDesc = () => {
+        fetch('http://localhost:3500/v1/calculadora/sortDesc', {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ numbers: selectedNumbers })
+        })
+        .then(res => res.json())
+        .then(data => setDescNumbers(data.sorted));
+    };
+    const handleEquation = () => {
+        const values = Object.fromEntries(numbers.map(item => [item.letter, Number(item.value)]));
+        fetch('http://localhost:3500/v1/calculadora/equation', {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ equation, values })
+        })
+        .then(res => res.json())
+        .then(data => setEquationResult(data.result));
     };
 
     return (
         <div className="container">
-            <h1>Calculadora con Ordenación y Operaciones</h1>
-            <div className="casillas">
-                {['A', 'B', 'C', 'D', 'E', 'F'].map(letra => (
-                    <div key={letra}>
-                        <label>{letra}: </label>
+             <h1 id="txtCalculadora">PARCIAL 1</h1>
+            <div className="number-selection">
+                {numbers.map((item, index) => (
+                    <div key={index}>
+                        <label>{item.letter})</label>
                         <input
-                            type="text"
-                            value={casillas[letra]}
-                            onChange={(e) => handleChange(e, letra)}
+                            type="number"
+                            value={item.value}
+                            onChange={(e) => handleNumberChange(index, e.target.value)}
                         />
                         <input
                             type="checkbox"
-                            checked={seleccionadas[letra]}
-                            onChange={(e) => handleSelect(e, letra)}
+                            onChange={() => handleNumberSelect(item.value)}
+                            checked={selectedNumbers.includes(item.value)}
                         />
                     </div>
                 ))}
             </div>
-
-            <div className="botones">
-                <button onClick={() => handleOrdenar('ascendente')}>Ascendente</button>
-                <button onClick={() => handleOrdenar('descendente')}>Descendente</button>
+            <div className="sorting">
+                <button onClick={handleSortAsc}>Ascendente</button>
+                <input type="text" value={ascNumbers.join(', ')} readOnly />
+                <button onClick={handleSortDesc}>Descendente</button>
+                <input type="text" value={descNumbers.join(', ')} readOnly />
             </div>
-
-            <div className="operacion">
-                <h3>Realizar Operación</h3>
+            <div className="equation">
+                <label>Ecuación:</label>
                 <input
                     type="text"
-                    placeholder="Escribe la operación (ej: 2*A + 3*B)"
-                    value={operacion}
-                    onChange={(e) => setOperacion(e.target.value)}
+                    value={equation}
+                    onChange={(e) => setEquation(e.target.value)}
+                    placeholder="Ingresa una ecuación (ej. 2a + 3b)"
                 />
-                <button onClick={handleOperacion}>Calcular</button>
+                <button onClick={handleEquation}>Calcular</button>
+                <label>Resultado:</label>
+                <input type="text" value={equationResult} readOnly />
             </div>
-
-            <Resultado resultado={"El resultado es " + resultado} />
+            <Resultado
+                ascNumbers={ascNumbers}
+                descNumbers={descNumbers}
+                equationResult={equationResult}
+            />
         </div>
-    );
-}
-
-export default Calculadora;
-
+          );
+        }
+ export default Calculadora;        

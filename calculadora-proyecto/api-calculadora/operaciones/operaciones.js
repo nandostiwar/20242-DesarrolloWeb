@@ -1,31 +1,45 @@
-// operaciones.js
+/**
+ * Ordenar números de menor a mayor
+ * @param {Array} numbers
+ * @returns Array
+ */
+function sortAscending(numbers) {
+    return numbers.sort((a, b) => a - b);
+}
 
-// Función para realizar la operación matemática
-const realizarOperacion = (expresion, valores) => {
-    let expresionEvaluada = expresion;
-    
-    // Reemplazar las letras por los valores correspondientes
-    for (const letra in valores) {
-        const regex = new RegExp(`\\b${letra}\\b`, 'g');
-        expresionEvaluada = expresionEvaluada.replace(regex, valores[letra]);
+/**
+ * Ordenar números de mayor a menor
+ * @param {Array} numbers
+ * @returns Array
+ */
+function sortDescending(numbers) {
+    return numbers.sort((a, b) => b - a);
+}
+
+/**
+ * Resolver ecuaciones aritméticas
+ * @param {String} equation
+ * @param {Object} values
+ * @returns Number | String
+ */
+function solveEquation(equation, values) {
+    try {
+        const parsedEquation = equation.replace(/([1-9]?)([a-f])/g, (match, coef, letter) => {
+            if (values[letter] === undefined) {
+                throw new Error(`Valor no definido para la variable ${letter}`);
+            }
+            const numero = Number(values[letter]);
+            return coef ? `${coef}*${numero}` : numero;
+        });
+        const result = eval(parsedEquation);
+        return Math.round(result * 100) / 100; // Redondear a 2 decimales
+    } catch (error) {
+        return 'Error en la ecuación: ' + error.message;
     }
-
-    // Evaluar la expresión con los valores
-    return eval(expresionEvaluada);
-};
-
-// Función para ordenar los valores seleccionados
-const ordenarValores = (valores, tipo) => {
-    const valoresNumericos = valores.map(v => parseFloat(v)).filter(v => !isNaN(v));
-
-    if (tipo === 'ascendente') {
-        return valoresNumericos.sort((a, b) => a - b);
-    } else {
-        return valoresNumericos.sort((a, b) => b - a);
-    }
-};
+}
 
 module.exports = {
-    realizarOperacion,
-    ordenarValores
+    sortAscending,
+    sortDescending,
+    solveEquation
 };

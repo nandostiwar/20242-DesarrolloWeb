@@ -1,30 +1,67 @@
-// calculadoraControllers.js
+const fs = require('fs');
+const { sortAscending, sortDescending, solveEquation } = require('../operaciones/operaciones.js');
 
-const { realizarOperacion, ordenarValores } = require('./operaciones');
-
-// Controlador para la operación matemática
-const calcularOperacion = (req, res) => {
-    const { expresion, valores } = req.body;
-    try {
-        const resultado = realizarOperacion(expresion, valores);
-        res.status(200).json({ resultado });
-    } catch (error) {
-        res.status(400).json({ error: 'Error al calcular la operación' });
+// Función para guardar los resultados en un archivo JSON
+function guardarOperacion(tipo, resultado) {
+    const filePath = './operaciones.json';
+    // Leer el archivo JSON actual
+    let data = [];
+    if (fs.existsSync(filePath)) {
+        const fileData = fs.readFileSync(filePath, 'utf-8');
+        data = JSON.parse(fileData);
     }
-};
 
-// Controlador para ordenar los valores
-const ordenar = (req, res) => {
-    const { valores, tipo } = req.body;
-    try {
-        const resultado = ordenarValores(valores, tipo);
-        res.status(200).json({ resultado });
-    } catch (error) {
-        res.status(400).json({ error: 'Error al ordenar los valores' });
-    }
-};
+    // Agregar nueva operación
+    const nuevaOperacion = {
+        tipo,
+        resultado,
+        fecha: new Date().toISOString()
+    };
+    data.push(nuevaOperacion);
+
+    // Escribir el nuevo contenido en el archivo
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+}
+// Controlador para ordenar de forma ascendente
+function ordenarAscendente(req, res) {
+    const { numbers } = req.body;
+    const sortedNumbers = sortAscending(numbers);
+   
+    // Guardar la operación en el JSON
+    guardarOperacion('ascendente', sortedNumbers);
+   
+    res.json({
+        sorted: sortedNumbers
+    });
+}
+
+// Controlador para ordenar de forma descendente
+function ordenarDescendente(req, res) {
+    const { numbers } = req.body;
+    const sortedNumbers = sortDescending(numbers);
+   
+    // Guardar la operación en el JSON
+    guardarOperacion('descendente', sortedNumbers);
+   
+    res.json({
+        sorted: sortedNumbers
+    });
+}
+// Controlador para resolver ecuaciones
+function resolverEcuacion(req, res) {
+    const { equation, values } = req.body;
+    const result = solveEquation(equation, values);
+   
+    // Guardar la operación en el JSON
+    guardarOperacion('ecuacion', result);
+   
+    res.json({
+        result: result
+    });
+}
 
 module.exports = {
-    calcularOperacion,
-    ordenar
+ordenarAscendente,
+ordenarDescendente,
+resolverEcuacion
 };

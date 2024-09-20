@@ -1,14 +1,15 @@
-// calculadora.routes.js
-
 const express = require('express');
-const { calcularOperacion, ordenar } = require('./calculadoraControllers');
 const router = express.Router();
+const calculadoraControllers = require('../controllers/calculadoraControllers');
 
-// Ruta para calcular la operación matemática
-router.post('/calcular', calcularOperacion);
 
-// Ruta para ordenar los valores
-router.post('/ordenar', ordenar);
+
+// Definición de rutas usando los controladores
+router
+    .post('/sortAsc', calculadoraControllers.ordenarAscendente)    // Ordenar de forma ascendente
+    .post('/sortDesc', calculadoraControllers.ordenarDescendente)  // Ordenar de forma descendente
+    .post('/equation', calculadoraControllers.resolverEcuacion);    // Resolver ecuaciones
 
 module.exports = router;
+
 
