@@ -1,39 +1,64 @@
-body{
-    text-align: center;
-    justify-content: center;
+.container {
     display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.container{
-    text-align: center;
-    justify-content: center;
-    background-color: rgb(116, 252, 211);
-    padding: 50px;
-    margin: 50px;
-    border-radius: 50px;
-    width: 500px;
-    display: block;
+h1#txtCalculadora {
+    color: #f8c8dc; /* Cambiar el título a rosa pastel */
 }
 
-.number{
-    margin: 20px;
-    height: 20px;
-    border-radius: 20px;
-    height: 35px;
-    text-align: center;
+.number-selection {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Distribuye las cajas en tres columnas */
+    gap: 20px; /* Aumenta el espacio entre los cuadros */
+    margin-bottom: 20px; /* Espacio debajo de la sección */
 }
 
-.btnEnviar{
-    border-radius: 10px;
-    width: 150px;
-    height: 50px;
-    background-color: rgb(121, 89, 89);
-    color: white;
-    border-color: rgb(121, 89, 89);
+.number-selection div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+input[type="number"] {
+    width: 80px;
+    padding: 5px;
+    margin-right: 10px;
+    border: 1px solid #f8c8dc; /* Borde rosa pastel */
+    background-color: #ffeef5; /* Fondo rosa pastel suave */
+    color: #333; /* Color de texto */
+}
+
+input[type="checkbox"] {
     margin-left: 10px;
 }
 
-#txtCalculadora{
-    color: rgb(0, 0, 0);
-    font-family: Trebuchet, Geneva, Tahoma, Verdana;
+button {
+    margin-right: 10px;
+    background-color: #f8c8dc; /* Fondo de botón rosa pastel */
+    color: #333; /* Color de texto */
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #f4b0c7; /* Color rosa pastel más oscuro al hacer hover */
+}
+
+input[type="text"] {
+    width: 200px;
+    padding: 5px;
+    border: 1px solid #f8c8dc; /* Borde rosa pastel */
+    background-color: #ffeef5; /* Fondo rosa pastel suave */
+    color: #333;
+}
+
+.sorting, .sorting-desc, .equation {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
 }
