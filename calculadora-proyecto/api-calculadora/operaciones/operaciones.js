@@ -1,55 +1,45 @@
+/**
+ *  * @param {Array} numbers
+ * @returns Array
+ */
+function sortAscending(numbers) {
+    return numbers.sort((a, b) => a - b);
+}
 
 /**
- * Sumar dos cantidades numéricas
- * @param {Number} a 
- * @param {Number} b 
- * @returns Number
+ * Ordenar números de mayor a menor
+ * @param {Array} numbers
+ * @returns Array
  */
-function add(a, b){
-    let number1 = parseInt(a);
-    let number2 = parseInt(b);
-    return number1 + number2;
+function sortDescending(numbers) {
+    return numbers.sort((a, b) => b - a);
 }
 
-function subtract(a, b){
-    let number1 = parseInt(a);
-    let number2 = parseInt(b);
-    return number1 - number2;
-}
+/**
+ * Resolver ecuaciones aritméticas
+ * @param {String} equation
+ * @param {Object} values
+ * @returns Number | String
+ */
+function solveEquation(equation, values) {
+    try {
+        const parsedEquation = equation.replace(/([1-9]?)([a-f])/g, (match, coef, letter) => {
+            if (values[letter] === undefined) {
+                throw new Error(`Valor no definido para la variable ${letter}`);
+            }
+            const numero = Number(values[letter]);
+            return coef ? `${coef}*${numero}` : numero;
+        });
 
-function multiply(a, b){
-    let number1 = parseInt(a);
-    let number2 = parseInt(b);
-    return number1 * number2;
-}
-
-function greaterthan(a, b){
-    let number1 = parseInt(a);
-    let number2 = parseInt(b);
-    if (number1 > number2) {
-    } else {
-        return number2;
+        const result = eval(parsedEquation);
+        return Math.round(result * 100) / 100; 
+    } catch (error) {
+        return 'Error en la ecuación: ' + error.message;
     }
 }
 
-function lessthan(a, b){
-    let number1 = parseInt(a);
-    let number2 = parseInt(b);
-    if (number1 < number2) {return number1;} 
-    else { return number2;}
-}
-
-function average(a, b){
-    let number1 = parseInt(a);
-    let number2 = parseInt(b);
-    return (number1 + number2) / 2; 
-}
-
 module.exports = {
-    add,
-    subtract,
-    multiply,
-    greaterthan,
-    lessthan,
-    average
-}
+    sortAscending,
+    sortDescending,
+    solveEquation
+};
