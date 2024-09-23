@@ -1,63 +1,67 @@
-const {add, subtract, multiply, greaterthan, lessthan, average} = require('../operaciones/operaciones.js');
+const fs = require('fs');
+const { sortAscending, sortDescending, solveEquation } = require('../operaciones/operaciones.js');
 
-function sumar(req, res){
-    const {body} = req;
-    const {number1, number2} = body;
-    const result = add(number1, number2);
+
+function guardarOperacion(tipo, resultado) {
+    const filePath = './operaciones.json';
+
+    let data = [];
+    if (fs.existsSync(filePath)) {
+        const fileData = fs.readFileSync(filePath, 'utf-8');
+        data = JSON.parse(fileData);
+    }
+
+    const nuevaOperacion = {
+        tipo,
+        resultado,
+        fecha: new Date().toISOString()
+    };
+    data.push(nuevaOperacion);
+
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+}
+
+
+function ordenarAscendente(req, res) {
+    const { numbers } = req.body;
+    const sortedNumbers = sortAscending(numbers);
+   
+
+    guardarOperacion('ascendente', sortedNumbers);
+   
     res.json({
-        resultado: result
+        sorted: sortedNumbers
     });
 }
 
-function restar(req, res){
-    const {body} = req;
-    const {number1, number2} = body;
-    const result = subtract(number1, number2);
-    res.json({
-        resultado: result
-    })
-}
 
-function multiplicar(req, res){
-    const {body} = req;
-    const {number1, number2} = body;
-    const result = multiply(number1, number2);
-    res.json({
-        resultado: result
-    })
-}
+function ordenarDescendente(req, res) {
+    const { numbers } = req.body;
+    const sortedNumbers = sortDescending(numbers);
+   
 
-function mayorque(req, res){
-    const {body} = req;
-    const {number1, number2} = body;
-    const result = greaterthan(number1, number2);
+    guardarOperacion('descendente', sortedNumbers);
+   
     res.json({
-        resultado: result
+        sorted: sortedNumbers
     });
 }
 
-function menorque(req, res){
-    const {body} = req;
-    const {number1, number2} = body;
-    const result = lessthan(number1, number2);
+
+function resolverEcuacion(req, res) {
+    const { equation, values } = req.body;
+    const result = solveEquation(equation, values);
+   
+
+    guardarOperacion('ecuacion', result);
+   
     res.json({
-        resultado: result
+        result: result
     });
 }
 
-function promedio(req, res){
-    const {body} = req;
-    const {number1, number2} = body;
-    const result = average(number1, number2);
-    res.json({
-        resultado: result
-    });
-}
 module.exports = {
-    sumar,
-    restar,
-    multiplicar,
-    mayorque,
-    menorque,
-    promedio
-}
+    ordenarAscendente,
+    ordenarDescendente,
+    resolverEcuacion
+};
