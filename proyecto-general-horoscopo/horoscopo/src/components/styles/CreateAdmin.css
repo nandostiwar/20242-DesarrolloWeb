@@ -1,60 +1,93 @@
-/* CreateAdmin.css */
-
-body {
+/* Estilos generales del contenedor del formulario */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    text-align: center;
+    min-height: 100vh;
+    background-color: #d5a6e8;
+    /* Color de fondo morado */
 }
 
-.container {
-    height: 300px;
-    display: grid;
-    place-items: center;
-}
-
-#tituloCrearUsuario {
+/* Estilos del título */
+h1 {
+    font-family: Arial, sans-serif;
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    /* Color blanco para el título */
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    /* Texto en mayúsculas */
     font-style: italic;
+    /* Estilo cursiva */
+}
+
+/* Etiquetas */
+label {
+    font-size: 1.2rem;
+    color: white;
+    /* Etiquetas en blanco */
+    margin-bottom: 10px;
+    display: block;
+}
+
+/* Inputs de usuario y contraseña */
+input[type="text"],
+input[type="password"] {
+    width: 300px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    /* Bordes redondeados */
+    font-size: 1rem;
+    background-color: #3d3b3b;
+    /* Fondo gris oscuro para los inputs */
+    color: white;
+    /* Texto blanco */
+}
+
+/* Checkbox para mostrar la contraseña */
+.show-password {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.show-password input {
+    margin-right: 10px;
+}
+
+.show-password label {
+    font-size: 1rem;
     color: white;
 }
 
-#inputUsername,
-#inputPassword {
-    margin-top: 10px;
-    width: 400px;
-    padding: 10px;
-    border-radius: 10px;
-    background-color: rgb(71, 63, 63);
+/* Estilo para los botones */
+button {
+    padding: 10px 30px;
+    margin: 10px;
+    font-size: 1rem;
     color: white;
     border: none;
-}
-
-.password-container {
-    position: relative;
-    margin-top: 10px;
-}
-
-.password-container input {
-    width: 100%;
+    border-radius: 10px;
+    cursor: pointer;
 }
 
 #btnCrear {
-    margin-top: 10%;
-    padding: 10px 20px;
-    border-radius: 10px;
-    background-color: rgb(226, 241, 16);
-    color: white;
-    cursor: pointer;
+    background-color: #e2f110;
+    /* Color amarillo del botón Crear Usuario */
+    color: black;
+    /* Texto negro */
 }
 
 #btnHome {
-    margin-top: 15px;
-    padding: 5px 15px;
-    border-radius: 10px;
     background-color: blue;
-    color: white;
-    cursor: pointer;
+    /* Color azul del botón Volver a Inicio */
 }
 
-label {
-    color: white;
-    /* Asegura que el texto de la etiqueta sea visible */
+/* Cambiar color al pasar sobre los botones */
+button:hover {
+    opacity: 0.8;
 }

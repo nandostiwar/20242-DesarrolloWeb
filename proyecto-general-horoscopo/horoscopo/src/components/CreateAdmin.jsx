@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './styles/CreateAdmin.css'; // Asegúrate de que este sea el nombre correcto
+import './styles/CreateAdmin.css';
 
 function CreateAdmin() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
     const handleCreateAdmin = async (event) => {
@@ -34,18 +35,46 @@ function CreateAdmin() {
     };
 
     return (
-        <form onSubmit={handleCreateAdmin}>
-            <h1>Crear Administrador</h1>
-            <label>Nombre de Usuario</label>
-            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required />
-            <br />
-            <label>Contraseña</label>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-            <br />
-            <button type="submit">Crear Administrador</button>
-            <button type="button" onClick={() => navigate('/')}>Volver a Inicio</button>
-        </form>
+        <div className="form-container">
+            <form onSubmit={handleCreateAdmin}>
+                <h1>Crear Administrador</h1>
+
+                <label htmlFor="username">Nombre de Administrador</label>
+                <input
+                    type="text"
+                    id="username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    required
+                />
+
+                <label htmlFor="password">Contraseña</label>
+                <input
+                    type={showPassword ? 'text' : 'password'}
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                />
+
+                <div className="show-password">
+                    <input
+                        type="checkbox"
+                        id="showPassword"
+                        checked={showPassword}
+                        onChange={() => setShowPassword(!showPassword)}
+                    />
+                    <label htmlFor="showPassword">Mostrar contraseña</label>
+                </div>
+
+                <button id="btnCrear" type="submit">Crear Usuario</button>
+                <button id="btnHome" type="button" onClick={() => navigate('/')}>
+                    Volver a Inicio
+                </button>
+            </form>
+        </div>
     );
 }
 
 export default CreateAdmin;
+
