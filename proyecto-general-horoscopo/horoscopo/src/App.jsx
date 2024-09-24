@@ -3,11 +3,13 @@ import Form from './components/Form';
 import UserHome from './components/UserHome';
 import AdminHome from './components/AdminHome';
 import ChangePassword from './components/ChangePassword';
-import {BrowserRouter, Routes, Route} from 'react-router-dom'; 
+import NewUser from './components/NewUser'; // Asegúrate de importar el componente NewUser
+import { BrowserRouter, Routes, Route } from 'react-router-dom'; 
 import { useState } from 'react';
 
 function App() {
   const [user, setUser] = useState(null);
+  
   return (  
     <BrowserRouter>
       {/* <Navigation/> */}
@@ -16,22 +18,10 @@ function App() {
         <Route path='/userHome' element={<UserHome user={user}/>}></Route>
         <Route path='/adminHome' element={<AdminHome user={user}/>}></Route>
         <Route path="/changePassword" element={<ChangePassword />} />
+        <Route path="/newUser" element={<NewUser />} /> {/* Agregada la ruta para NewUser */}
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
-// function Navigation(){
-//   return <nav>
-//     <ul>
-//       <li>
-//         <Link to="/userHome">userHome</Link>
-//       </li>
-//       <li>
-//         <Link to="/adminHome">adminHome</Link>
-//       </li>
-//     </ul>
-//   </nav>
-// }
-
-export default App
+export default App;
