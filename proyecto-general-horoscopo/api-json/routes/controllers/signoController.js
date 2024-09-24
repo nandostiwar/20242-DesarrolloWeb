@@ -38,55 +38,146 @@ const updateSigno = async (req, res) => {
 
 // Controlador para manejar la autenticación
 const login = async (req, res) => {
-    const credencialesFilePath = path.join(__dirname, '../../db/credenciales.json');
+    const userFilePath = path.join(__dirname, '../../db/user.json');
+    const adminFilePath = path.join(__dirname, '../../db/admin.json');
     const { username, password } = req.body;
 
-    const data = await fs.readFile(credencialesFilePath, 'utf-8');
-    const users = JSON.parse(data).users;
+    try {
+        // Leer y parsear los archivos JSON
+        const userData = await fs.readFile(userFilePath, 'utf-8');
+        const adminData = await fs.readFile(adminFilePath, 'utf-8');
 
-    const user = users.find(u => u.username === username && u.password === password);
+        const users = JSON.parse(userData).users;
+        const admins = JSON.parse(adminData).admins;
 
-    if (user) {
-        return res.json({ role: username });
-    } else {
+        // Buscar en la lista de usuarios
+        const user = users.find(u => u.username === username && u.password === password);
+        if (user) {
+            return res.json({ role: 'user' });
+        }
+
+        // Buscar en la lista de administradores
+        const admin = admins.find(a => a.username === username && a.password === password);
+        if (admin) {
+            return res.json({ role: 'admin' });
+        }
+
+        // Si no se encuentra, retornar error de credenciales
         return res.status(401).json({ error: 'Credenciales inválidas' });
+    } catch (error) {
+        // Manejo de errores de lectura de archivo o de otro tipo
+        return res.status(500).json({ error: 'Error en el servidor' });
     }
 };
+
 
 // Cambiar contraseña de usuario
 const changePassword = async (req, res) => {
     const { username, oldPassword, newPassword } = req.body;
-    const credencialesFilePath = path.join(__dirname, '../../db/credenciales.json');
+    const userFilePath = path.join(__dirname, '../../db/user.json');
+    const adminFilePath = path.join(__dirname, '../../db/admin.json');
 
     try {
-        // Leer el archivo de credenciales
-        const data = await fs.readFile(credencialesFilePath, 'utf-8');
-        const credenciales = JSON.parse(data);
+        // Leer los archivos de usuarios y administradores
+        const userData = await fs.readFile(userFilePath, 'utf-8');
+        const adminData = await fs.readFile(adminFilePath, 'utf-8');
 
-        // Buscar el usuario
-        const userIndex = credenciales.users.findIndex(user => user.username === username && user.password === oldPassword);
+        const users = JSON.parse(userData).users;
+        const admins = JSON.parse(adminData).admins;
 
-        if (userIndex === -1) {
+        let userIndex = users.findIndex(user => user.username === username && user.password === oldPassword);
+        let adminIndex = admins.findIndex(admin => admin.username === username && admin.password === oldPassword);
+
+        // Si el usuario no se encuentra en usuarios ni en administradores
+        if (userIndex === -1 && adminIndex === -1) {
             return res.status(401).json({ error: 'Credenciales incorrectas' });
         }
 
-        // Actualizar la contraseña
-        credenciales.users[userIndex].password = newPassword;
+        // Actualizar la contraseña si es un usuario
+        if (userIndex !== -1) {
+            users[userIndex].password = newPassword;
 
-        // Guardar el archivo actualizado
-        await fs.writeFile(credencialesFilePath, JSON.stringify(credenciales, null, 2), { encoding: 'utf-8' });
+            // Guardar el archivo de usuarios actualizado
+            await fs.writeFile(userFilePath, JSON.stringify({ users }, null, 2), { encoding: 'utf-8' });
 
-        res.json({ message: 'Contraseña cambiada con éxito.' });
+            return res.json({ message: 'Contraseña de usuario cambiada con éxito.' });
+        }
+
+        // Actualizar la contraseña si es un administrador
+        if (adminIndex !== -1) {
+            admins[adminIndex].password = newPassword;
+
+            // Guardar el archivo de administradores actualizado
+            await fs.writeFile(adminFilePath, JSON.stringify({ admins }, null, 2), { encoding: 'utf-8' });
+
+            return res.json({ message: 'Contraseña de administrador cambiada con éxito.' });
+        }
+
     } catch (error) {
         console.error('Error al cambiar la contraseña:', error);
         res.status(500).json({ error: 'Error al cambiar la contraseña.' });
     }
-}
+};
+
+
+// Crear nuevo usuario
+const createUser = async (req, res) => {
+    const { username, password, role } = req.body; // Desestructuramos el cuerpo de la solicitud
+
+    // Determinamos el archivo donde se guardará el nuevo usuario
+    const userFilePath = path.join(__dirname, '../../db/user.json');
+    const adminFilePath = path.join(__dirname, '../../db/admin.json');
+
+    try {
+        // Leemos el archivo correspondiente según el rol
+        let users, admins;
+        if (role === 'user') {
+            const userData = await fs.readFile(userFilePath, 'utf-8');
+            users = JSON.parse(userData).users;
+            
+            // Verificamos si el usuario ya existe
+            const existingUser = users.find(u => u.username === username);
+            if (existingUser) {
+                return res.status(400).json({ error: 'El nombre de usuario ya existe.' });
+            }
+
+            // Agregamos el nuevo usuario
+            users.push({ username, password });
+            await fs.writeFile(userFilePath, JSON.stringify({ users }, null, 2), { encoding: 'utf-8' });
+            return res.json({ message: 'Usuario creado con éxito.' });
+
+        } else if (role === 'admin') {
+            const adminData = await fs.readFile(adminFilePath, 'utf-8');
+            admins = JSON.parse(adminData).admins;
+
+            // Verificamos si el administrador ya existe
+            const existingAdmin = admins.find(a => a.username === username);
+            if (existingAdmin) {
+                return res.status(400).json({ error: 'El nombre de usuario ya existe.' });
+            }
+
+            // Agregamos el nuevo administrador
+            admins.push({ username, password });
+            await fs.writeFile(adminFilePath, JSON.stringify({ admins }, null, 2), { encoding: 'utf-8' });
+            return res.json({ message: 'Administrador creado con éxito.' });
+        } else {
+            return res.status(400).json({ error: 'Rol inválido. Debe ser "user" o "admin".' });
+        }
+
+    } catch (error) {
+        console.error('Error al crear el usuario:', error);
+        return res.status(500).json({ error: 'Error en el servidor.' });
+    }
+};
+
 
 module.exports = {
     getAllSignos,
     getOneSigno,
     updateSigno,
     login,
-    changePassword
+    changePassword,
+    createUser
+    
 }
+    
