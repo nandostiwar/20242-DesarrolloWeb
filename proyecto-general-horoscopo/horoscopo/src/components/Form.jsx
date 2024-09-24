@@ -40,6 +40,10 @@ function Form({ callback }) {
         goTo('/changePassword');
     }
 
+    const goToNuevoUser = () => {
+        goTo('/nuevoUser');
+    }
+
     return (
         <form onSubmit={validateUser}>
             <h1 id="txtBienvenida">Bienvenido a nuestro portal del Zodiaco</h1>
@@ -48,11 +52,21 @@ function Form({ callback }) {
             <h4 className="txt">Contraseña</h4>  
             <input type="password" className="entry" onChange={(e) => setPassword(e.target.value)} /><br />
             <input type="submit" value="Ingresar" id="btnEnviar" /><br />
+            
+            {/* Botón para cambiar la contraseña */}
             <input 
                 type="button" 
                 value="Cambiar Contraseña" 
-                id="btnEnviar"  // Reutilizamos el mismo id para aplicar el estilo existente
+                id="btnEnviar"  
                 onClick={goToChangePassword}
+            /><br />
+            
+            {/* Nuevo botón para crear un nuevo usuario */}
+            <input 
+                type="button" 
+                value="Crear Usuario" 
+                id="btnEnviar"  // Reutilizamos el mismo id para aplicar el estilo existente
+                onClick={goToNuevoUser}
             />
         </form>
     )

@@ -36,52 +36,88 @@ const updateSigno = async (req, res) => {
     });
 }
 
-// Controlador para manejar la autenticación
 const login = async (req, res) => {
-    const credencialesFilePath = path.join(__dirname, '../../db/credenciales.json');
+    const usersFilePath = path.join(__dirname, '../../db/user.json');
+    const adminsFilePath = path.join(__dirname, '../../db/admin.json');
     const { username, password } = req.body;
 
-    const data = await fs.readFile(credencialesFilePath, 'utf-8');
-    const users = JSON.parse(data).users;
+    try {
+        // Leer archivos de usuarios y admins
+        const usersData = await fs.readFile(usersFilePath, 'utf-8');
+        const adminsData = await fs.readFile(adminsFilePath, 'utf-8');
 
-    const user = users.find(u => u.username === username && u.password === password);
+        const users = JSON.parse(usersData).users;
+        const admins = JSON.parse(adminsData).admins;
 
-    if (user) {
-        return res.json({ role: username });
-    } else {
+        // Buscar en el archivo de usuarios
+        const user = users.find(u => u.username === username && u.password === password);
+        if (user) {
+            return res.json({ role: 'user' }); // Usuario regular
+        }
+
+        // Buscar en el archivo de admins
+        const admin = admins.find(a => a.username === username && a.password === password);
+        if (admin) {
+            return res.json({ role: 'admin' }); // Administrador
+        }
+
+        // Si no se encontró en ninguno de los archivos, credenciales inválidas
         return res.status(401).json({ error: 'Credenciales inválidas' });
+
+    } catch (error) {
+        return res.status(500).json({ error: 'Error al leer los archivos de credenciales' });
     }
 };
+
 
 // Cambiar contraseña de usuario
 const changePassword = async (req, res) => {
     const { username, oldPassword, newPassword } = req.body;
-    const credencialesFilePath = path.join(__dirname, '../../db/credenciales.json');
+    const userFilePath = path.join(__dirname, '../../db/user.json');
+    const adminFilePath = path.join(__dirname, '../../db/admin.json');
 
     try {
-        // Leer el archivo de credenciales
-        const data = await fs.readFile(credencialesFilePath, 'utf-8');
-        const credenciales = JSON.parse(data);
+        // Leer los archivos de usuarios y administradores
+        const userData = await fs.readFile(userFilePath, 'utf-8');
+        const adminData = await fs.readFile(adminFilePath, 'utf-8');
 
-        // Buscar el usuario
-        const userIndex = credenciales.users.findIndex(user => user.username === username && user.password === oldPassword);
+        const users = JSON.parse(userData).users;
+        const admins = JSON.parse(adminData).admins;
 
-        if (userIndex === -1) {
+        let userIndex = users.findIndex(user => user.username === username && user.password === oldPassword);
+        let adminIndex = admins.findIndex(admin => admin.username === username && admin.password === oldPassword);
+
+        // Si el usuario no se encuentra en usuarios ni en administradores
+        if (userIndex === -1 && adminIndex === -1) {
             return res.status(401).json({ error: 'Credenciales incorrectas' });
         }
 
-        // Actualizar la contraseña
-        credenciales.users[userIndex].password = newPassword;
+        // Actualizar la contraseña si es un usuario
+        if (userIndex !== -1) {
+            users[userIndex].password = newPassword;
 
-        // Guardar el archivo actualizado
-        await fs.writeFile(credencialesFilePath, JSON.stringify(credenciales, null, 2), { encoding: 'utf-8' });
+            // Guardar el archivo de usuarios actualizado
+            await fs.writeFile(userFilePath, JSON.stringify({ users }, null, 2), { encoding: 'utf-8' });
 
-        res.json({ message: 'Contraseña cambiada con éxito.' });
+            return res.json({ message: 'Contraseña de usuario cambiada con éxito.' });
+        }
+
+        // Actualizar la contraseña si es un administrador
+        if (adminIndex !== -1) {
+            admins[adminIndex].password = newPassword;
+
+            // Guardar el archivo de administradores actualizado
+            await fs.writeFile(adminFilePath, JSON.stringify({ admins }, null, 2), { encoding: 'utf-8' });
+
+            return res.json({ message: 'Contraseña de administrador cambiada con éxito.' });
+        }
+
     } catch (error) {
         console.error('Error al cambiar la contraseña:', error);
         res.status(500).json({ error: 'Error al cambiar la contraseña.' });
     }
-}
+};
+
 
 module.exports = {
     getAllSignos,
