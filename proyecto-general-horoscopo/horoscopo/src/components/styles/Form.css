@@ -1,4 +1,3 @@
-/* Form.css */
 body {
     justify-content: center;
     text-align: center;
@@ -49,4 +48,37 @@ form {
 
 #btnChangePassword:hover {
     background-color: rgb(219, 9, 9);
+}
+
+/* Estilos para el botón de crear usuario */
+#btnCreateUser {
+    margin-top: 10px;
+    background-color: rgb(238, 216, 18);
+    /* Verde para diferenciarlo */
+    padding: 5px 20px;
+    border-radius: 10px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#btnCreateUser:hover {
+    background-color: rgb(213, 255, 24);
+    /* Cambia el color al pasar el cursor */
+}
+
+#btnCreateAdmin {
+    margin-top: 10px;
+    background-color: rgb(16, 216, 238);
+    padding: 5px 20px;
+    border-radius: 10px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#btnCreateAdmin:hover {
+    background-color: rgb(24, 245, 255);
 }

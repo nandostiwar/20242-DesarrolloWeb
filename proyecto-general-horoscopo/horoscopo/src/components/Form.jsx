@@ -1,4 +1,3 @@
-// src/components/Form.jsx
 import './styles/Form.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -26,11 +25,11 @@ function Form({ callback }) {
             const data = await response.json();
 
             if (data && data.success) {
-                alert(data.message); // Mensaje de éxito
+                alert(data.message);
                 callback(data.role);
                 navigate(data.role === 'user' ? "/userHome" : "/adminHome");
             } else {
-                alert(data.message || 'Error desconocido'); // Mensaje de error
+                alert(data.message || 'Error desconocido');
             }
         } catch (error) {
             console.error('Error:', error);
@@ -46,6 +45,7 @@ function Form({ callback }) {
             <h4 className="txt">Contraseña</h4>
             <input type="password" className="entry" onChange={(e) => setPassword(e.target.value)} /><br />
             <input type="submit" value="Ingresar" id="btnEnviar" />
+
             {/* Botón para cambiar contraseña */}
             <button
                 type="button"
@@ -54,8 +54,24 @@ function Form({ callback }) {
             >
                 Cambiar Contraseña
             </button>
+
+            {/* Botón para crear usuario */}
+            <button
+                type="button"
+                id="btnCreateUser"
+                onClick={() => navigate('/createUser')}
+            >
+                Crear Usuario
+            </button>
+            {/* Botón para crear administrador */}
+            <button type="button" id="btnCreateAdmin" onClick={() => navigate('/createAdmin')}>
+                Crear Administrador
+            </button>
+
         </form>
+
     );
 }
 
 export default Form;
+

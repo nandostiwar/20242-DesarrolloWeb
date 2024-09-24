@@ -36,36 +36,55 @@ const updateSigno = async (req, res) => {
 
 const login = async (req, res) => {
     const { username, password } = req.body;
-    try {
-        const credentialsPath = path.join(__dirname, '../../db/credentials.json');
-        const credentialsData = await fs.readFile(credentialsPath, 'utf-8');
-        const credentials = JSON.parse(credentialsData);
 
-        const user = credentials[username];
+    try {
+        // Intenta primero buscar en credentials.json (usuarios normales)
+        let credentialsPath = path.join(__dirname, '../../db/credentials.json');
+        let credentialsData = await fs.readFile(credentialsPath, 'utf-8');
+        let credentials = JSON.parse(credentialsData);
+
+        let user = credentials[username];
+
+        // Si no encuentra en credentials.json, busca en credentialsadmin.json (administradores)
+        if (!user) {
+            credentialsPath = path.join(__dirname, '../../db/credentialsadmin.json');
+            credentialsData = await fs.readFile(credentialsPath, 'utf-8');
+            credentials = JSON.parse(credentialsData);
+            user = credentials[username];
+        }
 
         if (user && user.password === password) {
             const response = { success: true, role: user.role, message: 'Datos ingresados correctamente' };
-            console.log('Response:', response);
             res.json(response);
         } else {
             const response = { success: false, message: 'Datos incorrectos' };
-            console.log('Response:', response);
             res.json(response);
         }
     } catch (error) {
         console.error('Error:', error);
         res.status(500).json({ success: false, message: 'Error en el servidor' });
     }
-}
+};
 const changePassword = async (req, res) => {
     const { username, oldPassword, newPassword } = req.body;
+
     try {
-        const credentialsPath = path.join(__dirname, '../../db/credentials.json');
-        const credentialsData = await fs.readFile(credentialsPath, 'utf-8');
-        const credentials = JSON.parse(credentialsData);
+        let credentialsPath = path.join(__dirname, '../../db/credentials.json');
+        let credentialsData = await fs.readFile(credentialsPath, 'utf-8');
+        let credentials = JSON.parse(credentialsData);
+
+        // Busca primero en credentials.json
+        let user = credentials[username];
+
+        // Si no encuentra en credentials.json, busca en credentialsadmin.json
+        if (!user) {
+            credentialsPath = path.join(__dirname, '../../db/credentialsadmin.json');
+            credentialsData = await fs.readFile(credentialsPath, 'utf-8');
+            credentials = JSON.parse(credentialsData);
+            user = credentials[username];
+        }
 
         // Verifica si el usuario existe y si la contraseña antigua es correcta
-        const user = credentials[username];
         if (user && user.password === oldPassword) {
             // Actualiza la contraseña
             user.password = newPassword;
@@ -80,6 +99,56 @@ const changePassword = async (req, res) => {
     }
 };
 
+const createUser = async (req, res) => {
+    const { username, password } = req.body;
+    const role = 'user'; // Asignamos el rol de 'user' por defecto
+
+    console.log('Received data:', { username, password, role });
+
+    try {
+        const credentialsPath = path.join(__dirname, '../../db/credentials.json');
+
+        const credentialsData = await fs.readFile(credentialsPath, 'utf-8');
+        const credentials = JSON.parse(credentialsData);
+
+        // Verifica si el usuario ya existe
+        if (credentials[username]) {
+            return res.status(400).json({ success: false, message: 'Usuario ya existe' });
+        }
+
+        // Guarda el nuevo usuario con el rol de 'user'
+        credentials[username] = { password, role }; // Aquí se guarda el rol
+        await fs.writeFile(credentialsPath, JSON.stringify(credentials, null, 2), 'utf-8');
+        res.json({ success: true, message: 'Usuario creado exitosamente' });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ success: false, message: 'Error en el servidor' });
+    }
+};
+const createAdmin = async (req, res) => {
+    const { username, password } = req.body;
+    const role = 'admin'; // Asignamos el rol de 'admin'
+
+    try {
+        const credentialsPath = path.join(__dirname, '../../db/credentialsadmin.json');
+
+        const credentialsData = await fs.readFile(credentialsPath, 'utf-8');
+        const credentials = JSON.parse(credentialsData);
+
+        // Verifica si el administrador ya existe
+        if (credentials[username]) {
+            return res.status(400).json({ success: false, message: 'Administrador ya existe' });
+        }
+
+        // Guarda el nuevo administrador
+        credentials[username] = { password, role };
+        await fs.writeFile(credentialsPath, JSON.stringify(credentials, null, 2), 'utf-8');
+        res.json({ success: true, message: 'Administrador creado exitosamente' });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ success: false, message: 'Error en el servidor' });
+    }
+};
 
 
 module.exports = {
@@ -87,5 +156,7 @@ module.exports = {
     login,
     getOneSigno,
     changePassword,
-    updateSigno
+    updateSigno,
+    createUser,
+    createAdmin
 }

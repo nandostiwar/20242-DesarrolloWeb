@@ -1,0 +1,61 @@
+/* src/styles/CreateUser.css */
+
+.container {
+    height: 300px;
+    display: grid;
+    place-items: center;
+}
+
+#tituloCrearUsuario {
+    font-style: italic;
+    color: white;
+}
+
+#inputUsername,
+#inputPassword {
+    margin-top: 10px;
+    width: 400px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgb(71, 63, 63);
+    color: white;
+    border: none;
+}
+
+.password-field {
+    position: relative;
+    margin-top: 10px;
+}
+
+.password-field input {
+    width: 100%;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+#btnCrear {
+    margin-top: 10%;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: rgb(226, 241, 16);
+    color: white;
+    cursor: pointer;
+}
+
+#btnHome {
+    margin-top: 15px;
+    padding: 5px 15px;
+    border-radius: 10px;
+    background-color: blue;
+    color: white;
+    cursor: pointer;
+}

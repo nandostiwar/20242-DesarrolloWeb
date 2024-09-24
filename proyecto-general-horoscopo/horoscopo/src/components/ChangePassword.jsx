@@ -20,7 +20,7 @@ function ChangePassword() {
         }
 
         try {
-            const response = await fetch('http://localhost:4000/v1/signos/change-password', { // Asegúrate de que esta URL sea correcta
+            const response = await fetch('http://localhost:4000/v1/signos/change-password', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -28,19 +28,25 @@ function ChangePassword() {
                 body: JSON.stringify({ username, oldPassword, newPassword }),
             });
 
-            if (!response.ok) {
-                throw new Error('Error al cambiar la contraseña');
-            }
-
             const data = await response.json();
-            alert(data.message || 'Contraseña cambiada exitosamente');
-            navigate('/'); // Redirige a la página principal después de cambiar la contraseña
+
+            if (response.ok) {
+                alert(data.message || 'Contraseña cambiada exitosamente');
+                navigate('/');
+            } else {
+                if (data.errorType === 'username') {
+                    alert('Usuario correcto, pero la contraseña es incorrecta.');
+                } else if (data.errorType === 'password') {
+                    alert('Contraseña correcta, pero el usuario es incorrecto.');
+                } else {
+                    alert(data.message || 'Error al cambiar la contraseña');
+                }
+            }
         } catch (error) {
             console.error('Error:', error);
             alert('Error en la solicitud: ' + error.message);
         }
     };
-
     return (
         <div className="container">
             <h2 id="tituloCambioPassword">Cambiar Contraseña</h2>
