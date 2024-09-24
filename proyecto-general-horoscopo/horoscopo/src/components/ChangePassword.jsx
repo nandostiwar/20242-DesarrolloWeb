@@ -1,53 +1,72 @@
-import './styles/ChangePassword.css';
+import './styles/Form.css'; // Reutilizamos los mismos estilos del Form
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function ChangePassword({ user }) {
+function ChangePassword() {
+    const [username, setUsername] = useState('');
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const goTo = useNavigate();
 
     const handleChangePassword = async (event) => {
         event.preventDefault();
-        if (!oldPassword || !newPassword) {
-            alert("Por favor completa todos los campos.");
-            return;
-        }
 
         try {
             const response = await fetch('http://localhost:4000/v1/signos/changePassword', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ username: user, oldPassword, newPassword })
+                body: JSON.stringify({ username, oldPassword, newPassword }),
             });
 
-            const data = await response.json();
             if (response.ok) {
-                alert(data.message);
-                goTo("/login");  // Redirige a la pantalla de inicio después de cambiar la contraseña
+                alert('Contraseña cambiada con éxito.');
+                goTo('/');
             } else {
-                alert(data.message || "Error al cambiar la contraseña");
+                alert('Error al cambiar la contraseña. Verifica tus datos.');
             }
         } catch (error) {
-            console.error("Error during password change:", error);
-            alert("No se pudo conectar al servidor. Intenta de nuevo más tarde.");
+            console.error('Error al cambiar la contraseña:', error);
+            alert('Ocurrió un error, por favor intenta nuevamente.');
         }
     };
 
-    if (!user) {
-        return <p>No se ha identificado ningún usuario. Por favor, inicia sesión primero.</p>;
-    }
+    const goToForm = () => {
+        goTo('/');
+    };
 
     return (
         <form onSubmit={handleChangePassword}>
-            <h1 id="txtCambioContraseña">Cambiar Contraseña</h1>
-            <h4 className="txt">Contraseña Vieja</h4>
-            <input type="password" className="entry" onChange={(e) => setOldPassword(e.target.value)} /><br />
+            <h1 id="txtBienvenida">Cambiar Contraseña</h1>
+            <h4 className="txt">Nombre de Usuario</h4>
+            <input 
+                type="text" 
+                value={username}
+                onChange={(e) => setUsername(e.target.value)} 
+                className="entry"
+            /><br />
+            <h4 className="txt">Contraseña Actual</h4>
+            <input 
+                type="password" 
+                value={oldPassword}
+                onChange={(e) => setOldPassword(e.target.value)} 
+                className="entry"
+            /><br />
             <h4 className="txt">Nueva Contraseña</h4>
-            <input type="password" className="entry" onChange={(e) => setNewPassword(e.target.value)} /><br />
+            <input 
+                type="password" 
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)} 
+                className="entry"
+            /><br />
             <input type="submit" value="Cambiar Contraseña" id="btnEnviar" />
+            <input 
+                type="button" 
+                value="Volver al Inicio" 
+                id="btnEnviar"  // Reutilizando el estilo existente del botón
+                onClick={goToForm} 
+            />
         </form>
     );
 }
