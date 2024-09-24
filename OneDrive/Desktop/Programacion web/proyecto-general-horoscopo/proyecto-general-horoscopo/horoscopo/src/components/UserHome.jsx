@@ -3,73 +3,84 @@ import './styles/UserHome.css';
 import TextSigno from "./TextSigno.jsx";
 import { useState } from "react";
 
-function UserHome({ user }) {
-    if (user !== "user" || !user) {
-        return <Navigate to="/" />
+function UserHome({user}){
+    if(user!=="user" || !user){
+        return <Navigate to="/"/>
     }
-
     const home = useNavigate();
     const [textoSigno, setTextoSigno] = useState('');
-    const [signoSeleccionado, setSignoSeleccionado] = useState('');
-    const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('');
 
-    function goHome() {
+    function goHome(){
         home("/");
     }
 
-    // Función para manejar la selección de signos
-    function handleSelectSigno(event) {
+    async function handleSelect(event){
         const signo = event.target.value;
-        setSignoSeleccionado(signo);
-        if (signo !== "0" && categoriaSeleccionada) {
-            const textoGuardado = localStorage.getItem(`${signo}-${categoriaSeleccionada}`);
-            setTextoSigno(textoGuardado || "No hay información disponible para este signo y categoría.");
-        }
-    }
-
-    // Función para manejar la selección de categoría
-    function handleSelectCategoria(event) {
-        const categoria = event.target.value;
-        setCategoriaSeleccionada(categoria);
-        if (signoSeleccionado && categoria !== "0") {
-            const textoGuardado = localStorage.getItem(`${signoSeleccionado}-${categoria}`);
-            setTextoSigno(textoGuardado || "No hay información disponible para este signo y categoría.");
-        }
+        if(signo!=="0"){
+            fetch(`http://localhost:4000/v1/signos/${signo}`)
+                .then(response => response.json())
+                .then(responseData => setTextoSigno(responseData))
+        } 
     }
 
     return (
         <div className="container">
-            <div id="txtSeleccionPage"><h3>Selecciona tu signo zodiacal y categoría</h3></div>
+            <div id="txtSeleccionPage"><h3>Selecciona tu signo zodiacal</h3></div>
+            <div>
+                <select id="selectSignos" onClick={handleSelect}>
+                    <option value="0">Signo hombre</option>
+                    <option value="Arieshombre">Aries</option>
+                    <option value="Geminishombre">Géminis</option>
+                    <option value="Cancerhombre">Cáncer</option>
+                    <option value="Leohombre">Leo</option>
+                    <option value="Virgohombre">Virgo</option>
+                    <option value="Librahombre">Libra</option>
+                    <option value="Escorpiohombre">Escorpio</option>
+                    <option value="Sagitariohombre">Sagitario</option>
+                    <option value="Capricorniohombre">Capricornio</option>
+                    <option value="Acuariohombre">Acuario</option>
+                    <option value="Piscishombre">Piscis</option>
+                </select>
+               
+                
+                <select id="selectSignos" onClick={handleSelect}>
+                    <option value="0">Signo mujer</option>
+                    <option value="Ariesmujer">Aries</option>
+                    <option value="Geminismujer">Géminis</option>
+                    <option value="Cancermujer">Cáncer</option>
+                    <option value="Leomujer">Leo</option>
+                    <option value="Virgomujer">Virgo</option>
+                    <option value="Libramujer">Libra</option>
+                    <option value="Escorpiomujer">Escorpio</option>
+                    <option value="Sagitariomujer">Sagitario</option>
+                    <option value="Capricorniomujer">Capricornio</option>
+                    <option value="Acuariomujer">Acuario</option>
+                    <option value="Piscismujer">Piscis</option>
+                </select>
 
-            {/* Selección de signos zodiacales */}
-            <select id="selectSignos" onChange={handleSelectSigno}>
-                <option value="0">Selecciona un signo zodiacal</option>
-                <option value="Aries">Aries</option>
-                <option value="Geminis">Géminis</option>
-                <option value="Cancer">Cáncer</option>
-                <option value="Leo">Leo</option>
-                <option value="Virgo">Virgo</option>
-                <option value="Libra">Libra</option>
-                <option value="Escorpio">Escorpio</option>
-                <option value="Sagitario">Sagitario</option>
-                <option value="Capricornio">Capricornio</option>
-                <option value="Acuario">Acuario</option>
-                <option value="Piscis">Piscis</option>
-            </select>
+                <select id="selectSignos" onClick={handleSelect}>
+                    <option value="0">Signo nino</option>
+                    <option value="Ariesnino">Aries</option>
+                    <option value="Geminisnino">Géminis</option>
+                    <option value="Cancernino">Cáncer</option>
+                    <option value="Leonino">Leo</option>
+                    <option value="Virgonino">Virgo</option>
+                    <option value="Libranino">Libra</option>
+                    <option value="Escorpionino">Escorpio</option>
+                    <option value="Sagitarionino">Sagitario</option>
+                    <option value="Capricornionino">Capricornio</option>
+                    <option value="Acuarionino">Acuario</option>
+                    <option value="Piscisnino">Piscis</option>
+                </select>
+              
+            </div>
+            
 
-            {/* Selección de categoría */}
-            <select id="selectCategoria" onChange={handleSelectCategoria}>
-                <option value="0">Selecciona una categoría</option>
-                <option value="niño">Niño</option>
-                <option value="mujer">Mujer</option>
-                <option value="hombre">Hombre</option>
-            </select>
-
-            {/* Mostrar el texto correspondiente */}
-            <TextSigno texto={textoSigno} />
+            <TextSigno texto={textoSigno}/>
             <button id="btnHome" onClick={goHome}>Home</button>
         </div>
-    );
+    )
 }
+
 
 export default UserHome;

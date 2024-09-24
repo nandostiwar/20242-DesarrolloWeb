@@ -1,61 +1,55 @@
-import './styles/Form.css';
+import './styles/Form.css'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function Form({ callback }) {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+function Form({callback}){
+    const [username, setUsername] = useState(null);
+    const [password, setPassword] = useState(null);
     const goTo = useNavigate();
-
-    const validateUser = async (event) => {
+ 
+    const validateUser = (event)=>{
         event.preventDefault();
-
-        try {
-            const response = await fetch('http://localhost:4000/v1/signos/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username, password }),
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                callback(data.role);
-                if (data.role === 'user') {
+        fetch('http://localhost:4000/v1/signos/login', {
+            method: 'POST',
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({username, password})
+        })
+            .then(res =>res.json())
+            .then(responseData=>{
+                if(responseData.resultado=== 'user'){
+                    callback("user");
                     goTo("/userHome");
-                } else if (data.role === 'admin') {
+                }else if(responseData.resultado=== 'admin'){
+                    callback("admin");
                     goTo("/adminHome");
                 }
-            } else {
-                alert("Credenciales inválidas");
-            }
-        } catch (error) {
-            console.error('Error al intentar autenticar:', error);
-            alert("Ocurrió un error, por favor intenta nuevamente.");
-        }
-    }
 
-    const goToChangePassword = () => {
-        goTo('/changePassword');
+            })
+        
     }
-
     return (
         <form onSubmit={validateUser}>
             <h1 id="txtBienvenida">Bienvenido a nuestro portal del Zodiaco</h1>
             <h4 className="txt">Nombre de Usuario</h4>  
-            <input type="text" className="entry" onChange={(e) => setUsername(e.target.value)} /><br />
+            <input type="text" className="entry" onChange={(e)=> setUsername(e.target.value)}/><br></br>
             <h4 className="txt">Contraseña</h4>  
-            <input type="password" className="entry" onChange={(e) => setPassword(e.target.value)} /><br />
-            <input type="submit" value="Ingresar" id="btnEnviar" /><br />
-            <input 
-                type="button" 
-                value="Cambiar Contraseña" 
-                id="btnEnviar"  // Reutilizamos el mismo id para aplicar el estilo existente
-                onClick={goToChangePassword}
-            />
-        </form>
+            <input type="password" className="entry" onChange={(e)=> setPassword(e.target.value)}/><br></br>
+            <input type="submit" value="Ingresar" id="btnEnviar"/>
+
+            {/* Enlace para 'Olvidé mi contraseña' */}
+            <button onClick={() => goTo("/cambiarP")} id="forgotPasswordLink">Cambiar Contraseña</button>
+    
+
+            <button onClick={() => goTo("/crearusers")} id="forgotPasswordLink">Agregar Usuarios</button>
+    
+
+            
+        </form>   
     )
+
+    
 }
+
+
 
 export default Form;

@@ -1,12 +1,24 @@
 {
+  "userId": "nando",
+  "userPass": "54321",
+  "adminId": "jorge",
+  "adminPass": "qwer",
   "users": [
     {
-      "username": "user",
-      "password": "user2023"
+      "username": "pablo",
+      "password": "3312"
     },
     {
-      "username": "admin",
-      "password": "admin2023"
+      "username": "juan",
+      "password": "1234"
+    },
+    {
+      "username": "march",
+      "password": "1223"
+    },
+    {
+      "username": "brandin",
+      "password": "queso"
     }
   ]
 }

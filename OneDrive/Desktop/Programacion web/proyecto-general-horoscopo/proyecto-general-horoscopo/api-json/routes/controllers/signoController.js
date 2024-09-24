@@ -1,27 +1,24 @@
 const fs = require('fs/promises');
 const path = require('path');
 
-// Obtener todos los signos
-const getAllSignos = async (req, res) => {
-    const signo = await fs.readFile(path.join(__dirname, '../../db/signos.json'));
-    const signosJson = JSON.parse(signo);
+const getAllSignos = async (req, res)=>{
+    const signo = await fs.readFile(path.join(__dirname,'../../db/signos.json'));
+    const signosJson = JSON.parse(signo)
     res.json(signosJson);
 }
 
-// Obtener un signo específico
-const getOneSigno = async (req, res) => {
+const getOneSigno = async (req, res)=>{
     const oneSigno = req.params.signo;
-    const allSignos = await fs.readFile(path.join(__dirname, '../../db/signos.json'));
+    const allSignos = await fs.readFile(path.join(__dirname,'../../db/signos.json'));
     const objSignos = JSON.parse(allSignos);
     const result = objSignos[oneSigno];
-    res.json(result);
+    res.json(result)
 }
 
-// Actualizar un signo
-const updateSigno = async (req, res) => {
+const updateSigno = async (req, res)=>{
     const signoEditar = req.params.signoEditar;
-    const { textoEditar } = req.body;
-    const allSignos = await fs.readFile(path.join(__dirname, '../../db/signos.json'));
+    const {textoEditar} = req.body;
+    const allSignos = await fs.readFile(path.join(__dirname,'../../db/signos.json'));
     const objSignos = JSON.parse(allSignos);
 
     const objUpdate = {
@@ -29,64 +26,158 @@ const updateSigno = async (req, res) => {
         [signoEditar]: textoEditar
     }
 
-    await fs.writeFile(path.join(__dirname, '../../db/signos.json'), JSON.stringify(objUpdate, null, 2), { encoding: 'utf-8' });
+    // console.log(objUpdate);
+    await fs.writeFile(path.join(__dirname,'../../db/signos.json'), JSON.stringify(objUpdate, null, 2), {encoding: 'utf-8'})
 
     res.json({
         message: "Updated"
-    });
+    })
 }
 
-// Controlador para manejar la autenticación
-const login = async (req, res) => {
-    const credencialesFilePath = path.join(__dirname, '../../db/credenciales.json');
-    const { username, password } = req.body;
+const compareLogin = async (req, res) => {
+    const { body } = req;
+    const { username, password } = body;
 
-    const data = await fs.readFile(credencialesFilePath, 'utf-8');
-    const users = JSON.parse(data).users;
+    console.log("Recibí user: " + username);
+    console.log("Recibí pass: " + password);
 
-    const user = users.find(u => u.username === username && u.password === password);
+    try {
+        
+        const adminData = await fs.readFile(path.join(__dirname, '../../db/admin.json'), 'utf-8');
+        const adminCredentials = JSON.parse(adminData);
 
-    if (user) {
-        return res.json({ role: username });
-    } else {
-        return res.status(401).json({ error: 'Credenciales inválidas' });
+        if (username === adminCredentials.adminId && password === adminCredentials.adminPass) {
+            return res.json({ resultado: "admin" });
+        }
+
+        const usersData = await fs.readFile(path.join(__dirname, '../../db/users.json'), 'utf-8');
+        const usersCredentials = JSON.parse(usersData);
+
+        const user = usersCredentials.users.find(u => u.username === username && u.password === password);
+        if (user) {
+            return res.json({ resultado: "user" });
+        }
+        return res.json({ resultado: "Credenciales inválidas" });
+    } catch (error) {
+        console.error("Error leyendo los archivos de credenciales:", error);
+        return res.status(500).json({ resultado: "Error interno del servidor" });
     }
 };
 
-// Cambiar contraseña de usuario
-const changePassword = async (req, res) => {
-    const { username, oldPassword, newPassword } = req.body;
-    const credencialesFilePath = path.join(__dirname, '../../db/credenciales.json');
+
+const updatepassword = async (req, res) => {
+    const { username, password, update } = req.body;
+
+    console.log("Recibí user: " + username);
+    console.log("Recibí pass: " + password);
+    console.log("Nuevo pass: " + update);
 
     try {
-        // Leer el archivo de credenciales
-        const data = await fs.readFile(credencialesFilePath, 'utf-8');
-        const credenciales = JSON.parse(data);
+        
+        const usersData = await fs.readFile(path.join(__dirname, '../../db/users.json'), 'utf-8');
+        const users = JSON.parse(usersData).users;
 
-        // Buscar el usuario
-        const userIndex = credenciales.users.findIndex(user => user.username === username && user.password === oldPassword);
+        
+        const userIndex = users.findIndex(user => user.username === username && user.password === password);
 
-        if (userIndex === -1) {
-            return res.status(401).json({ error: 'Credenciales incorrectas' });
+        if (userIndex !== -1) {
+           
+            users[userIndex].password = update;
+
+            await fs.writeFile(path.join(__dirname, '../../db/users.json'), JSON.stringify({ users }, null, 2), 'utf-8');
+
+            return res.json({ resultado: "Contraseña de usuario actualizada correctamente" });
         }
 
-        // Actualizar la contraseña
-        credenciales.users[userIndex].password = newPassword;
+        
+        const adminData = await fs.readFile(path.join(__dirname, '../../db/admin.json'), 'utf-8');
+        const admins = JSON.parse(adminData).admins;
 
-        // Guardar el archivo actualizado
-        await fs.writeFile(credencialesFilePath, JSON.stringify(credenciales, null, 2), { encoding: 'utf-8' });
+        
+        const adminIndex = admins.findIndex(admin => admin.adminId === username && admin.adminPass === password);
 
-        res.json({ message: 'Contraseña cambiada con éxito.' });
+        if (adminIndex !== -1) {
+            
+            admins[adminIndex].adminPass = update;
+
+            
+            await fs.writeFile(path.join(__dirname, '../../db/admin.json'), JSON.stringify({ admins }, null, 2), 'utf-8');
+
+            return res.json({ resultado: "Contraseña de administrador actualizada correctamente" });
+        }
+
+        
+        return res.json({ resultado: "Credenciales inválidas" });
+
     } catch (error) {
-        console.error('Error al cambiar la contraseña:', error);
-        res.status(500).json({ error: 'Error al cambiar la contraseña.' });
+        console.error("Error leyendo o escribiendo los archivos:", error);
+        return res.status(500).json({ resultado: "Error interno del servidor" });
     }
-}
+};
+
+
+
+
+const crearuser = async (req, res) => {
+    const { username, password, role } = req.body;
+
+    console.log("Recibí user: " + username);
+    console.log("Recibí pass: " + password);
+    console.log("Rol: " + role);
+
+    try {
+        if (role === "admin") {
+            
+            const data = await fs.readFile(path.join(__dirname, '../../db/admin.json'), 'utf-8');
+            const adminData = JSON.parse(data);
+
+           
+            const adminExists = adminData.admins.some(admin => admin.adminId === username);
+            if (adminExists) {
+                return res.json({ resultado: "El admin ya existe" });
+            }
+
+            
+            adminData.admins.push({ adminId: username, adminPass: password });
+
+            
+            await fs.writeFile(path.join(__dirname, '../../db/admin.json'), JSON.stringify(adminData, null, 2), 'utf-8');
+            return res.json({ resultado: "Admin creado correctamente" });
+        } else if (role === "user") {
+           
+            const data = await fs.readFile(path.join(__dirname, '../../db/users.json'), 'utf-8');
+            const usersData = JSON.parse(data);
+
+           
+            const userExists = usersData.users.some(user => user.username === username);
+            if (userExists) {
+                return res.json({ resultado: "El usuario ya existe" });
+            }
+
+            
+            usersData.users.push({ username, password });
+
+           
+            await fs.writeFile(path.join(__dirname, '../../db/users.json'), JSON.stringify(usersData, null, 2), 'utf-8');
+            return res.json({ resultado: "Usuario creado correctamente" });
+        } else {
+            return res.json({ resultado: "Rol inválido" });
+        }
+
+    } catch (error) {
+        console.error("Error leyendo o escribiendo el archivo de credenciales:", error);
+        return res.status(500).json({ resultado: "Error interno del servidor" });
+    }
+};
+
+
 
 module.exports = {
     getAllSignos,
     getOneSigno,
     updateSigno,
-    login,
-    changePassword
+    compareLogin,
+    updatepassword,
+    crearuser
+    
 }
