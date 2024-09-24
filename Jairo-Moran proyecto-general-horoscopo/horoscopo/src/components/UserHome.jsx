@@ -24,7 +24,7 @@ function UserHome({user}){
 
     async function fetchSignoInfo() {
         try {
-            const response = await fetch(`http://localhost:4000/v1/signos/${signoSeleccionado}?perfil=${perfilSeleccionado}`);
+            const response = await fetch(`http://localhost:4000/api/${signoSeleccionado}?perfil=${perfilSeleccionado}`);
             const responseData = await response.json();
             setTextoSigno(responseData);
         } catch (error) {

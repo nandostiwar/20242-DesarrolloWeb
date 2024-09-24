@@ -32,5 +32,140 @@
     "tipo": "ecuacion",
     "resultado": 8,
     "fecha": "2024-09-17T21:26:30.322Z"
+  },
+  {
+    "tipo": "ascendente",
+    "resultado": [
+      12,
+      18,
+      27
+    ],
+    "fecha": "2024-09-17T21:35:39.956Z"
+  },
+  {
+    "tipo": "descendente",
+    "resultado": [
+      27,
+      18,
+      12
+    ],
+    "fecha": "2024-09-17T21:35:53.433Z"
+  },
+  {
+    "tipo": "descendente",
+    "resultado": [
+      72,
+      64,
+      27,
+      18,
+      12
+    ],
+    "fecha": "2024-09-17T21:35:59.531Z"
+  },
+  {
+    "tipo": "ecuacion",
+    "resultado": 1130,
+    "fecha": "2024-09-17T21:36:19.437Z"
+  },
+  {
+    "tipo": "ecuacion",
+    "resultado": 294,
+    "fecha": "2024-09-17T21:37:44.617Z"
+  },
+  {
+    "tipo": "ecuacion",
+    "resultado": 3240,
+    "fecha": "2024-09-18T00:43:04.398Z"
+  },
+  {
+    "tipo": "descendente",
+    "resultado": [
+      90,
+      72,
+      64,
+      27,
+      18,
+      12
+    ],
+    "fecha": "2024-09-18T00:43:12.201Z"
+  },
+  {
+    "tipo": "ascendente",
+    "resultado": [
+      9,
+      16,
+      27
+    ],
+    "fecha": "2024-09-18T02:54:00.212Z"
+  },
+  {
+    "tipo": "descendente",
+    "resultado": [
+      27,
+      16,
+      9
+    ],
+    "fecha": "2024-09-18T02:54:01.609Z"
+  },
+  {
+    "tipo": "ascendente",
+    "resultado": [
+      9,
+      16,
+      27
+    ],
+    "fecha": "2024-09-18T02:54:56.803Z"
+  },
+  {
+    "tipo": "descendente",
+    "resultado": [
+      27,
+      16,
+      9
+    ],
+    "fecha": "2024-09-18T02:54:57.634Z"
+  },
+  {
+    "tipo": "descendente",
+    "resultado": [
+      25,
+      16,
+      9
+    ],
+    "fecha": "2024-09-18T02:55:03.884Z"
+  },
+  {
+    "tipo": "ascendente",
+    "resultado": [
+      9,
+      16,
+      25
+    ],
+    "fecha": "2024-09-18T02:55:05.123Z"
+  },
+  {
+    "tipo": "ecuacion",
+    "resultado": 9,
+    "fecha": "2024-09-18T02:55:07.123Z"
+  },
+  {
+    "tipo": "ecuacion",
+    "resultado": 288,
+    "fecha": "2024-09-18T02:58:09.822Z"
+  },
+  {
+    "tipo": "ecuacion",
+    "resultado": 8,
+    "fecha": "2024-09-18T02:58:14.199Z"
+  },
+  {
+    "tipo": "ecuacion",
+    "resultado": -15,
+    "fecha": "2024-09-18T03:16:14.368Z"
+  },
+  {
+    "tipo": "ecuacion",
+    "resultado": 13,
+    "fecha": "2024-09-18T03:16:26.286Z"
   }
 ]
