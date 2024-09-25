@@ -1,0 +1,187 @@
+[
+  {
+    "tipo": "ascendente",
+    "resultado": [],
+    "fecha": "2024-09-17T21:26:24.143Z"
+  },
+  {
+    "tipo": "ascendente",
+    "resultado": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "fecha": "2024-09-17T21:26:28.048Z"
+  },
+  {
+    "tipo": "descendente",
+    "resultado": [
+      6,
+      5,
+      4,
+      3,
+      2,
+      1
+    ],
+    "fecha": "2024-09-17T21:26:29.300Z"
+  },
+  {
+    "tipo": "ecuacion",
+    "resultado": 8,
+    "fecha": "2024-09-17T21:26:30.322Z"
+  },
+  {
+    "tipo": "ascendente",
+    "resultado": [
+      77
+    ],
+    "fecha": "2024-09-20T01:44:44.828Z"
+  },
+  {
+    "tipo": "ascendente",
+    "resultado": [
+      77
+    ],
+    "fecha": "2024-09-20T01:44:45.035Z"
+  },
+  {
+    "tipo": "ascendente",
+    "resultado": [
+      3,
+      4
+    ],
+    "fecha": "2024-09-20T01:44:54.228Z"
+  },
+  {
+    "tipo": "ecuacion",
+    "resultado": 7,
+    "fecha": "2024-09-20T01:45:10.700Z"
+  },
+  {
+    "tipo": "ecuacion",
+    "resultado": null,
+    "fecha": "2024-09-20T02:29:37.736Z"
+  },
+  {
+    "tipo": "ecuacion",
+    "resultado": null,
+    "fecha": "2024-09-20T02:29:46.995Z"
+  },
+  {
+    "tipo": "ascendente",
+    "resultado": [
+      6,
+      7,
+      8
+    ],
+    "fecha": "2024-09-20T02:29:55.383Z"
+  },
+  {
+    "tipo": "ascendente",
+    "resultado": [
+      1,
+      3,
+      6,
+      7,
+      8
+    ],
+    "fecha": "2024-09-20T02:43:21.621Z"
+  },
+  {
+    "tipo": "ascendente",
+    "resultado": [
+      3,
+      4
+    ],
+    "fecha": "2024-09-20T02:44:06.352Z"
+  },
+  {
+    "tipo": "descendente",
+    "resultado": [
+      4,
+      3
+    ],
+    "fecha": "2024-09-20T02:44:07.454Z"
+  },
+  {
+    "tipo": "descendente",
+    "resultado": [
+      4,
+      3
+    ],
+    "fecha": "2024-09-20T02:44:08.440Z"
+  },
+  {
+    "tipo": "ecuacion",
+    "resultado": 6,
+    "fecha": "2024-09-20T02:44:23.617Z"
+  },
+  {
+    "tipo": "descendente",
+    "resultado": [],
+    "fecha": "2024-09-20T02:44:29.232Z"
+  },
+  {
+    "tipo": "ascendente",
+    "resultado": [],
+    "fecha": "2024-09-20T02:44:30.174Z"
+  },
+  {
+    "tipo": "ecuacion",
+    "resultado": 6,
+    "fecha": "2024-09-20T02:44:31.036Z"
+  },
+  {
+    "tipo": "ecuacion",
+    "resultado": 6,
+    "fecha": "2024-09-20T02:44:31.573Z"
+  },
+  {
+    "tipo": "ecuacion",
+    "resultado": 6,
+    "fecha": "2024-09-20T02:44:31.947Z"
+  },
+  {
+    "tipo": "ecuacion",
+    "resultado": 3,
+    "fecha": "2024-09-20T02:44:34.577Z"
+  },
+  {
+    "tipo": "ecuacion",
+    "resultado": 6,
+    "fecha": "2024-09-20T02:44:41.147Z"
+  },
+  {
+    "tipo": "ecuacion",
+    "resultado": 3,
+    "fecha": "2024-09-20T02:44:46.494Z"
+  },
+  {
+    "tipo": "ascendente",
+    "resultado": [
+      2,
+      3,
+      4,
+      6
+    ],
+    "fecha": "2024-09-20T02:45:04.770Z"
+  },
+  {
+    "tipo": "descendente",
+    "resultado": [
+      6,
+      4,
+      3,
+      2
+    ],
+    "fecha": "2024-09-20T02:45:06.800Z"
+  },
+  {
+    "tipo": "ecuacion",
+    "resultado": 21,
+    "fecha": "2024-09-20T02:45:23.934Z"
+  }
+]

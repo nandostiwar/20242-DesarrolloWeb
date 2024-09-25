@@ -1,14 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const calculadoraControllers = require('../controllers/calculadoraControllers.js');
+const calculadoraControllers = require('../controllers/calculadoraControllers');
 
+
+
+// Definición de rutas usando los controladores
 router
-    .post('/ordenar', calculadoraControllers.ordenarCheckboxes)
-    .post('/sumar', calculadoraControllers.sumar)
-    .post('/restar', calculadoraControllers.restar)
-    .post('/multiplicar', calculadoraControllers.multiplicar)
-    .post('/mayor', calculadoraControllers.mayor_que)
-    .post('/menor', calculadoraControllers.menor_que)
-    .post('/promedio', calculadoraControllers.promedio)
+    .post('/sortAsc', calculadoraControllers.ordenarAscendente)    // Ordenar de forma ascendente
+    .post('/sortDesc', calculadoraControllers.ordenarDescendente)  // Ordenar de forma descendente
+    .post('/equation', calculadoraControllers.resolverEcuacion);    // Resolver ecuaciones
 
 module.exports = router;
+
+

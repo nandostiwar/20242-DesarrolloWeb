@@ -1,84 +1,67 @@
-const {add, subtract, multiply, greater_than, less_than, percent } = require('../operaciones/operaciones.js');
+const fs = require('fs');
+const { sortAscending, sortDescending, solveEquation } = require('../operaciones/operaciones.js');
 
-function ordenarCheckboxes(req, res) {
-    const { number1, number2, checkboxes } = req.body;
-
-    // Verificar que el array de checkboxes esté presente y sea un array
-    if (!checkboxes || !Array.isArray(checkboxes)) {
-        return res.status(400).json({ error: 'Se requiere un array de checkboxes' });
+// Función para guardar los resultados en un archivo JSON
+function guardarOperacion(tipo, resultado) {
+    const filePath = './operaciones.json';
+    // Leer el archivo JSON actual
+    let data = [];
+    if (fs.existsSync(filePath)) {
+        const fileData = fs.readFileSync(filePath, 'utf-8');
+        data = JSON.parse(fileData);
     }
 
-    // Ordenar los números de los checkboxes de forma ascendente
-    const sortedCheckboxes = checkboxes.sort(function(a, b) {
-        return a - b;
+    // Agregar nueva operación
+    const nuevaOperacion = {
+        tipo,
+        resultado,
+        fecha: new Date().toISOString()
+    };
+    data.push(nuevaOperacion);
+
+    // Escribir el nuevo contenido en el archivo
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+}
+// Controlador para ordenar de forma ascendente
+function ordenarAscendente(req, res) {
+    const { numbers } = req.body;
+    const sortedNumbers = sortAscending(numbers);
+   
+    // Guardar la operación en el JSON
+    guardarOperacion('ascendente', sortedNumbers);
+   
+    res.json({
+        sorted: sortedNumbers
     });
+}
 
-    // Devolver los números ordenados
+// Controlador para ordenar de forma descendente
+function ordenarDescendente(req, res) {
+    const { numbers } = req.body;
+    const sortedNumbers = sortDescending(numbers);
+   
+    // Guardar la operación en el JSON
+    guardarOperacion('descendente', sortedNumbers);
+   
     res.json({
-        resultado: sortedCheckboxes,
+        sorted: sortedNumbers
     });
 }
-
-function sumar(req, res){
-    const {body} = req;
-    const {number1, number2} = body;
-    const result = add(number1, number2);
+// Controlador para resolver ecuaciones
+function resolverEcuacion(req, res) {
+    const { equation, values } = req.body;
+    const result = solveEquation(equation, values);
+   
+    // Guardar la operación en el JSON
+    guardarOperacion('ecuacion', result);
+   
     res.json({
-        resultado: result
+        result: result
     });
-}
-
-function restar(req, res){
-    const {body} = req;
-    const {number1, number2} = body;
-    const result = subtract(number1, number2);
-    res.json({
-        resultado: result
-    })
-}
-
-function multiplicar(req, res){
-    const {body} = req;
-    const {number1, number2} = body;
-    const result = multiply(number1, number2);
-    res.json({
-        resultado: result
-    })
-}
-
-function mayor_que(req, res){
-    const {body} = req;
-    const {number1, number2} = body;
-    const result = greater_than(number1, number2);
-    res.json({
-        resultado: result
-    })
-}
-
-function menor_que(req, res){
-    const {body} = req;
-    const {number1, number2} = body;
-    const result = less_than(number1, number2);
-    res.json({
-        resultado: result
-    })
-}
-
-function promedio(req, res){
-    const {body} = req;
-    const {number1, number2} = body;
-    const result = percent(number1, number2);
-    res.json({
-        resultado: result
-    })
 }
 
 module.exports = {
-    sumar,
-    restar,
-    multiplicar,
-    mayor_que,
-    menor_que,
-    promedio,
-    ordenarCheckboxes
-}
+ordenarAscendente,
+ordenarDescendente,
+resolverEcuacion
+};

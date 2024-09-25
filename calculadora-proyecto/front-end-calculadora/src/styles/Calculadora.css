@@ -1,39 +1,94 @@
-body{
+body {
     text-align: center;
     justify-content: center;
     display: flex;
+    background-color: #e0e0ff; /* Morado claro */
 }
 
-.container{
+.container {
     text-align: center;
     justify-content: center;
-    background-color: gray;
+    background-color: #3366cc; /* Azul */
     padding: 50px;
     margin: 50px;
     border-radius: 50px;
-    width: 500px;
+    width: 600px; /* Aumentar el ancho */
     display: block;
 }
 
-.number{
-    margin: 20px;
-    height: 20px;
-    border-radius: 20px;
-    height: 35px;
+.casillas div {
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    margin: 10px;
+    height: 45px;
+    width: 120px;
+    border-radius: 30px;
+    text-align: center;
+    border: 2px solid #ccc;
+}
+
+input[type="checkbox"] {
+    margin-left: 10px;
+    transform: scale(1.5);
+    cursor: pointer;
+}
+
+.botones button,
+.equation button,
+.sorting button {
+    border-radius: 30px; /* Ovalados */
+    width: 140px; /* Ajustar el tamaño de los botones */
+    height: 40px;
+    background-color: #4caf50; /* Verde */
+    color: white;
+    border: none;
+    margin: 20px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; /* Misma fuente que el título */
+}
+
+.botones button:hover,
+.equation button:hover,
+.sorting button:hover {
+    background-color: #388e3c; /* Verde más oscuro */
+}
+
+.sorting,
+.equation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.sorting input,
+.equation input {
+    margin: 0 10px;
+    width: 150px;
     text-align: center;
 }
 
-.btnEnviar{
-    border-radius: 10px;
-    width: 150px;
-    height: 50px;
-    background-color: rgb(121, 89, 89);
-    color: white;
-    border-color: rgb(121, 89, 89);
-    margin-left: 10px;
+#txtCalculadora {
+    color: #e0e0ff; /* Morado claro */
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-#txtCalculadora{
+.equation-label {
+    font-family: Verdana, Geneva, Tahoma, sans-serif; /* Misma fuente que el título */
+    font-weight: bold;
+    color: #e0e0ff; /* Morado claro */
+}
+
+.resultado {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #e0e0ff; /* Morado claro */
+}
+
+.credit small {
     color: white;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 12px;
 }

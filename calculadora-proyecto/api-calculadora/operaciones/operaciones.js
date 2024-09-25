@@ -1,64 +1,45 @@
-
-
+/**
+ * Ordenar números de menor a mayor
+ * @param {Array} numbers
+ * @returns Array
+ */
+function sortAscending(numbers) {
+    return numbers.sort((a, b) => a - b);
+}
 
 /**
- * Sumar dos cantidades numéricas
- * @param {Number} a 
- * @param {Number} b 
- * @returns Number
+ * Ordenar números de mayor a menor
+ * @param {Array} numbers
+ * @returns Array
  */
-function add(a, b){
-    let number1 = parseInt(a);
-    let number2 = parseInt(b);
-    return number1 + number2;
+function sortDescending(numbers) {
+    return numbers.sort((a, b) => b - a);
 }
 
-function subtract(a, b){
-    let number1 = parseInt(a);
-    let number2 = parseInt(b);
-    return number1 - number2;
-}
-
-function multiply(a, b){
-    let number1 = parseInt(a);
-    let number2 = parseInt(b);
-    return number1 * number2;
-}
-
-function greater_than(a, b){
-    let number1 = parseInt(a);
-    let number2 = parseInt(b);
-    if (number1 > number2) {
-        return number1;
-    } else {
-        return number2;
+/**
+ * Resolver ecuaciones aritméticas
+ * @param {String} equation
+ * @param {Object} values
+ * @returns Number | String
+ */
+function solveEquation(equation, values) {
+    try {
+        const parsedEquation = equation.replace(/([1-9]?)([a-f])/g, (match, coef, letter) => {
+            if (values[letter] === undefined) {
+                throw new Error(`Valor no definido para la variable ${letter}`);
+            }
+            const numero = Number(values[letter]);
+            return coef ? `${coef}*${numero}` : numero;
+        });
+        const result = eval(parsedEquation);
+        return Math.round(result * 100) / 100; // Redondear a 2 decimales
+    } catch (error) {
+        return 'Error en la ecuación: ' + error.message;
     }
 }
-
-function less_than(a, b){
-    let number1 = parseInt(a);
-    let number2 = parseInt(b);
-    if (number1 < number2) {
-        return number1;
-    } else {
-        return number2;
-    }
-}
-
-function percent(a, b){
-    let number1 = parseInt(a);
-    let number2 = parseInt(b);
-    let percentnum = number1 + number2;
-    return percentnum / 2;
-}
-
-
 
 module.exports = {
-    add,
-    subtract,
-    multiply,
-    greater_than,
-    less_than,
-    percent
-}
+    sortAscending,
+    sortDescending,
+    solveEquation
+};
