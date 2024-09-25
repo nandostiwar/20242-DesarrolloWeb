@@ -1,11 +1,20 @@
-import './styles/TextSigno.css';
+import React, { useState } from 'react';
 
-function TextSigno({texto}){
-    return (
-        <textarea id="textoSigno" value={texto} cols="50" rows="10">
+function TextSigno({ initialValue }) {
+  const [value, setValue] = useState(initialValue);
 
-        </textarea>
-    )
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
+
+  return (
+    <textarea
+      value={value}
+      onChange={handleChange}
+      rows="4"
+      cols="50"
+    />
+  );
 }
 
 export default TextSigno;
