@@ -9,8 +9,8 @@ app.use(urlencoded({extended: true}))
 app.use(json())
 
 app.use(cors())
-app.use('/v1/signos', router);
+app.use('/api', router);
 
-app.listen(4000, ()=>{
-    console.log('listening at port 4000');
+app.listen(4001, ()=>{
+    console.log('listening at port 4001');
 })
