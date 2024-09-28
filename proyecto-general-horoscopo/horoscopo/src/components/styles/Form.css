@@ -1,19 +1,22 @@
-body{
+body {
     justify-content: center;
     text-align: center;
+    background-color: #282f34; /* Cambia esto al color que desees */
 }
 
-.entry{
+.entry {
     border-radius: 10px;
     padding: 10px 20px 10px 35px;
 }
 
-form{
+form {
     padding: 20px;
     padding-top: 10%;
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgb(238, 236, 236); /* Efecto de sombra */
 }
 
-#btnEnviar{
+#btnEnviar, #btnChangePassword, #btnAddUser {
     margin-top: 20px;
     background-color: rgb(48, 27, 238);
     padding: 5px;
@@ -22,14 +25,19 @@ form{
     border-radius: 15px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: white;
+    cursor: pointer; /* Para mostrar el cursor de mano */
 }
 
-.txt{
+#btnEnviar:hover, #btnChangePassword:hover, #btnAddUser:hover {
+    background-color: rgb(34, 20, 162); /* Efecto hover para todos los botones */
+}
+
+.txt {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-#txtBienvenida{
+#txtBienvenida {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-style: oblique;
-    color: white;
+    color: #040000;
 }
