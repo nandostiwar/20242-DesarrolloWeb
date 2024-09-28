@@ -1,7 +1,8 @@
 body {
     justify-content: center;
     text-align: center;
-    background-color: #282f34; /* Cambia esto al color que desees */
+    background-color: #282c34; /* Cambia esto al color que desees */
+    color: white; /* Asegúrate de que el texto sea visible en el nuevo fondo */
 }
 
 .entry {
@@ -12,20 +13,21 @@ body {
 form {
     padding: 20px;
     padding-top: 10%;
-    border-radius: 10px; /* Bordes redondeados */
-    box-shadow: 0 4px 8px rgb(238, 236, 236); /* Efecto de sombra */
+    background-color: transparent !important; /* Forzar a que sea transparente */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
 
 #btnEnviar, #btnChangePassword, #btnAddUser {
     margin-top: 20px;
-    background-color: rgb(48, 27, 238);
-    padding: 5px;
-    padding-left: 35px;
-    padding-right: 35px;
+    background-color: rgb(48, 27, 238); /* Estilo de fondo igual al botón ingresar */
+    padding: 5px 35px; /* Simplificado el padding */
     border-radius: 15px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: white;
     cursor: pointer; /* Para mostrar el cursor de mano */
+    transition: background-color 0.3s; /* Transición suave */
 }
 
 #btnEnviar:hover, #btnChangePassword:hover, #btnAddUser:hover {
@@ -39,5 +41,5 @@ form {
 #txtBienvenida {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-style: oblique;
-    color: #040000;
+    color: white;
 }
