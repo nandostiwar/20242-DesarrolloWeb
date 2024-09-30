@@ -1,43 +1,40 @@
 const fs = require('fs/promises');
 const path = require('path');
 
-// Función para leer los archivos JSON y autenticar el usuario
-const authenticateUser = async (username, password) => {
-    try {
-        let userData;
-        if (username === 'user') {
-            const userFile = await fs.readFile(path.join(__dirname, '../../db/user.json'), 'utf-8');
-            userData = JSON.parse(userFile);
-        } else if (username === 'admin') {
-            const adminFile = await fs.readFile(path.join(__dirname, '../../db/admin.json'), 'utf-8');
-            userData = JSON.parse(adminFile);
-        } else {
-            return { authenticated: false, role: null }; // Usuario no encontrado
-        }
-
-        // Comparar credenciales
-        if (userData.username === username && userData.password === password) {
-            return { authenticated: true, role: username }; // Autenticado
-        } else {
-            return { authenticated: false, role: null }; // Credenciales incorrectas
-        }
-    } catch (error) {
-        console.error("Error al autenticar:", error);
-        return { authenticated: false, role: null }; // Error al leer el archivo
-    }
-};
-
 // Nueva ruta para el inicio de sesión
 const login = async (req, res) => {
-    const { username, password } = req.body;
+    const { username, password } = req.body; // Datos del formulario
+    const userFilePath = path.join(__dirname, '../../db/user.json');
+    const adminFilePath = path.join(__dirname, '../../db/admin.json');
 
-    // Autenticación
-    const authResult = await authenticateUser(username, password);
+    try {
+        // Leer archivos user.json y admin.json
+        const [userData, adminData] = await Promise.all([
+            fs.readFile(userFilePath, 'utf8'),
+            fs.readFile(adminFilePath, 'utf8')
+        ]);
 
-    if (authResult.authenticated) {
-        res.json({ message: "Login exitoso", role: authResult.role });
-    } else {
-        res.status(401).json({ message: "Credenciales incorrectas" });
+        const users = JSON.parse(userData);
+        const admins = JSON.parse(adminData);
+
+        // Asegúrate de que ambos archivos son arrays
+        const allUsers = Array.isArray(users) ? users : [];
+        const allAdmins = Array.isArray(admins) ? admins : [];
+
+        // Buscar el usuario en ambas listas (usuarios y administradores)
+        const user = allUsers.find(u => u.username === username && u.password === password);
+        const admin = allAdmins.find(a => a.username === username && a.password === password);
+
+        if (user) {
+            return res.status(200).json({ message: 'Login exitoso', role: 'user' });
+        } else if (admin) {
+            return res.status(200).json({ message: 'Login exitoso', role: 'admin' });
+        } else {
+            return res.status(401).json({ message: 'Credenciales incorrectas' });
+        }
+    } catch (error) {
+        console.error('Error en el login:', error);
+        res.status(500).json({ message: 'Error en el servidor' });
     }
 };
 
@@ -77,6 +74,39 @@ const changePassword = async (req, res) => {
         res.status(500).json({ message: 'Error del servidor al cambiar la contraseña' });
     }
 };
+
+const createAccount = async (req, res) => {
+    const { username, password, role } = req.body;
+  
+    if (!username || !password || !role) {
+      return res.status(400).json({ message: 'Todos los campos son obligatorios.' });
+    }
+  
+    try {
+      const filePath = role === 'admin' 
+        ? path.join(__dirname, '../../db/admin.json') 
+        : path.join(__dirname, '../../db/user.json');
+  
+      const fileData = await fs.readFile(filePath, 'utf-8');
+      const users = JSON.parse(fileData);
+  
+      // Comprobar si el usuario ya existe
+      const userExists = users.some(user => user.username === username);
+      if (userExists) {
+        return res.status(400).json({ message: 'El usuario ya existe.' });
+      }
+  
+      // Agregar el nuevo usuario
+      users.push({ username, password });
+  
+      await fs.writeFile(filePath, JSON.stringify(users, null, 2), 'utf-8');
+  
+      res.status(201).json({ success: true, message: 'Cuenta creada con éxito.' });
+    } catch (error) {
+      console.error('Error al crear cuenta:', error);
+      res.status(500).json({ success: false, message: 'Error al crear la cuenta.' });
+    }
+  };
 
 const getAllSignos = async (req, res) => {
     const signo = await fs.readFile(path.join(__dirname, '../../db/signos.json'));
@@ -124,5 +154,6 @@ module.exports = {
     getOneSigno,
     updateSigno,
     login, // Exportar la nueva función de login
-    changePassword // Añadir nueva función exportada
+    changePassword, // Añadir nueva función exportada
+    createAccount
 };

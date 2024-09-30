@@ -46,6 +46,11 @@ function Form({ callback }) {
         goTo('/change-password');
     };
 
+    // Función para redirigir al formulario de creación de usuario
+    const goToCreateAccount = () => {
+        goTo('/create-account'); // Redirige a la página de creación de cuenta
+      };
+
     return (
         <form onSubmit={validateUser}>
             <h1 id="txtBienvenida">Bienvenido a nuestro portal del Zodiaco</h1>
@@ -65,13 +70,20 @@ function Form({ callback }) {
                 onChange={(e) => setPassword(e.target.value)}
                 required
             /><br />
-            <input type="submit" value="Ingresar" id="btnEnviar" />
-
-            {error && <p style={{ color: 'red' }}>{error}</p>} {/* Mostrar error si lo hay */}
 
             {/* Botón para cambiar la contraseña */}
             <button type="button" onClick={goToChangePassword} id="btnChangePassword">
                 Cambiar Contraseña
+            </button>
+                        
+            <input type="submit" value="Ingresar" id="btnEnviar" />
+
+            {error && <p style={{ color: 'red' }}>{error}</p>} {/* Mostrar error si lo hay */}
+
+
+            {/* Botón nuevo */}
+            <button type="button" onClick={goToCreateAccount} id="btnCrearCuenta">
+                Crear Cuenta
             </button>
         </form>
     );
