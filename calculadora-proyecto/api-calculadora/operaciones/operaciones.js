@@ -1,52 +1,28 @@
-
-function add(a, b) {
-    let number1 = parseInt(a);
-    let number2 = parseInt(b);
-    return number1 + number2;
+function sortAsc(numbers) {
+    return numbers.sort((a, b) => a - b);
 }
 
-function subtract(a, b) {
-    let number1 = parseInt(a);
-    let number2 = parseInt(b);
-    return number1 - number2;
+function sortDesc(numbers) {
+    return numbers.sort((a, b) => b - a);
 }
 
-function multiply(a, b) {
-    let number1 = parseInt(a);
-    let number2 = parseInt(b);
-    return number1 * number2;
+function evaluateEquation(equation, values) {
+    try {
+        let formattedEquation = equation;
+        for (const key in values) {
+            if (values.hasOwnProperty(key)) {
+                const value = values[key];
+                formattedEquation = formattedEquation.replace(new RegExp(`\\b${key}\\b`, 'g'), value);
+            }
+        }
+        const result = new Function('return ' + formattedEquation)();
+        return result;
+    } catch (error) {
+        return 'Error en la ecuación';
+    }
 }
-
-function divide(a, b) {
-    let number1 = parseInt(a);
-    let number2 = parseInt(b);
-    return number2 !== 0 ? number1 / number2 : 'No se puede dividir por cero';
-}
-
-function max(a, b) {
-    let number1 = parseInt(a);
-    let number2 = parseInt(b);
-    return Math.max(number1, number2);
-}
-
-function min(a, b) {
-    let number1 = parseInt(a);
-    let number2 = parseInt(b);
-    return Math.min(number1, number2);
-}
-
-function average(a, b) {
-    let number1 = parseInt(a);
-    let number2 = parseInt(b);
-    return (number1 + number2) / 2;
-}
-
 module.exports = {
-    add,
-    subtract,
-    multiply,
-    divide,
-    max,
-    min,
-    average
+    sortAsc,
+    sortDesc,
+    evaluateEquation
 };

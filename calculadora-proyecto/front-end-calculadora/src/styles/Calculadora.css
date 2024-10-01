@@ -1,39 +1,72 @@
-body{
+body {
     text-align: center;
     justify-content: center;
     display: flex;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #ebaf2d; /* Fondo más claro */
 }
 
-.container{
-    text-align: center;
-    justify-content: center;
-    background-color: gray;
-    padding: 50px;
-    margin: 50px;
-    border-radius: 50px;
-    width: 500px;
-    display: block;
-}
-
-.number{
-    margin: 20px;
-    height: 20px;
+.container {
+    background-color: #74716a;
+    padding: 30px;
     border-radius: 20px;
-    height: 35px;
-    text-align: center;
+    width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.btnEnviar{
+.inputs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.inputs div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.inputs input[type="text"] {
+    width: 60px;
+    height: 35px;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid #8b867f;
+    margin-bottom: 5px;
+}
+
+.inputs input[type="checkbox"] {
+    transform: scale(1.5);
+}
+
+.operations {
+    margin: 20px 0;
+}
+
+.operations button {
     border-radius: 10px;
     width: 150px;
     height: 50px;
     background-color: rgb(121, 89, 89);
     color: white;
-    border-color: rgb(121, 89, 89);
-    margin-left: 10px;
+    border: none;
+    margin: 5px;
+    cursor: pointer;
+    font-size: 16px;
 }
 
-#txtCalculadora{
-    color: white;
+.operations button:hover {
+    background-color: rgb(100, 70, 70);
+}
+
+.results {
+    margin-top: 20px;
+}
+
+#txtCalculadora {
+    color: #333;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-bottom: 20px;
 }
