@@ -1,46 +1,67 @@
-.container{
-    height: 300px;
+.container {
+    height: auto; 
     display: grid;
     place-items: center;
+    padding: 20px; 
 }
 
-#editSignos{
+#editSignos,
+#selectTipoPersona { 
     margin-top: 0px;
-    margin: 100px;
+    margin: 10px; 
     width: 400px;
-    padding: 5px 50px 5px 10px;
+    padding: 10px; 
     border-radius: 10px;
-    background-color: rgb(46, 37, 37);
+    background-color: rgb(71, 63, 63);
+    color: white;
+    
+    
+    text-align: center; 
+    box-sizing: border-box;
+
+    
+}
+
+#btnEditar {
+    margin-top: 10px; 
+    padding: 10px 20px; 
+    border-radius: 10px;
+    background-color: brown;
     color: white;
 }
 
-#btnEditar{
-    margin-top: 10%;
-    padding: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
+#btnGuardar { 
+    margin-top: 10px; 
+    padding: 10px 20px; 
     border-radius: 10px;
-    background-color: rgb(119, 104, 104);
-    color: white;
+    background-color: #ff5722; 
+    color: white; 
+    transition: background-color 0.3s; 
 }
 
-#textoAdmin{
+#btnGuardar:hover { 
+    background-color: #c791fa; 
+}
+
+#textoAdmin {
     font-style: italic;
+    margin-bottom: 20px; 
 }
 
-#textoEditar{
+#textoEditar {
     border-radius: 10px;
     display: flex;
-    background-color: rgb(46, 37, 37);
+    background-color: rgb(95, 82, 82);
     color: white;
+    margin-top: 10px; 
+    width: 400px; 
+    height: 100px; 
 }
 
-#btnHomeAdmin{
+#btnHomeAdmin {
     margin-top: 15px;
-    padding: 5px;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding: 5px 15px; 
     border-radius: 10px;
-    background-color: rgb(46, 37, 37);
-    color: white
+    background-color: blue;
+    color: white;
 }

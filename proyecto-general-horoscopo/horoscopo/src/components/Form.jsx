@@ -3,40 +3,47 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function Form({ callback }) {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState(null);
+    const [password, setPassword] = useState(null);
     const goTo = useNavigate();
 
     const validateUser = async (event) => {
         event.preventDefault();
+        const role = username === 'admin' ? 'admin' : 'user';
+
         try {
             const response = await fetch('http://localhost:4000/v1/signos/login', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ username, password })
+                body: JSON.stringify({ role, username, password }),
             });
 
             const data = await response.json();
+
             if (response.ok) {
-                callback(username);  // Guardamos el nombre de usuario
-                if (data.role === 'user') {
-                    goTo("/userHome");
-                } else if (data.role === 'admin') {
-                    goTo("/adminHome");
+                callback(role);
+                if (role === 'admin') {
+                    goTo('/adminHome');
+                } else if (role === 'user') {
+                    goTo('/userHome');
                 }
             } else {
-                alert(data.message || "Error en el inicio de sesión");
+                alert(data.message || 'Credenciales incorrectas');
             }
         } catch (error) {
-            console.error("Error during authentication:", error);
-            alert("No se pudo conectar al servidor. Intenta de nuevo más tarde.");
+            console.error('Error al intentar iniciar sesión:', error);
+            alert('Hubo un problema con el servidor. Intenta de nuevo más tarde.');
         }
     };
 
-    const handleChangePassword = () => {
-        goTo("/changePassword");
+    const handleChangePasswordClick = () => {
+        goTo('/changePassword');
+    };
+
+    const handleAddUserClick = () => {
+        goTo('/addUser');
     };
 
     return (
@@ -47,7 +54,8 @@ function Form({ callback }) {
             <h4 className="txt">Contraseña</h4>
             <input type="password" className="entry" onChange={(e) => setPassword(e.target.value)} /><br />
             <input type="submit" value="Ingresar" id="btnEnviar" />
-            <button type="button" id="btnCambiar" onClick={handleChangePassword}>Cambiar Contraseña</button>
+            <button type="button" id="btnChangePassword" onClick={handleChangePasswordClick}>Cambio de Contraseña</button>
+            <button type="button" id="btnAddUser" onClick={handleAddUserClick}>Crear Nuevo Usuario</button>
         </form>
     );
 }

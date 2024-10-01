@@ -1,0 +1,65 @@
+body {
+    justify-content: center;
+    text-align: center;
+    background-color:#c791fa; /* Cambia esto al color que desees */
+    color: white; /* Asegúrate de que el texto sea visible en el nuevo fondo */
+}
+
+.entry {
+    border-radius: 10px;
+    padding: 10px 20px 10px 35px;
+}
+
+form {
+    margin: 20px auto;
+    padding: 20px;
+    width: 300px;
+    border-radius: 10px;
+    background-color: transparent; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    text-align: center;
+}
+
+label {
+    font-family: Arial, sans-serif;
+    margin-bottom: 10px;
+    display: block;
+}
+
+input[type="text"], input[type="password"], select {
+    width: 100%;
+    padding: 10px 0; 
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    
+    
+    text-align: center; 
+    box-sizing: border-box; 
+}
+
+.btn, #btnEnviar, #btnChangePassword, #btnAddUser {
+    background-color: #4CAF50; /* Estilo de fondo para todos los botones */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px; /* Añadido para separación */
+    transition: background-color 0.3s; /* Transición suave */
+}
+
+.btn:hover, #btnEnviar:hover, #btnChangePassword:hover, #btnAddUser:hover {
+    background-color: #45a049; /* Efecto hover para todos los botones */
+}
+
+.txt {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+#txtBienvenida {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-style: oblique;
+    color: white;
+}

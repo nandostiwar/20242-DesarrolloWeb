@@ -1,27 +1,36 @@
 body {
-    justify-content: center;
+    display: flex; /* Habilita flexbox */
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    min-height: 100vh; /* Asegura que el contenido ocupe toda la altura de la pantalla */
+    margin: 0; /* Elimina márgenes predeterminados */
+    background-color: #1156e068; /* Cambia esto al color que desees */
+    color: white; /* Asegúrate de que el texto sea visible en el nuevo fondo */
     text-align: center;
-}
-
-.entry {
-    border-radius: 10px;
-    padding: 10px 20px 10px 35px;
 }
 
 form {
     padding: 20px;
-    padding-top: 10%;
+    background-color: transparent !important; /* Forzar a que sea transparente */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%; /* Asegura que el formulario se ajuste correctamente */
+    max-width: 400px; /* Controla el tamaño máximo del formulario */
 }
 
-#btnEnviar, #btnCambiar {
+#btnEnviar, #btnChangePassword, #btnAddUser {
     margin-top: 20px;
-    background-color: rgb(46, 37, 37);
-    padding: 5px;
-    padding-left: 35px;
-    padding-right: 35px;
+    background-color: rgb(48, 27, 238); /* Estilo de fondo igual al botón ingresar */
+    padding: 5px 35px; /* Simplificado el padding */
     border-radius: 15px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: white;
+    cursor: pointer; /* Para mostrar el cursor de mano */
+    transition: background-color 0.3s; /* Transición suave */
+}
+
+#btnEnviar:hover, #btnChangePassword:hover, #btnAddUser:hover {
+    background-color: rgb(34, 20, 162); /* Efecto hover para todos los botones */
 }
 
 .txt {
