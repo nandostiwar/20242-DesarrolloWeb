@@ -83,10 +83,38 @@ const changePassword = async (req, res) => {
     }
 }
 
+const createUser = async (req, res) => {
+    const { username, password } = req.body;
+    const credencialesFilePath = path.join(__dirname, '../../db/credenciales.json');
+
+    try {
+        const data = await fs.readFile(credencialesFilePath, 'utf-8');
+        const credenciales = JSON.parse(data);
+
+        // Verificar si el usuario ya existe
+        const existingUser = credenciales.users.find(user => user.username === username);
+        if (existingUser) {
+            return res.status(400).json({ error: 'El usuario ya existe.' });
+        }
+
+        // Agregar nuevo usuario
+        credenciales.users.push({ username, password });
+        
+        // Guardar el archivo actualizado
+        await fs.writeFile(credencialesFilePath, JSON.stringify(credenciales, null, 2), { encoding: 'utf-8' });
+
+        res.status(201).json({ message: 'Usuario creado con éxito.' });
+    } catch (error) {
+        console.error('Error al crear el usuario:', error);
+        res.status(500).json({ error: 'Error al crear el usuario.' });
+    }
+};
+
 module.exports = {
     getAllSignos,
     getOneSigno,
     updateSigno,
     login,
-    changePassword
+    changePassword,
+    createUser // Exportar la nueva función
 }

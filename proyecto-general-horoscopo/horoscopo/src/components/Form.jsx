@@ -1,6 +1,6 @@
 import './styles/Form.css';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom'; // Asegúrate de importar Link
 
 function Form({ callback }) {
     const [username, setUsername] = useState('');
@@ -53,7 +53,8 @@ function Form({ callback }) {
                 value="Cambiar Contraseña" 
                 id="btnEnviar"  // Reutilizamos el mismo id para aplicar el estilo existente
                 onClick={goToChangePassword}
-            />
+            /><br />
+            <Link to="/createUser">Crear un nuevo usuario</Link> {/* Enlace para crear usuario */}
         </form>
     )
 }
