@@ -216,5 +216,41 @@
     "tipo": "ecuacion",
     "resultado": 1.11,
     "fecha": "2024-09-30T21:32:01.806Z"
+  },
+  {
+    "tipo": "ascendente",
+    "resultado": [
+      -6,
+      4
+    ],
+    "fecha": "2024-10-07T17:21:16.732Z"
+  },
+  {
+    "tipo": "descendente",
+    "resultado": [
+      4,
+      -6
+    ],
+    "fecha": "2024-10-07T17:21:17.609Z"
+  },
+  {
+    "tipo": "ecuacion",
+    "resultado": "Error en la ecuación: Invalid or unexpected token",
+    "fecha": "2024-10-07T17:21:23.607Z"
+  },
+  {
+    "tipo": "ecuacion",
+    "resultado": "Error en la ecuación: Invalid or unexpected token",
+    "fecha": "2024-10-07T17:21:26.643Z"
+  },
+  {
+    "tipo": "ecuacion",
+    "resultado": "Error en la ecuación: Invalid or unexpected token",
+    "fecha": "2024-10-07T17:21:30.759Z"
+  },
+  {
+    "tipo": "ecuacion",
+    "resultado": -24,
+    "fecha": "2024-10-07T17:21:39.793Z"
   }
 ]
