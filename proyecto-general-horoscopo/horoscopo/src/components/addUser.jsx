@@ -74,18 +74,10 @@ function AddUser() {
             {/* Botón "Agregar Usuario" */}
             <input type="submit" value="Agregar Usuario" className="btn" />
 
-            {/* Nuevo botón "Regresar" con el mismo diseño */}
-<<<<<<< HEAD
+            {/* Botón "Regresar" con el mismo diseño */}
             <button type="button" onClick={handleBack} className="btn">Regresar</button>
-=======
-            <button type="button" onClick={handleBack} className="btn">Volver al Inicio</button>
->>>>>>> e0f1c237c4000c1035a4df2e57a2f4c417ee138d
         </form>
     );
 }
 
-<<<<<<< HEAD
 export default AddUser;
-=======
-export default AddUser;
->>>>>>> e0f1c237c4000c1035a4df2e57a2f4c417ee138d
