@@ -167,5 +167,54 @@
     "tipo": "ecuacion",
     "resultado": 13,
     "fecha": "2024-09-18T03:16:26.286Z"
+  },
+  {
+    "tipo": "ascendente",
+    "resultado": [
+      -4,
+      -3,
+      -2,
+      3,
+      5
+    ],
+    "fecha": "2024-09-30T21:30:49.293Z"
+  },
+  {
+    "tipo": "descendente",
+    "resultado": [
+      5,
+      3,
+      -2,
+      -3,
+      -4
+    ],
+    "fecha": "2024-09-30T21:30:50.048Z"
+  },
+  {
+    "tipo": "descendente",
+    "resultado": [
+      5,
+      3,
+      0,
+      -2,
+      -3,
+      -4
+    ],
+    "fecha": "2024-09-30T21:30:53.261Z"
+  },
+  {
+    "tipo": "ecuacion",
+    "resultado": 19,
+    "fecha": "2024-09-30T21:30:58.684Z"
+  },
+  {
+    "tipo": "ecuacion",
+    "resultado": 10,
+    "fecha": "2024-09-30T21:31:04.163Z"
+  },
+  {
+    "tipo": "ecuacion",
+    "resultado": 1.11,
+    "fecha": "2024-09-30T21:32:01.806Z"
   }
 ]
