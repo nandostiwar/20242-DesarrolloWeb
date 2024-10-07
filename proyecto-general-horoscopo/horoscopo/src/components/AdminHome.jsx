@@ -1,45 +1,48 @@
 import { Navigate, useNavigate } from "react-router-dom";
-import './styles/AdminHome.css'
-import { useState } from "react";
+import './styles/AdminHome.css';
+import { useState, useEffect } from "react";
 
-function AdminHome({user}){
-    if(user!=='admin' || !user){
-        return <Navigate to="/"/>
+function AdminHome({ user }) {
+    if (user !== 'admin' || !user) {
+        return <Navigate to="/" />
     }
+
     const home = useNavigate();
     const [textoEditar, setTextoEditar] = useState("");
     const [signoEditar, setSignoEditar] = useState("");
+    const [tipoPersona, setTipoPersona] = useState(""); // Estado para el tipo de persona
 
-    function handleSelect(event){
-        const signo = event.target.value;
-        if(signo!=="0"){
-            setSignoEditar(signo);
-        } 
-    }
-
-    function goHome(){
+    // Volver a la página de inicio
+    function goHome() {
         home("/");
     }
 
-    function handleClick(e){
-        // console.log(signoEditar);
-        // console.log(textoEditar);
+    // Manejar la solicitud de edición
+    function handleClick(e) {
         e.preventDefault();
-        fetch(`http://localhost:4000/v1/signos/${signoEditar}`, {
-            method: 'PATCH',
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({"textoEditar": textoEditar})
-        })
+        if (!signoEditar || !tipoPersona) {
+            alert("Por favor selecciona un signo zodiacal y un tipo de persona");
+            return;
+        }
+
+        // Guardar en localStorage
+        const storedSignos = JSON.parse(localStorage.getItem('signos')) || {};
+        storedSignos[`${signoEditar}-${tipoPersona}`] = { texto: textoEditar }; // Guardar texto con signo y tipo
+        localStorage.setItem('signos', JSON.stringify(storedSignos));
+
+        alert("Horóscopo actualizado con éxito");
     }
 
     return (
-        <div class="container">
+        <div className="container">
             <h2 id="textoAdmin">Edita un Signo Zodiacal</h2>
-            <select id="editSignos" onClick={handleSelect}>
-                <option value="0">Seleciona un signo zodiacal</option>
+            
+            {/* Selector de signos zodiacales */}
+            <select id="editSignos" onChange={(e) => setSignoEditar(e.target.value)}>
+                <option value="0">Selecciona un signo zodiacal</option>
                 <option value="Aries">Aries</option>
-                <option value="Geminis">Géminis</option>
-                <option value="Cancer">Cáncer</option>
+                <option value="Géminis">Géminis</option>
+                <option value="Cáncer">Cáncer</option>
                 <option value="Leo">Leo</option>
                 <option value="Virgo">Virgo</option>
                 <option value="Libra">Libra</option>
@@ -49,13 +52,21 @@ function AdminHome({user}){
                 <option value="Acuario">Acuario</option>
                 <option value="Piscis">Piscis</option>
             </select>
-            <textarea id="textoEditar" cols="50" rows="10" onChange={(e)=> setTextoEditar(e.target.value)}>
 
-            </textarea>
-            <button id="btnEditar" onClick={handleClick}>Editar</button>
+            {/* Selector del tipo de persona */}
+            <select id="selectTipoPersona" onChange={(e) => setTipoPersona(e.target.value)}>
+                <option value="0">Selecciona el tipo de persona</option>
+                <option value="niño">Niño</option>
+                <option value="mujer">Mujer</option>
+                <option value="hombre">Hombre</option>
+            </select>
+
+            {/* Textarea para el contenido a editar */}
+            <textarea id="textoEditar" cols="50" rows="10" onChange={(e) => setTextoEditar(e.target.value)} />
+            <button id="btnEditar" onClick={handleClick}>Guardar</button>
             <button id="btnHomeAdmin" onClick={goHome}>Home</button>
         </div>
-    )
+    );
 }
 
 export default AdminHome;
