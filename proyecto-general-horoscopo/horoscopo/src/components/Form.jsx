@@ -40,8 +40,8 @@ function Form({ callback }) {
         goTo('/changePassword');
     }
 
-    const goToNuevoUser = () => {
-        goTo('/nuevoUser');
+    const goToNewUser = () => {
+        goTo('/newUser');
     }
 
     return (
@@ -66,7 +66,7 @@ function Form({ callback }) {
                 type="button" 
                 value="Crear Usuario" 
                 id="btnEnviar"  // Reutilizamos el mismo id para aplicar el estilo existente
-                onClick={goToNuevoUser}
+                onClick={goToNewUser}
             />
         </form>
     )

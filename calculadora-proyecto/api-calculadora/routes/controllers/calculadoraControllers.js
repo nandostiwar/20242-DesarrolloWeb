@@ -41,7 +41,7 @@ const resolverEcuacion = (req, res) => {
 
     try {
         // Evaluar la ecuación resuelta
-        const resultado = eval(ecuacionResuelta);  // Ten cuidado con el uso de eval
+        const resultado = eval(ecuacionResuelta);  
         res.json({ resultado }); // Enviar el resultado al frontend
     } catch (error) {
         res.status(400).json({ error: 'Error al resolver la ecuación.' });

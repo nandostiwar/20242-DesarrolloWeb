@@ -7,7 +7,9 @@ router
     .get('/:signo', signoController.getOneSigno)
     .patch('/:signoEditar', signoController.updateSigno)
     .post('/login', signoController.login)
-    .post('/changePassword', signoController.changePassword);  // Nueva ruta para cambiar la contraseña
+    .post('/changePassword', signoController.changePassword)
+    .post('/createUser', signoController.createUser);
+    
 
 module.exports = router;
 

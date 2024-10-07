@@ -118,11 +118,63 @@ const changePassword = async (req, res) => {
     }
 };
 
+// Crear nuevo usuario
+const createUser = async (req, res) => {
+    const { username, password, role } = req.body; // Desestructuramos el cuerpo de la solicitud
+
+    // Determinamos el archivo donde se guardará el nuevo usuario
+    const userFilePath = path.join(__dirname, '../../db/user.json');
+    const adminFilePath = path.join(__dirname, '../../db/admin.json');
+
+    try {
+        // Leemos el archivo correspondiente según el rol
+        let users, admins;
+        if (role === 'user') {
+            const userData = await fs.readFile(userFilePath, 'utf-8');
+            users = JSON.parse(userData).users;
+            
+            // Verificamos si el usuario ya existe
+            const existingUser = users.find(u => u.username === username);
+            if (existingUser) {
+                return res.status(400).json({ error: 'El nombre de usuario ya existe.' });
+            }
+
+            // Agregamos el nuevo usuario
+            users.push({ username, password });
+            await fs.writeFile(userFilePath, JSON.stringify({ users }, null, 2), { encoding: 'utf-8' });
+            return res.json({ message: 'Usuario creado con éxito.' });
+
+        } else if (role === 'admin') {
+            const adminData = await fs.readFile(adminFilePath, 'utf-8');
+            admins = JSON.parse(adminData).admins;
+
+            // Verificamos si el administrador ya existe
+            const existingAdmin = admins.find(a => a.username === username);
+            if (existingAdmin) {
+                return res.status(400).json({ error: 'El nombre de usuario ya existe.' });
+            }
+
+            // Agregamos el nuevo administrador
+            admins.push({ username, password });
+            await fs.writeFile(adminFilePath, JSON.stringify({ admins }, null, 2), { encoding: 'utf-8' });
+            return res.json({ message: 'Administrador creado con éxito.' });
+        } else {
+            return res.status(400).json({ error: 'Rol inválido. Debe ser "user" o "admin".' });
+        }
+
+    } catch (error) {
+        console.error('Error al crear el usuario:', error);
+        return res.status(500).json({ error: 'Error en el servidor.' });
+    }
+};
+
+
 
 module.exports = {
     getAllSignos,
     getOneSigno,
     updateSigno,
     login,
-    changePassword
+    changePassword,
+    createUser
 }

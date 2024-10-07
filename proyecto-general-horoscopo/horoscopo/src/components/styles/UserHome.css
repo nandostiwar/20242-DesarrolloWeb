@@ -11,7 +11,7 @@
     padding: 5px 50px 5px 10px;
     border-radius: 10px;
     background-color: rgb(71, 63, 63);
-    color: white;
+    color: rgb(0, 0, 0);
     font-size: 16px; /* Tamaño de fuente consistente */
 }
 
@@ -28,7 +28,7 @@
     margin-top: 100px;
     border-radius: 10px;
     display: flex;
-    background-color: rgb(95, 82, 82);
+    background-color: rgb(240, 105, 105);
     color: white;
 }
 
