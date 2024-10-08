@@ -68,7 +68,7 @@ input[type="submit"]:hover {
 .btn:hover {
     background-color: #45a049; /* Color en el hover */
 }
-=======
+
 .btn, #btnEnviar, #btnChangePassword, #btnAddUser {
     background-color: #4CAF50; /* Estilo de fondo para todos los botones */
     color: white;

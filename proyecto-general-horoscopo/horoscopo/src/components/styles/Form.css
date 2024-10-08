@@ -1,11 +1,11 @@
 body {
     justify-content: center;
     text-align: center;
-<<<<<<< HEAD
+
     background-color: #282c34; /* Cambia esto al color que desees */
-=======
+
     background-color: #125df168; /* Cambia esto al color que desees */
->>>>>>> e0f1c237c4000c1035a4df2e57a2f4c417ee138d
+
     color: white; /* Asegúrate de que el texto sea visible en el nuevo fondo */
 }
 
