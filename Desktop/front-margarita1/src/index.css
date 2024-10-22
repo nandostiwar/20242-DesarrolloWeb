@@ -1,0 +1,126 @@
+:root {
+  font-family: 'Poppins', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  --primary-color: #FF5722;
+  --secondary-color: #FF9800;
+  --background-dark: #242424;
+  --background-light: #f4f4f9;
+  --text-dark: rgba(255, 255, 255, 0.87);
+  --text-light: #213547;
+
+  color-scheme: light dark;
+  background-color: var(--background-dark);
+  color: var(--text-dark);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: var(--primary-color);
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: var(--secondary-color);
+}
+
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  
+  background-image: url('imagen.png');
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+  color: var(--primary-color);
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: var(--primary-color);
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.25s, border-color 0.25s;
+}
+
+button:hover {
+  background-color: var(--secondary-color);
+}
+
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+input {
+  border-radius: 8px;
+  border: 2px solid var(--primary-color);
+  padding: 12px;
+  font-size: 16px;
+  width: 100%;
+  margin-bottom: 20px;
+  transition: border-color 0.25s;
+}
+
+input:focus {
+  border-color: var(--secondary-color);
+}
+
+.login-container {
+  background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco semitransparente */
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  text-align: center;
+  width: 400px;
+  position: relative;
+}
+
+.login-container h2 {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    background-color: var(--background-light);
+    color: var(--text-light);
+  }
+
+  a:hover {
+    color: var(--secondary-color);
+  }
+
+  button {
+    background-color: var(--primary-color);
+  }
+
+  button:hover {
+    background-color: var(--secondary-color);
+  }
+}
