@@ -1,57 +1,84 @@
-body{
+body {
+    display: flex;
     justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #ff8a00, #e52e71);
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+}
+
+form {
+    background-color: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%;
     text-align: center;
+    animation: fadeIn 1s ease-in-out;
 }
 
-.entry{
-    border-radius: 10px;
-    padding: 10px 20px 10px 35px;
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-form{
-    padding: 20px;
-    padding-top: 10%;
+#txtBienvenida {
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    color: #ff8a00;
+    margin-bottom: 10px;
 }
 
-#btnEnviar{
-    margin-top: 20px;
-    background-color: rgb(48, 27, 238);
-    padding: 5px;
-    padding-left: 35px;
-    padding-right: 35px;
-    border-radius: 15px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+.txt {
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 18px;
+    color: #555;
+    margin: 10px 0;
+}
+
+.entry {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 25px;
+    border: 2px solid #e5e5e5;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.entry:focus {
+    border-color: #ff8a00;
+}
+
+button, #btnEnviar, #btnChangePassword, #btnCrearCuenta {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 25px;
+    background-color: #ff8a00;
     color: white;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
-.txt{
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+button:hover, #btnEnviar:hover, #btnChangePassword:hover, #btnCrearCuenta:hover {
+    background-color: #e52e71;
+    transform: translateY(-3px);
 }
 
-#txtBienvenida{
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-style: oblique;
-    color: white;
+button:active, #btnEnviar:active, #btnChangePassword:active, #btnCrearCuenta:active {
+    transform: translateY(1px);
 }
 
-#btnChangePassword{
-    margin-top: 20px;
-    background-color: rgb(48, 27, 238);
-    padding: 5px;
-    padding-left: 35px;
-    padding-right: 35px;
-    border-radius: 15px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    color: white;
-}
-
-#btnCrearCuenta{
-    margin-top: 20px;
-    background-color: rgb(48, 27, 238);
-    padding: 5px;
-    padding-left: 35px;
-    padding-right: 35px;
-    border-radius: 15px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    color: white;
+#error {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
 }

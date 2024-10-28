@@ -1,22 +1,31 @@
 import { useState } from 'react';
+import './styles/CreateAccount.css';
 
 function CreateAccount() {
-  const [username, setUsername] = useState('');
+  const [nombre, setNombre] = useState('');
+  const [fechaNacimiento, setFechaNacimiento] = useState('');
+  const [cedula, setCedula] = useState('');
+  const [correo, setCorreo] = useState('');
+  const [celular, setCelular] = useState('');
+  const [ciudad, setCiudad] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('user'); // 'user' o 'admin'
 
   const handleCreateAccount = (event) => {
     event.preventDefault();
 
-    fetch('http://localhost:4000/api/create-account', {
+    fetch('http://localhost:4000/api/registro', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        username,
+        nombre,
+        fechaNacimiento,
+        cedula,
+        correo,
+        celular,
+        ciudad,
         password,
-        role, // Enviamos el rol para determinar si es 'user' o 'admin'
       }),
     })
       .then(response => response.json())
@@ -33,24 +42,31 @@ function CreateAccount() {
   };
 
   return (
-    <form onSubmit={handleCreateAccount}>
-      <h1>Crear Nueva Cuenta</h1>
-      <div>
-        <label>Nombre de Usuario</label>
-        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required />
-      </div>
-      <div>
-        <label>Contraseña</label>
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-      </div>
-      <div>
-        <label>Rol</label>
-        <select value={role} onChange={(e) => setRole(e.target.value)}>
-          <option value="user">Usuario</option>
-          <option value="admin">Administrador</option>
-        </select>
-      </div>
-      <button type="submit">Crear Cuenta</button>
+    <form onSubmit={handleCreateAccount} className="create-account-form">
+      <h2>Registro para Sorteos</h2>
+      
+      <label>Nombre</label>
+      <input type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
+
+      <label>Fecha de Nacimiento</label>
+      <input type="date" value={fechaNacimiento} onChange={(e) => setFechaNacimiento(e.target.value)} required />
+
+      <label>Cédula</label>
+      <input type="text" value={cedula} onChange={(e) => setCedula(e.target.value)} required />
+
+      <label>Correo</label>
+      <input type="email" value={correo} onChange={(e) => setCorreo(e.target.value)} required />
+
+      <label>Celular</label>
+      <input type="tel" value={celular} onChange={(e) => setCelular(e.target.value)} required />
+
+      <label>Ciudad</label>
+      <input type="text" value={ciudad} onChange={(e) => setCiudad(e.target.value)} required />
+
+      <label>Contraseña</label>
+      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+
+      <button type="submit">Guardar</button>
     </form>
   );
 }

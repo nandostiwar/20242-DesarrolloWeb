@@ -12,7 +12,6 @@ function Form({ callback }) {
         event.preventDefault();
 
         try {
-            // Realizar la solicitud POST al backend
             const response = await fetch('http://localhost:4000/api/login', {
                 method: 'POST',
                 headers: {
@@ -25,65 +24,46 @@ function Form({ callback }) {
                 const data = await response.json();
                 callback(data.role);
 
-                // Redirigir según el rol
                 if (data.role === 'user') {
-                    goTo("/userHome");
+                    goTo("/user");
                 } else if (data.role === 'admin') {
-                    goTo("/adminHome");
+                    goTo("/admin");
                 }
             } else {
                 const errorData = await response.json();
                 setError(errorData.message);
             }
         } catch (error) {
-            console.error('Error durante la autenticación:', error);
-            setError('Error al intentar iniciar sesión. Por favor, inténtelo de nuevo.');
+            console.error('Error en la autenticación:', error);
+            setError('Error al intentar iniciar sesión.');
         }
     };
 
-    // Función para redirigir al formulario de cambio de contraseña
-    const goToChangePassword = () => {
-        goTo('/change-password');
-    };
-
-    // Función para redirigir al formulario de creación de usuario
     const goToCreateAccount = () => {
-        goTo('/create-account'); // Redirige a la página de creación de cuenta
-      };
+        goTo('/registro');
+    };
 
     return (
         <form onSubmit={validateUser}>
-            <h1 id="txtBienvenida">Bienvenido a nuestro portal del Zodiaco</h1>
-            <h4 className="txt">Nombre de Usuario</h4>  
+            <h1>Bienvenido a la App de Premios</h1>
+            <h4>Usuario</h4>  
             <input
                 type="text"
-                className="entry"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
             /><br />
-            <h4 className="txt">Contraseña</h4>  
+            <h4>Contraseña</h4>  
             <input
                 type="password"
-                className="entry"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
             /><br />
-
-            {/* Botón para cambiar la contraseña */}
-            <button type="button" onClick={goToChangePassword} id="btnChangePassword">
-                Cambiar Contraseña
-            </button>
-                        
-            <input type="submit" value="Ingresar" id="btnEnviar" />
-
-            {error && <p style={{ color: 'red' }}>{error}</p>} {/* Mostrar error si lo hay */}
-
-
-            {/* Botón nuevo */}
-            <button type="button" onClick={goToCreateAccount} id="btnCrearCuenta">
-                Crear Cuenta
+            <input type="submit" value="Ingresar" />
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+            <button type="button" onClick={goToCreateAccount}>
+                Registrarse
             </button>
         </form>
     );

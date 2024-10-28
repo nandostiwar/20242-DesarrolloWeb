@@ -1,73 +1,52 @@
 import { Navigate, useNavigate } from "react-router-dom";
-import './styles/UserHome.css';
-import TextSigno from "./TextSigno.jsx";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-function UserHome({user}){
-    if(user!=="user" || !user){
-        return <Navigate to="/"/>
+function UserHome({ user }) {
+    if (user !== "user" || !user) {
+        return <Navigate to="/" />
     }
+
     const home = useNavigate();
-    const [textoSigno, setTextoSigno] = useState('');
-    const [signoSeleccionado, setSignoSeleccionado] = useState('0');
-    const [perfilSeleccionado, setPerfilSeleccionado] = useState('0');
+    const [codigo, setCodigo] = useState('');
+    const [mensaje, setMensaje] = useState('');
 
-    function goHome(){
-        home("/");
-    }
-
-    useEffect(() => {
-        if (signoSeleccionado !== "0" && perfilSeleccionado !== "0") {
-            fetchSignoInfo();
-        }
-    }, [signoSeleccionado, perfilSeleccionado]);
-
-    async function fetchSignoInfo() {
+    const registrarCodigo = async () => {
         try {
-            const response = await fetch(`http://localhost:4000/api/${signoSeleccionado}?perfil=${perfilSeleccionado}`);
-            const responseData = await response.json();
-            setTextoSigno(responseData);
+            const response = await fetch(`http://localhost:4000/api/codigos`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ codigo }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setMensaje(`Código registrado con éxito. Premio: ${data.premio}`);
+            } else {
+                const errorData = await response.json();
+                setMensaje(errorData.message);
+            }
         } catch (error) {
-            console.error("Error fetching signo info:", error);
-            setTextoSigno("Error al obtener la información del signo.");
+            console.error("Error al registrar el código:", error);
+            setMensaje("Error en el registro del código.");
         }
-    }
-
-    function handleSelectSigno(event){
-        setSignoSeleccionado(event.target.value);
-    }
-
-    function handleSelectPerfil(event){
-        setPerfilSeleccionado(event.target.value);
-    }
+    };
 
     return (
         <div className="container">
-            <div id="txtSeleccionPage"><h3>Selecciona tu signo zodiacal y perfil</h3></div>
-            <select id="selectSignos" onChange={handleSelectSigno} value={signoSeleccionado}>
-                <option value="0">Selecciona un signo zodiacal</option>
-                <option value="Aries">Aries</option>
-                <option value="Geminis">Géminis</option>
-                <option value="Cancer">Cáncer</option>
-                <option value="Leo">Leo</option>
-                <option value="Virgo">Virgo</option>
-                <option value="Libra">Libra</option>
-                <option value="Escorpio">Escorpio</option>
-                <option value="Sagitario">Sagitario</option>
-                <option value="Capricornio">Capricornio</option>
-                <option value="Acuario">Acuario</option>
-                <option value="Piscis">Piscis</option>
-            </select>
-            <select id="selectPerfil" onChange={handleSelectPerfil} value={perfilSeleccionado}>
-                <option value="0">Selecciona un perfil</option>
-                <option value="hombre">Hombre</option>
-                <option value="mujer">Mujer</option>
-                <option value="nino">Niño</option>
-            </select>
-            <TextSigno texto={textoSigno}/>
-            <button id="btnHome" onClick={goHome}>Home</button>
+            <h3>Bienvenido, inserta tu código para ganar premios:</h3>
+            <input
+                type="text"
+                value={codigo}
+                onChange={(e) => setCodigo(e.target.value)}
+                placeholder="Ingresa tu código"
+            />
+            <button onClick={registrarCodigo}>Registrar Código</button>
+            {mensaje && <p>{mensaje}</p>}
+            <button onClick={() => home("/")}>Salir</button>
         </div>
-    )
+    );
 }
 
 export default UserHome;
