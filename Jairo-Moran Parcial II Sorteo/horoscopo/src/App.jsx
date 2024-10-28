@@ -4,6 +4,7 @@ import UserHome from './components/UserHome';
 import AdminHome from './components/AdminHome';
 import ChangePassword from './components/ChangePassword'; // Importa el nuevo componente
 import CreateAccount from './components/CreateAccount'; // Importa el nuevo componente
+import CreateAdmin from './components/CreateAdmin'; // Importa el nuevo componente CreateAdmin
 import {BrowserRouter, Routes, Route} from 'react-router-dom'; 
 import { useState } from 'react';
 
@@ -18,6 +19,7 @@ function App() {
         <Route path='/user' element={<UserHome user={user}/>}></Route>
         <Route path='/admin' element={<AdminHome user={user}/>}></Route>
         <Route path='/change-password' element={<ChangePassword user={user} />}></Route>
+        <Route path='/crear-admin' element={<CreateAdmin />}></Route>
       </Routes>
     </BrowserRouter>
   )

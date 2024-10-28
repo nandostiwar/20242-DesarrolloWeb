@@ -1,0 +1,39 @@
+.create-admin-container {
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.create-admin-container h2 {
+    text-align: center;
+}
+
+.create-admin-container label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+.create-admin-container input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.create-admin-container .btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.create-admin-container .btn:hover {
+    background-color: #0056b3;
+}

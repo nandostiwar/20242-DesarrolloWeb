@@ -1,11 +1,12 @@
 const fs = require('fs/promises');
 const path = require('path');
 
+const userFilePath = path.join(__dirname, '../../db/user.json');
+const adminFilePath = path.join(__dirname, '../../db/admin.json');
+const registrosFilePath = path.join(__dirname, '../../db/registros.json');
+
 const login = async (req, res) => {
     const { username, password } = req.body;
-    const userFilePath = path.join(__dirname, '../../db/user.json');
-    const adminFilePath = path.join(__dirname, '../../db/admin.json');
-    const registrosFilePath = path.join(__dirname, '../../db/registros.json');
 
     try {
         const [userData, adminData] = await Promise.all([
@@ -100,6 +101,34 @@ const createAccount = async (req, res) => {
     }
 };
 
+const createAdmin = async (req, res) => {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        return res.status(400).json({ message: 'Todos los campos son obligatorios.' });
+    }
+
+    const adminFilePath = path.join(__dirname, '../../db/admin.json');
+
+    try {
+        const adminData = await fs.readFile(adminFilePath, 'utf-8');
+        const admins = JSON.parse(adminData);
+
+        const adminExists = admins.some(admin => admin.username === username);
+        if (adminExists) {
+            return res.status(400).json({ message: 'El administrador ya existe.' });
+        }
+
+        admins.push({ username, password });
+        await fs.writeFile(adminFilePath, JSON.stringify(admins, null, 2), 'utf-8');
+
+        res.status(201).json({ message: 'Administrador creado con éxito.' });
+    } catch (error) {
+        console.error('Error al crear el administrador:', error);
+        res.status(500).json({ message: 'Error al crear el administrador.' });
+    }
+};
+
 // Ruta para obtener todos los códigos registrados
 const getCodigos = async (req, res) => {
     try {
@@ -149,6 +178,7 @@ module.exports = {
     login,
     changePassword,
     createAccount,
+    createAdmin,
     getCodigos,
     registrarCodigo
 };

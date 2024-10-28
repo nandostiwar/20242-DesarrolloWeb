@@ -1,6 +1,6 @@
 const express = require('express');
 const {urlencoded, json} = require('express');
-const router = require('./routes/signos.routes.js');
+const router = require('./routes/sorteo.routes.js');
 const cors = require('cors');
 
 const app = express();
