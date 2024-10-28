@@ -1,6 +1,6 @@
-import './styles/Form.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './styles/Form.css';
 
 function Form({ callback }) {
     const [username, setUsername] = useState('');

@@ -14,10 +14,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route index element={<Form callback={setUser}/>}></Route>
+        <Route path='/registro' element={<CreateAccount />}></Route>
         <Route path='/user' element={<UserHome user={user}/>}></Route>
         <Route path='/admin' element={<AdminHome user={user}/>}></Route>
-        <Route path='/change-password' element={<ChangePassword user={user} />}></Route> {/* Nueva ruta */}
-        <Route path='/registro' element={<CreateAccount />}></Route> {/* Nueva ruta */}
+        <Route path='/change-password' element={<ChangePassword user={user} />}></Route>
       </Routes>
     </BrowserRouter>
   )

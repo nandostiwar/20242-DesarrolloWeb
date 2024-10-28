@@ -1,52 +1,85 @@
 import { Navigate, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import './styles/UserHome.css';
 
-function UserHome({ user }) {
-    if (user !== "user" || !user) {
-        return <Navigate to="/" />
-    }
-
-    const home = useNavigate();
+function UserHome() {
     const [codigo, setCodigo] = useState('');
+    const [registros, setRegistros] = useState([]);
     const [mensaje, setMensaje] = useState('');
-
-    const registrarCodigo = async () => {
-        try {
-            const response = await fetch(`http://localhost:4000/api/codigos`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ codigo }),
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                setMensaje(`Código registrado con éxito. Premio: ${data.premio}`);
-            } else {
-                const errorData = await response.json();
-                setMensaje(errorData.message);
-            }
-        } catch (error) {
-            console.error("Error al registrar el código:", error);
-            setMensaje("Error en el registro del código.");
-        }
+  
+    useEffect(() => {
+      // Obtener los registros del backend al cargar el componente
+      fetch('http://localhost:4000/api/codigos')
+        .then(response => response.json())
+        .then(data => setRegistros(data))
+        .catch(error => console.error('Error al obtener los registros:', error));
+    }, []);
+  
+    const handleRegistrarCodigo = () => {
+      if (!/^\d{3}$/.test(codigo)) {
+        setMensaje('El código debe ser un número de 3 dígitos entre 000 y 999.');
+        return;
+      }
+  
+      fetch('http://localhost:4000/api/codigos', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ codigo }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            setRegistros(prev => [...prev, data.nuevoRegistro]);
+            setMensaje('Código registrado exitosamente');
+            setCodigo('');
+          } else {
+            setMensaje(data.message || 'Error al registrar el código');
+          }
+        })
+        .catch(error => {
+          console.error('Error al registrar el código:', error);
+          setMensaje('Error al registrar el código');
+        });
     };
-
+  
     return (
-        <div className="container">
-            <h3>Bienvenido, inserta tu código para ganar premios:</h3>
-            <input
-                type="text"
-                value={codigo}
-                onChange={(e) => setCodigo(e.target.value)}
-                placeholder="Ingresa tu código"
-            />
-            <button onClick={registrarCodigo}>Registrar Código</button>
-            {mensaje && <p>{mensaje}</p>}
-            <button onClick={() => home("/")}>Salir</button>
-        </div>
+      <div className="user-container">
+        <h2>Registro de Códigos</h2>
+        <input
+          type="text"
+          placeholder="Ingresa un código (000 - 999)"
+          value={codigo}
+          onChange={(e) => setCodigo(e.target.value)}
+        />
+        <button onClick={handleRegistrarCodigo}>Validar Código</button>
+        {mensaje && <p>{mensaje}</p>}
+        
+        <h3>Códigos Registrados</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Fecha</th>
+              <th>Hora</th>
+              <th>Premio Obtenido</th>
+            </tr>
+          </thead>
+          <tbody>
+            {registros.map((registro, index) => (
+              <tr key={index}>
+                <td>{registro.codigo}</td>
+                <td>{registro.fecha}</td>
+                <td>{registro.hora}</td>
+                <td>{registro.premio}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <button onClick={() => (window.location.href = '/')}>Volver al Inicio</button>
+      </div>
     );
-}
-
-export default UserHome;
+  }
+  
+  export default UserHome;

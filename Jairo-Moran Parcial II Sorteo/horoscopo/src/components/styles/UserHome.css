@@ -1,44 +1,51 @@
-.container{
-    height: 300px;
-    display: grid;
-    place-items: center;
-}
-
-#selectSignos{
-    margin-top: 0px;
-    margin: 100px;
-    width: 400px;
-    padding: 5px 50px 5px 10px;
-    border-radius: 10px;
-    background-color: rgb(71, 63, 63);
+.user-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .user-container input[type="text"] {
+    width: 200px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .user-container button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
     color: white;
-}
-
-#selectPerfil{
-    margin-top: 0px;
-    margin: 100px;
-    width: 400px;
-    padding: 5px 50px 5px 10px;
-    border-radius: 10px;
-    background-color: rgb(71, 63, 63);
-    color: white;
-}
-
-#txtSeleccionPage{
-    padding: 50px;
-    padding-bottom: 0px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-style: italic  ;
-}
-
-
-
-#btnHome{
-    margin-top: 100px;
-    background-color: blue;
-    color: white;
-    padding: 50px;
-    padding-bottom: 5px;
-    padding-top: 5px;
-    border-radius: 10px;
-}
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .user-container button:hover {
+    background-color: #45a049;
+  }
+  
+  table {
+    width: 100%;
+    max-width: 600px;
+    margin-top: 20px;
+    border-collapse: collapse;
+  }
+  
+  table, th, td {
+    border: 1px solid #ddd;
+  }
+  
+  th, td {
+    padding: 8px;
+    text-align: center;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
