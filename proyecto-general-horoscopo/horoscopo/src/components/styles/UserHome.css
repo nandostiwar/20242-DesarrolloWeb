@@ -1,33 +1,66 @@
-.container{
-    height: 300px;
-    display: grid;
-    place-items: center;
+.container {
+    height: auto; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px; 
 }
 
-
-#selectSignos{
-    margin-top: 0px;
-    margin: 10px;
-    width: 400px;
-    padding: 5px 50px 5px 100px;
-    border-radius: 10px;
-    background-color: rgb(71, 63, 63);
-    color: white;
+h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
 }
 
-#txtSeleccionPage{
-    padding: 150px;
-    padding-bottom: 0px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-style: italic  ;
+.styled-table {
+    width: 100%;
+    border-collapse: collapse; /* Eliminar espacio entre los bordes */
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: left;
+    border: 1px solid #ddd; /* Borde externo de la tabla */
 }
 
-#btnHome{
-    margin-top: 100px;
+.styled-table th, 
+.styled-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd; /* Bordes de las celdas */
+}
+
+.styled-table th {
+    background-color: #0ea3e9; /* Color de fondo para el encabezado */
+    color: white; /* Color del texto en el encabezado */
+}
+
+.styled-table tr:nth-child(even) {
+    background-color: #f2f2f2; /* Color de filas pares */
+}
+
+.styled-table tr:hover {
+    background-color: #ddd; /* Color de fondo al pasar el ratón */
+}
+
+/* Estilos adicionales para el formulario */
+form {
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-right: 10px; /* Espaciado entre input y botón */
+}
+
+button {
+    padding: 10px 15px;
     background-color: blue;
     color: white;
-    padding: 50px;
-    padding-bottom: 5px;
-    padding-top: 5px;
-    border-radius: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Transición suave para el fondo */
+}
+
+button:hover {
+    background-color: darkblue; /* Cambia el color al pasar el ratón */
 }

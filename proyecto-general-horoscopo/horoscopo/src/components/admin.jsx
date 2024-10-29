@@ -2,17 +2,17 @@ import './styles/Form.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function Form({ callback }) {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+function Admin({ callback }) {
+    const [username, setUsername] = useState(null);
+    const [password, setPassword] = useState(null);
     const goTo = useNavigate();
 
-    const validateUser = async (event) => {
+    const validateAdmin = async (event) => {
         event.preventDefault();
-        const role = 'user';  // Solo usuarios, no admins
+        const role = 'admin'; // Asignar el rol de admin directamente
 
         try {
-            const response = await fetch('http://localhost:4000/v1/signos/login', {
+            const response = await fetch('http://localhost:4000/v1/signos/admin', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -23,8 +23,8 @@ function Form({ callback }) {
             const data = await response.json();
 
             if (response.ok) {
-                callback(role);
-                goTo('/userHome');  // Redirige solo a userHome
+                callback(role); // Llama al callback con el rol
+                goTo('/adminHome'); // Redirige a la página de adminHome
             } else {
                 alert(data.message || 'Credenciales incorrectas');
             }
@@ -43,16 +43,26 @@ function Form({ callback }) {
     };
 
     return (
-        <form onSubmit={validateUser}>
-            <h1 id="txtBienvenida">Bienvenido, regístrate para reclamar tus premios</h1>
+        <form onSubmit={validateAdmin}>
+            <h1 id="txtBienvenida">Bienvenido Administrador</h1>
             <h4 className="txt">Nombre de Usuario</h4>
-            <input type="text" className="entry" onChange={(e) => setUsername(e.target.value)} required /><br />
+            <input 
+                type="text" 
+                className="entry" 
+                onChange={(e) => setUsername(e.target.value)} 
+            /><br />
             <h4 className="txt">Contraseña</h4>
-            <input type="password" className="entry" onChange={(e) => setPassword(e.target.value)} required /><br />
+            <input 
+                type="password" 
+                className="entry" 
+                onChange={(e) => setPassword(e.target.value)} 
+            /><br />
             <input type="submit" value="Ingresar" id="btnEnviar" />
-            <button type="button" id="btnAddUser" onClick={handleAddUserClick}>Crear Nuevo Usuario</button>
+            <button type="button" id="btnAddUser" onClick={handleAddUserClick}>
+                Crear Nuevo Usuario
+            </button>
         </form>
     );
 }
 
-export default Form;
+export default Admin;

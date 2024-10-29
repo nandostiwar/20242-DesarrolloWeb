@@ -1,67 +1,39 @@
 .container {
     height: auto; 
-    display: grid;
-    place-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: 20px; 
 }
 
-#editSignos,
-#selectTipoPersona { 
-    margin-top: 0px;
-    margin: 10px; 
-    width: 400px;
-    padding: 10px; 
-    border-radius: 10px;
-    background-color: rgb(71, 63, 63);
-    color: white;
-    
-    
-    text-align: center; 
-    box-sizing: border-box;
-
-    
+h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
 }
 
-#btnEditar {
-    margin-top: 10px; 
-    padding: 10px 20px; 
-    border-radius: 10px;
-    background-color: brown;
-    color: white;
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: left;
 }
 
-#btnGuardar { 
-    margin-top: 10px; 
-    padding: 10px 20px; 
-    border-radius: 10px;
-    background-color: #ff5722; 
-    color: white; 
-    transition: background-color 0.3s; 
+.styled-table th, 
+.styled-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd; /* Bordes de las celdas */
 }
 
-#btnGuardar:hover { 
-    background-color: #c791fa; 
+.styled-table th {
+    background-color: #0ea3e9; /* Color de fondo para el encabezado */
+    color: white; /* Color del texto en el encabezado */
 }
 
-#textoAdmin {
-    font-style: italic;
-    margin-bottom: 20px; 
+.styled-table tr:nth-child(even) {
+    background-color: #f2f2f2; /* Color de filas pares */
 }
 
-#textoEditar {
-    border-radius: 10px;
-    display: flex;
-    background-color: rgb(95, 82, 82);
-    color: white;
-    margin-top: 10px; 
-    width: 400px; 
-    height: 100px; 
-}
-
-#btnHomeAdmin {
-    margin-top: 15px;
-    padding: 5px 15px; 
-    border-radius: 10px;
-    background-color: blue;
-    color: white;
+.styled-table tr:hover {
+    background-color: #ddd; /* Color de fondo al pasar el ratón */
 }

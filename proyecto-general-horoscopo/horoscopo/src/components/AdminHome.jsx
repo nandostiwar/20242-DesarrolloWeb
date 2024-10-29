@@ -1,70 +1,55 @@
-import { Navigate, useNavigate } from "react-router-dom";
 import './styles/AdminHome.css';
-import { useState, useEffect } from "react";
+import { useEffect, useState } from 'react';
 
 function AdminHome({ user }) {
-    if (user !== 'admin' || !user) {
-        return <Navigate to="/" />
-    }
+    const [winners, setWinners] = useState([]);
 
-    const home = useNavigate();
-    const [textoEditar, setTextoEditar] = useState("");
-    const [signoEditar, setSignoEditar] = useState("");
-    const [tipoPersona, setTipoPersona] = useState(""); // Estado para el tipo de persona
+    useEffect(() => {
+        const fetchWinners = async () => {
+            try {
+                const response = await fetch('http://localhost:4000/v1/signos/vistAdmin'); // Endpoint de ganadores
+                const data = await response.json();
 
-    // Volver a la página de inicio
-    function goHome() {
-        home("/");
-    }
+                if (response.ok) {
+                    setWinners(data);
+                } else {
+                    console.error('Error al obtener los ganadores:', data.message);
+                }
+            } catch (error) {
+                console.error('Error al conectarse al servidor:', error);
+            }
+        };
 
-    // Manejar la solicitud de edición
-    function handleClick(e) {
-        e.preventDefault();
-        if (!signoEditar || !tipoPersona) {
-            alert("Por favor selecciona un signo zodiacal y un tipo de persona");
-            return;
-        }
-
-        // Guardar en localStorage
-        const storedSignos = JSON.parse(localStorage.getItem('signos')) || {};
-        storedSignos[`${signoEditar}-${tipoPersona}`] = { texto: textoEditar }; // Guardar texto con signo y tipo
-        localStorage.setItem('signos', JSON.stringify(storedSignos));
-
-        alert("Horóscopo actualizado con éxito");
-    }
+        fetchWinners();
+    }, []);
 
     return (
         <div className="container">
-            <h2 id="textoAdmin">Edita un Signo Zodiacal</h2>
-            
-            {/* Selector de signos zodiacales */}
-            <select id="editSignos" onChange={(e) => setSignoEditar(e.target.value)}>
-                <option value="0">Selecciona un signo zodiacal</option>
-                <option value="Aries">Aries</option>
-                <option value="Géminis">Géminis</option>
-                <option value="Cáncer">Cáncer</option>
-                <option value="Leo">Leo</option>
-                <option value="Virgo">Virgo</option>
-                <option value="Libra">Libra</option>
-                <option value="Escorpio">Escorpio</option>
-                <option value="Sagitario">Sagitario</option>
-                <option value="Capricornio">Capricornio</option>
-                <option value="Acuario">Acuario</option>
-                <option value="Piscis">Piscis</option>
-            </select>
-
-            {/* Selector del tipo de persona */}
-            <select id="selectTipoPersona" onChange={(e) => setTipoPersona(e.target.value)}>
-                <option value="0">Selecciona el tipo de persona</option>
-                <option value="niño">Niño</option>
-                <option value="mujer">Mujer</option>
-                <option value="hombre">Hombre</option>
-            </select>
-
-            {/* Textarea para el contenido a editar */}
-            <textarea id="textoEditar" cols="50" rows="10" onChange={(e) => setTextoEditar(e.target.value)} />
-            <button id="btnEditar" onClick={handleClick}>Guardar</button>
-            <button id="btnHomeAdmin" onClick={goHome}>Home</button>
+            <h1>Lista de Ganadores</h1>
+            <table className="styled-table">
+                <thead>
+                    <tr>
+                        <th>Fecha de Registro</th>
+                        <th>Nombre del Ganador</th>
+                        <th>Cédula</th>
+                        <th>Teléfono</th>
+                        <th>Código Usado</th>
+                        <th>Monto del Premio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {winners.map((winner, index) => (
+                        <tr key={index}>
+                            <td>{winner.fechaRegistro}</td>
+                            <td>{winner.nombre}</td>
+                            <td>{winner.cedula}</td>
+                            <td>{winner.telefono}</td>
+                            <td>{winner.codigo}</td>
+                            <td>{winner.premio}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 }
