@@ -1,0 +1,76 @@
+/* Contenedor principal de la página de inicio de sesión */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Fondo de pantalla completa con semitransparencia */
+/* Background image for the entire application */
+body {
+    background-image: url('imagen.jpeg'); /* Ruta de la imagen */
+    background-size: cover; /* Asegura que la imagen cubra toda la pantalla */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-attachment: fixed; /* Mantiene la imagen fija al hacer scroll */
+    background-position: center; /* Centra la imagen */
+    font-family: 'Poppins', sans-serif; /* Fuente general */
+    margin: 0;
+    padding: 0;
+  }
+
+/* Fondo semitransparente del formulario */
+.transparent-bg {
+    background-color: rgba(255, 255, 255, 0.9); /* Color blanco con transparencia */
+    border-radius: 10px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Sombra para el formulario */
+    max-width: 400px; /* Limita el ancho del formulario */
+    width: 100%;
+    z-index: 1; /* Asegura que el formulario esté delante del fondo */
+}
+
+/* Estilo del título */
+.title {
+    color: #4a90e2;
+    font-size: 2em;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+/* Estilo del formulario de inicio de sesión */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px; /* Ancho máximo del formulario */
+    z-index: 1;
+}
+
+/* Botones de inicio de sesión */
+.button {
+    background-color: #4a90e2;
+    color: #ffffff;
+    padding: 12px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 10px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.button:hover {
+    background-color: #357ab8;
+    transform: scale(1.05);
+}

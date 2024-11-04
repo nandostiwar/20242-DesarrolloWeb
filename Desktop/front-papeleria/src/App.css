@@ -1,0 +1,10 @@
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Negro con 50% de opacidad */
+  z-index: 1; /* Asegúrate de que la superposición esté por encima de la imagen */
+}
+/* Estilo común para los títulos */

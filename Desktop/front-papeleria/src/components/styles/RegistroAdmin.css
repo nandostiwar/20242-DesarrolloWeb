@@ -1,0 +1,121 @@
+/* Estilo general del contenedor */
+.registro-container {
+    max-width: 350px; /* Reduce el ancho */
+    margin: auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 2;
+    text-align: center; /* Centra el contenido dentro del contenedor */
+}
+
+/* Fondo semitransparente */
+.transparent-bg {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 100%;
+    max-width: 350px; /* Reduce el ancho */
+    z-index: 1;
+}
+
+/* Estilo del título */
+.title {
+    font-size: 2em; /* Reduce ligeramente el tamaño del texto */
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #4a90e2;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Campos de entrada */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+input[type="tel"] {
+    width: 100%;
+    padding: 10px; /* Reduce el padding */
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 0.9em; /* Reduce ligeramente el tamaño de la fuente */
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+/* Contenedor de los botones con flexbox para centrarlos */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Espacio entre los botones */
+    margin-top: 15px;
+}
+
+/* Botones más pequeños */
+.registro-button,
+.regresar-button {
+    background-color: #4a90e2;
+    color: #ffffff;
+    padding: 8px 20px; /* Reduce el padding */
+    font-size: 1em;
+    border: none;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    width: 45%; /* Reduce el ancho para que ambos botones quepan */
+    max-width: 150px;
+}
+
+.registro-button {
+    background-color: #279bcd;
+}
+
+.regresar-button {
+    background-color: #6baeff;
+}
+
+.registro-button:hover {
+    background-color: #4a90e2;
+    transform: scale(1.05);
+}
+
+.regresar-button:hover {
+    background-color: #e84118;
+    transform: scale(1.05);
+}
+
+/* Mensaje de confirmación */
+.mensaje {
+    margin-top: 15px;
+    font-size: 1em;
+    color: #4a90e2;
+    font-weight: bold;
+    text-align: center;
+}
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Asegúrate de que ocupe toda la altura de la ventana */
+    background-color: #e0e0e0; /* Color de fondo opcional */
+    margin: 0; /* Elimina el margen predeterminado */
+}
+/* Background image for the entire application */
+body {
+    background-image: url('imagen.jpeg'); /* Ruta de la imagen */
+    background-size: cover; /* Asegura que la imagen cubra toda la pantalla */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-attachment: fixed; /* Mantiene la imagen fija al hacer scroll */
+    background-position: center; /* Centra la imagen */
+    font-family: 'Poppins', sans-serif; /* Fuente general */
+    margin: 0;
+    padding: 0;
+  }

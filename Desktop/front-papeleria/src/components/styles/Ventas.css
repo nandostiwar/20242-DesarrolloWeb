@@ -1,0 +1,75 @@
+/* ventas.css */
+
+/* Asegúrate de usar un prefijo único para los estilos de este componente */
+.ventas {
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+}
+
+/* Sidebar */
+.ventas .sidebar {
+    width: 200px;
+    background-color: #f5f5f5; /* Un color de fondo diferente para el sidebar */
+    padding: 20px;
+    border-right: 1px solid #ccc;
+}
+
+.ventas .sidebar nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+.ventas .sidebar nav ul li {
+    margin-bottom: 10px;
+}
+
+/* Main content */
+.ventas .main-content {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+/* User info */
+.ventas .user-info {
+    display: flex;
+    align-items: center;
+}
+
+.ventas .user-info img {
+    width: 50px; /* Tamaño del ícono del usuario */
+    height: 50px;
+    margin-right: 10px;
+}
+
+/* Product search */
+.ventas .product-search {
+    margin: 20px 0;
+}
+
+/* Product list */
+.ventas .product-list {
+    margin-bottom: 20px;
+}
+
+/* Product item */
+.ventas .producto {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+/* Payment options */
+.ventas .payment-options {
+    display: flex;
+    gap: 10px;
+}
+
+/* Summary */
+.ventas .summary {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
