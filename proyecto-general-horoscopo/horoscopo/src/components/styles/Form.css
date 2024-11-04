@@ -1,0 +1,45 @@
+body {
+    justify-content: center;
+    text-align: center;
+    background-color: #125df168; /* Cambia esto al color que desees */
+    color: white; /* Asegúrate de que el texto sea visible en el nuevo fondo */
+}
+
+.entry {
+    border-radius: 10px;
+    padding: 10px 20px 10px 35px;
+}
+
+form {
+    padding: 20px;
+    padding-top: 10%;
+    background-color: transparent !important; /* Forzar a que sea transparente */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+#btnEnviar, #btnChangePassword, #btnAddUser {
+    margin-top: 20px;
+    background-color: rgb(48, 27, 238); /* Estilo de fondo igual al botón ingresar */
+    padding: 5px 35px; /* Simplificado el padding */
+    border-radius: 15px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: white;
+    cursor: pointer; /* Para mostrar el cursor de mano */
+    transition: background-color 0.3s; /* Transición suave */
+}
+
+#btnEnviar:hover, #btnChangePassword:hover, #btnAddUser:hover {
+    background-color: rgb(34, 20, 162); /* Efecto hover para todos los botones */
+}
+
+.txt {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+#txtBienvenida {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-style: oblique;
+    color: white;
+}

@@ -1,0 +1,61 @@
+.container {
+    height: auto; /* Cambia a auto para que se ajuste al contenido */
+    display: grid;
+    place-items: center;
+    padding: 20px; /* Agrega padding para evitar que el contenido se pegue a los bordes */
+}
+
+#editSignos,
+#selectTipoPersona { /* Añadir el selector del tipo de persona aquí */
+    margin-top: 0px;
+    margin: 10px; /* Cambia el margin para que haya espacio entre los selectores */
+    width: 400px;
+    padding: 5px 50px 5px 10px;
+    border-radius: 10px;
+    background-color: rgb(71, 63, 63);
+    color: white;
+}
+
+#btnEditar {
+    margin-top: 10px; /* Cambia el margin a 10px para que esté más cerca de los otros elementos */
+    padding: 10px 20px; /* Simplifica el padding */
+    border-radius: 10px;
+    background-color: brown;
+    color: white;
+}
+
+#btnGuardar { /* Nuevo estilo para el botón de guardar */
+    margin-top: 10px; /* Asegúrate de que el botón tenga un margen superior */
+    padding: 10px 20px; /* Ajusta el padding para que sea consistente */
+    border-radius: 10px;
+    background-color: #ff5722; /* Color llamativo: naranja brillante */
+    color: white; /* Color del texto */
+    transition: background-color 0.3s; /* Añade una transición para el efecto hover */
+}
+
+#btnGuardar:hover { /* Efecto hover para el botón de guardar */
+    background-color: #e64a19; /* Color más oscuro en hover */
+}
+
+#textoAdmin {
+    font-style: italic;
+    margin-bottom: 20px; /* Agrega un margen inferior para separar el título del resto del contenido */
+}
+
+#textoEditar {
+    border-radius: 10px;
+    display: flex;
+    background-color: rgb(95, 82, 82);
+    color: white;
+    margin-top: 10px; /* Agrega un margen superior para separar del resto */
+    width: 400px; /* Establecer un ancho para el textarea */
+    height: 100px; /* Establecer una altura */
+}
+
+#btnHomeAdmin {
+    margin-top: 15px;
+    padding: 5px 15px; /* Simplifica el padding */
+    border-radius: 10px;
+    background-color: blue;
+    color: white;
+}
